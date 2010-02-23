@@ -20,7 +20,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([PYFOAM_CHECK_VTK],dnl
+AC_DEFUN([CONFFOAM_CHECK_VTK],dnl
 [
 AC_CHECKING(for VTK Library)
 

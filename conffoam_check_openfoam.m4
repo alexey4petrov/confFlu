@@ -19,7 +19,7 @@ dnl Author : Alexey PETROV
 dnl
 
 
-AC_DEFUN([PYFOAM_CHECK_OPENFOAM],dnl
+AC_DEFUN([CONFFOAM_CHECK_OPENFOAM],dnl
 [
 AC_CHECKING(for OpenFOAM library)
 
