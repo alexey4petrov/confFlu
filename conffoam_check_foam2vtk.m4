@@ -20,11 +20,11 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([PYFOAM_CHECK_FOAM2VTK],dnl
+AC_DEFUN([CONFFOAM_CHECK_FOAM2VTK],dnl
 [
 AC_CHECKING(for foam2vtk package)
 
-AC_REQUIRE([PYFOAM_CHECK_VTK])
+AC_REQUIRE([CONFFOAM_CHECK_VTK])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
