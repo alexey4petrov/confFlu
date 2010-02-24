@@ -48,7 +48,7 @@ AC_ARG_WITH( [vtk_includes],
    
 dnl AC_MSG_NOTICE( \${with_vtk_includes} ${with_vtk_includes})
 
-if test "x${with_vtk_includes}" = "xno" && test -d ${VTKHOME} ; then
+if test "x${with_vtk_includes}" = "xno" && test ! "x${VTKHOME}" = "x" ; then
    with_vtk_includes=${VTKHOME}/include/`ls ${VTKHOME}/include | grep vtk`
    AC_CHECK_FILE( [${with_vtk_includes}/vtkPlane.h], [ vtk_includes_ok=yes ], [ vtk_includes_ok=no ] )
 fi
@@ -77,12 +77,12 @@ AC_ARG_WITH( [vtk_libraries],
              [],
 	     [ with_vtk_libraries=no ]  )
    
-if test "x${with_vtk_libraries}" = "xno" && test -d ${VTKHOME} ; then
+if test "x${with_vtk_libraries}" = "xno" && test ! "x${VTKHOME}" = "x" ; then
    with_vtk_libraries=${VTKHOME}/lib
    AC_CHECK_FILE( [${with_vtk_libraries}/libvtkCommon.so], [ vtk_libraries_ok=yes ], [ vtk_libraries_ok=no ] )
 fi
 
-if test vtk_libraries_ok = "xno" ; then
+if test "x${vtk_libraries_ok}" = "xno" ; then
    with_vtk_libraries=/usr/lib
    AC_CHECK_FILE( [${with_vtk_libraries}/libvtkCommon.so], [ vtk_libraries_ok=yes ], [ vtk_libraries_ok=no ] )
 fi
