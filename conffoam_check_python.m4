@@ -47,6 +47,10 @@ fi
 
 python_version=[`python -c "import sys; print sys.version[:3]"`]
 
+python_app=`which python`
+python_app_dir=`dirname ${python_app}`
+python_home=`(cd ${python_app_dir}/..; pwd)`
+
 dnl --------------------------------------------------------------------------------
 python_includes_ok=no
 AC_ARG_WITH( [python_includes],
@@ -54,12 +58,16 @@ AC_ARG_WITH( [python_includes],
 		             [use <path> to look for Python includes] ),
              [],
 	     [ with_python_includes=no ] )
-   
+
 if test "x${with_python_includes}" = "xno" ; then
-   with_python_includes=/usr/include/python${python_version}
+   with_python_includes=${python_home}/include/python${python_version}
+   AC_CHECK_FILE( [${with_python_includes}/Python.h], [ python_includes_ok=yes ], [ python_includes_ok=no ] )
 fi
 
-AC_CHECK_FILE( [${with_python_includes}/Python.h], [ python_includes_ok=yes ], [ python_includes_ok=no ] )
+if test "x${python_includes_ok}" = "xno" ; then
+   with_python_includes=/usr/include/python${python_version}
+   AC_CHECK_FILE( [${with_python_includes}/Python.h], [ python_includes_ok=yes ], [ python_includes_ok=no ] )
+fi
 
 if test "x${python_includes_ok}" = "xyes" ; then
    PYTHON_CPPFLAGS="-I${with_python_includes}"
@@ -81,10 +89,15 @@ AC_ARG_WITH( [python_libraries],
 	     [ with_python_libraries=no ]  )
    
 if test "x${with_python_libraries}" = "xno" ; then
-   with_python_libraries=/usr/lib
+   with_python_libraries=${python_home}/lib
+   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
 fi
 
-AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
+if test "x${python_libraries_ok}" = "xno" ; then
+   with_python_libraries=/usr/lib
+   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
+fi
+
 
 if test "x${python_libraries_ok}" = "xyes" ; then
    PYTHON_CXXFLAGS=""
