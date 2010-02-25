@@ -77,7 +77,7 @@ if test "x${python_includes_ok}" = "xyes" ; then
 fi
 
 if test "x${python_includes_ok}" = "xno" ; then
-   AC_MSG_ERROR( [use --with-python-includes=<path> to define Python header files location] )
+   AC_MSG_WARN( [use --with-python-includes=<path> to define Python header files location] )
 fi
 
 dnl --------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ if test "x${python_libraries_ok}" = "xyes" ; then
 fi
 
 if test "x${python_libraries_ok}" = "xno" ; then
-   AC_MSG_ERROR( [use --with-python-libraries=<path> to define Python libraries location] )
+   AC_MSG_WARN( [use --with-python-libraries=<path> to define Python libraries location] )
 fi
 
 dnl --------------------------------------------------------------------------------

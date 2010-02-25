@@ -66,7 +66,7 @@ if test "x${vtk_includes_ok}" = "xyes" ; then
 fi
 
 if test "x${vtk_includes_ok}" = "xno" ; then
-   AC_MSG_ERROR( [use --with-vtk-includes=<path> to define VTK header files location] )
+   AC_MSG_WARN( [use --with-vtk-includes=<path> to define VTK header files location] )
 fi
 
 dnl --------------------------------------------------------------------------------
@@ -103,7 +103,7 @@ if test "x${vtk_libraries_ok}" = "xyes" ; then
 fi
 
 if test "x${vtk_libraries_ok}" = "xno" ; then
-   AC_MSG_ERROR( [use --with-vtk-libraries=<path> to define VTK libraries location] )
+   AC_MSG_WARN( [use --with-vtk-libraries=<path> to define VTK libraries location] )
 fi
 
 dnl --------------------------------------------------------------------------------
