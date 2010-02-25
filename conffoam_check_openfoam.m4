@@ -19,23 +19,43 @@ dnl Author : Alexey PETROV
 dnl
 
 
+dnl --------------------------------------------------------------------------------
 AC_DEFUN([CONFFOAM_CHECK_OPENFOAM],dnl
 [
 AC_CHECKING(for OpenFOAM library)
 
+FOAM_VERSION=""
+AC_SUBST(FOAM_VERSION)
+
 openfoam_ok=no
 
-if test ! "x${withval}" = "xno" ; then
-   AC_MSG_CHECKING(location of the OpenFOAM installation)
-   if test -d "${WM_PROJECT_DIR}" ; then
-      openfoam_ok=yes
+AC_MSG_CHECKING(location of the OpenFOAM installation)
+if test -d "${WM_PROJECT_DIR}" ; then
+   openfoam_ok=yes
+fi
+AC_MSG_RESULT(${openfoam_ok})
+
+dnl --------------------------------------------------------------------------------
+if test "x${openfoam_ok}" = "xyes" ; then
+   project_version=[`echo ${WM_PROJECT_VERSION} | sed  -e"s%\([0-9\.]\+\)-dev%\1%g"`]
+   number_counter=[`echo ${project_version} | sed -e"s%[^\.]%%g" | wc --bytes`]
+
+   if test "x${number_counter}" = "x2" ; then
+      FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\).*%0\10\200%g"`]
    fi
-   AC_MSG_RESULT($openfoam_ok)
+
+   if test "x${number_counter}" = "x3" ; then
+      FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20\3%g"`]
+   fi
+   AC_MSG_NOTICE( \${FOAM_VERSION} ${FOAM_VERSION} )
 fi
 
+dnl --------------------------------------------------------------------------------
 if test "x${openfoam_ok}" = "xno" ; then
-   AC_MSG_ERROR([it is neceesary to source OpenFOAM environment first])
+   AC_MSG_WARN([it is neceesary to source OpenFOAM environment first])
 fi
 
 ])
 
+
+dnl --------------------------------------------------------------------------------
