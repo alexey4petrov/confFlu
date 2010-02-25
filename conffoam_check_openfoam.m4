@@ -29,6 +29,7 @@ AC_SUBST(FOAM_VERSION)
 
 openfoam_ok=no
 
+dnl --------------------------------------------------------------------------------
 AC_MSG_CHECKING(location of the OpenFOAM installation)
 if test -d "${WM_PROJECT_DIR}" ; then
    openfoam_ok=yes
