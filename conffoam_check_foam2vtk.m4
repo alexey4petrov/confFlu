@@ -62,7 +62,7 @@ dnl ----------------------------------------------------------------------------
 AC_CHECK_FILE( [${foam2vtk_root_dir}/lib/vtkFoamInterfaces.H], [ foam2vtk_ok=yes ], [ foam2vtk_ok=no ] )
 
 if test "x${foam2vtk_ok}" = "xyes" ; then
-   FOAM2VTK_CPPFLAGS="-I${foam2vtk_root_dir}/lib/lnInclude"
+   FOAM2VTK_CPPFLAGS="-I${foam2vtk_root_dir}/lib"
    CPPFLAGS="${FOAM2VTK_CPPFLAGS}"
 
    dnl AC_CHECK_HEADERS( [vtkFoamInterfaces.H], [ foam2vtk_ok=yes ], [ foam2vtk_ok=no ] )

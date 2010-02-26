@@ -60,7 +60,7 @@ dnl ----------------------------------------------------------------------------
 AC_CHECK_FILE( [${unv2foam_root_dir}/lib/unv2foam.H], [ unv2foam_ok=yes ], [ unv2foam_ok=no ] )
 
 if test "x${unv2foam_ok}" = "xyes" ; then
-   UNV2FOAM_CPPFLAGS="-I${unv2foam_root_dir}/lib/lnInclude"
+   UNV2FOAM_CPPFLAGS="-I${unv2foam_root_dir}/lib"
    CPPFLAGS="${UNV2FOAM_CPPFLAGS}"
 
    dnl AC_CHECK_HEADERS( [unv2foam.H], [ unv2foam_ok=yes ], [ unv2foam_ok=no ] )
