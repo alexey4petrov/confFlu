@@ -19,44 +19,32 @@ dnl Author : Alexey PETROV
 dnl
 
 
-dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_OPENFOAM],dnl
+AC_DEFUN([CONFFOAM_CHECK_SWIG],dnl
 [
-AC_CHECKING(for OpenFOAM library)
+AC_CHECKING(for SWIG utitlity)
 
-FOAM_VERSION=""
-AC_SUBST(FOAM_VERSION)
+SWIG=""
+AC_SUBST(SWIG)
 
-openfoam_ok=no
-
-dnl --------------------------------------------------------------------------------
-AC_MSG_CHECKING(location of the OpenFOAM installation)
-if test -d "${WM_PROJECT_DIR}" ; then
-   openfoam_ok=yes
-fi
-AC_MSG_RESULT(${openfoam_ok})
+swig_ok=no
 
 dnl --------------------------------------------------------------------------------
-if test "x${openfoam_ok}" = "xyes" ; then
-   project_version=[`echo ${WM_PROJECT_VERSION} | sed  -e"s%\([0-9\.]\+\)-dev%\1%g"`]
-   number_counter=[`echo ${project_version} | sed -e"s%[^\.]%%g" | wc --bytes`]
-
-   if test "x${number_counter}" = "x2" ; then
-      FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\).*%0\10\200%g"`]
-   fi
-
-   if test "x${number_counter}" = "x3" ; then
-      FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20\3%g"`]
-   fi
-   AC_MSG_NOTICE( @FOAM_VERSION@ == ${FOAM_VERSION} )
+AC_ARG_WITH( [swig],
+             AC_HELP_STRING( [--with-swig=<path>],
+		             [use <path> to look for swig utility] ),
+             [],
+	     [with_swig=`which swig`])
+   
+dnl --------------------------------------------------------------------------------
+AC_CHECK_FILE( [${with_swig}], [ swig_ok=yes ], [ swig_ok=no ] )
+if test "x${swig_ok}" = "xyes" ; then
+   SWIG=${with_swig}
 fi
 
 dnl --------------------------------------------------------------------------------
-if test "x${openfoam_ok}" = "xno" ; then
-   AC_MSG_WARN([it is neceesary to source OpenFOAM environment first])
+if test "x${swig_ok}" = "xno" ; then
+   AC_MSG_WARN( [use --with-swig=<path> to define SWIG installation] )
 fi
 
+dnl --------------------------------------------------------------------------------
 ])
-
-
-dnl --------------------------------------------------------------------------------
