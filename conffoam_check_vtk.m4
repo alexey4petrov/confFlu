@@ -36,7 +36,7 @@ AC_SUBST(VTK_CXXFLAGS)
 VTK_LDFLAGS=""
 AC_SUBST(VTK_LDFLAGS)
 
-vtk_ok=yes
+vtk_ok=no
 
 dnl --------------------------------------------------------------------------------
 vtk_includes_ok=no
@@ -107,5 +107,9 @@ if test "x${vtk_libraries_ok}" = "xno" ; then
 fi
 
 dnl --------------------------------------------------------------------------------
+if test "x${vtk_includes_ok}" = "xyes" && test "x${vtk_libraries_ok}" = "xyes" ; then
+   vtk_ok="yes"
+fi
+
 AC_LANG_RESTORE
 ])

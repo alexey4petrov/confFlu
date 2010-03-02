@@ -20,6 +20,21 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
+AC_DEFUN([CONFFOAM_INIT],
+[
+  project_name=${1} ; project_version=${2} ; email_address=${3}
+
+  AC_INIT([${project_name} Project], [${project_version}], [${email_address}], [${project_name}])
+
+  dnl AC_CONFIG_AUX_DIR defines an alternative directory where to find the auxiliary
+  dnl scripts such as config.guess, install-sh, ...
+  AC_CONFIG_AUX_DIR(admin)
+  AC_CONFIG_MACRO_DIR([admin])
+  AM_INIT_AUTOMAKE([tar-pax -Wno-portability])
+])
+
+
+dnl --------------------------------------------------------------------------------
 AC_DEFUN([CONFFOAM_PRINT_SUMMURY],
 [
   variables=$*
@@ -31,8 +46,9 @@ AC_DEFUN([CONFFOAM_PRINT_SUMMURY],
     fi
   done
 ])
-dnl --------------------------------------------------------------------------------
 
+
+dnl --------------------------------------------------------------------------------
 AC_DEFUN([CONFFOAM_CHECK_MANDATORY],
 [
   variables=$*
@@ -45,4 +61,6 @@ AC_DEFUN([CONFFOAM_CHECK_MANDATORY],
     fi
   done  
 ])
+
+
 dnl --------------------------------------------------------------------------------
