@@ -55,9 +55,9 @@ dnl ----------------------------------------------------------------------------
 python_includes_ok=no
 AC_ARG_WITH( [python_includes],
              AC_HELP_STRING( [--with-python-includes=<path>],
-		             [use <path> to look for Python includes] ),
+                             [use <path> to look for Python includes] ),
              [],
-	     [ with_python_includes=no ] )
+             [ with_python_includes=no ] )
 
 if test "x${with_python_includes}" = "xno" ; then
    with_python_includes=${python_home}/include/python${python_version}
@@ -84,9 +84,9 @@ dnl ----------------------------------------------------------------------------
 python_libraries_ok=no
 AC_ARG_WITH( [python_libraries],
              AC_HELP_STRING( [--with-python-libraries=<path>],
-		             [use <path> to look for Python libraries] ),
+                             [use <path> to look for Python libraries] ),
              [],
-	     [ with_python_libraries=no ]  )
+             [ with_python_libraries=no ]  )
    
 if test "x${with_python_libraries}" = "xno" ; then
    with_python_libraries=${python_home}/lib
@@ -108,10 +108,9 @@ if test "x${python_libraries_ok}" = "xyes" ; then
    LDFLAGS=${PYTHON_LDFLAGS}
 
    AC_MSG_CHECKING( for linking to Python libraries )
-   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <Python.h> ] ],
-      			                [ PyDict_New() ] ) ],
-					[ python_libraries_ok=yes ],
-					[ python_libraries_ok=no ] )
+   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <Python.h> ], [ PyDict_New() ] ) ],
+                   [ python_libraries_ok=yes ],
+                   [ python_libraries_ok=no ] )
    AC_MSG_RESULT( ${python_libraries_ok} )
 fi
 

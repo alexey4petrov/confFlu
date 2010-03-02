@@ -21,100 +21,48 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BOOST_PROGRAM_OPTIONS],dnl
+AC_DEFUN([CONFFOAM_CHECK_BOOST_PROGRAM_OPTIONS],
 [
-AC_CHECKING(for Boost "program options" sub library)
+AC_CHECKING(for Boost "program_options" library)
 
 AC_REQUIRE([CONFFOAM_CHECK_BOOST])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
 
-BOOST_PROGRAM_OPTIONS_CPPFLAGS=""
-AC_SUBST(BOOST_PROGRAM_OPTIONS_CPPFLAGS)
-
-BOOST_PROGRAM_OPTIONS_CXXFLAGS=""
-AC_SUBST(BOOST_PROGRAM_OPTIONS_CXXFLAGS)
-
-BOOST_PROGRAM_OPTIONS_LDFLAGS=""
+BOOST_PROGRAM_OPTIONS_LDFLAGS="${BOOST_LDFLAGS} -lboost_program_options${BOOST_LIBSUFFIX}"
 AC_SUBST(BOOST_PROGRAM_OPTIONS_LDFLAGS)
-
-BOOST_PROGRAM_OPTIONS_LIBSUFFIX="-mt"
-AC_SUBST(BOOST_PROGRAM_OPTIONS_LIBSUFFIX)
 
 boost_program_options_ok=no
 
-AC_ARG_WITH( [boost],
-             AC_HELP_STRING([--with-boost=<path>],
-		            [use <path> to look for Boost installation]),
-             [],
-	     [withval=yes])
-   
-if test ! "x${withval}" = "xno" ; then
-   AC_MSG_CHECKING( ${withval} )
-   if test "x${withval}" = "xyes" ; then
-      if test ! "x${BOOSTDIR}" = "x" && test -d ${BOOSTDIR} ; then
-      	 boost_dir=${BOOSTDIR}
-      else
-	 boost_dir="/usr"
-      fi
-   else
-      boost_dir=${withval}
-   fi
+dnl --------------------------------------------------------------------------------
+dnl Check for Boost "program_options" header files
+if test "x${boost_libraries_ok}" = "xyes" ; then
+   CPPFLAGS="${BOOST_CPPFLAGS}"
+   CXXFLAGS="${BOOST_CXXFLAGS}"
 
-   AC_CHECK_FILE( [${boost_dir}], [ boost_ok=yes ], [ boost_ok=no ] )
-
-   if test "x${boost_ok}" = "xyes" ; then
-      AC_CHECK_FILE( [${boost_dir}/lib/libboost_thread${BOOST_LIBSUFFIX}.so],
-                     [ boost_ok=yes ], 
-		     [ boost_ok=no ])
-      if test "x${boost_ok}" = "xno" ; then
-      	 BOOST_LIBSUFFIX=""
-         AC_CHECK_FILE( [${boost_dir}/lib/libboost_thread${BOOST_LIBSUFFIX}.so],
-                        [ boost_ok=yes ], 
-		        [ boost_ok=no ])
-      fi
-   fi
-
-   if test "x${boost_ok}" = "xyes" ; then
-      test ! "x${boost_dir}" = "x/usr" && BOOST_CPPFLAGS="-I${boost_dir}/include"
-      CPPFLAGS="${BOOST_CPPFLAGS}"
-
-      BOOST_CXXFLAGS="-ftemplate-depth-40"
-      CXXFLAGS="${BOOST_CXXFLAGS}"
-
-      test ! "x${boost_dir}" = "x/usr" && BOOST_LDFLAGS="-L${loki_root_dir}/lib"
-      LDFLAGS="${BOOST_LDFLAGS}"
-
-      AC_CHECK_HEADERS( [boost/shared_ptr.hpp], [ boost_ok=yes ], [ boost_ok=no ] )
-
-      if test "x${boost_ok}" = "xyes" ; then
-         AC_MSG_CHECKING( Boost shared_ptr functionality )
-      	 AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <boost/shared_ptr.hpp> ] ],
-      			                    [ [ boost::shared_ptr< int >( new int ) ] ] ) ],
-					    [ boost_ok=yes ],
-					    [ boost_ok=no ] )
-         AC_MSG_RESULT( ${boost_ok} )
-      fi
-   fi
-
-   if test "x${boost_ok}" = "xyes" ; then
-      AC_MSG_CHECKING( Boost threading functionality )
-
-      LIBS="-lboost_thread${BOOST_LIBSUFFIX}"
-
-      AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <boost/thread/thread.hpp> ] ],
-      		                         [ [ struct TBody{ void operator()(){} }; boost::thread( TBody() ) ] ] ) ],
-					 [ boost_ok=yes ],
-					 [ boost_ok=no ] )
-      AC_MSG_RESULT( ${boost_ok} )
-   fi
+   AC_CHECK_HEADERS( [boost/program_options.hpp], [ boost_program_options_ok=yes ], [ boost_program_options_ok=no ] )
 fi
 
-if test "x${boost_ok}" = "xno" ; then
-   AC_MSG_ERROR([use either BOOSTDIR environement varaible or --with-boost=<path>])
+dnl --------------------------------------------------------------------------------
+dnl Check for Boost "program_options" library
+if test "x${boost_program_options_ok}" = "xyes" ; then
+   AC_CHECK_FILE( [${with_boost_libraries}/libboost_program_options${BOOST_LIBSUFFIX}.so], [ boost_program_options_ok=yes ], [ boost_program_options_ok=no ] )
 fi
+
+if test "x${boost_program_options_ok}" = "xyes" ; then
+   LDFLAGS="${BOOST_PROGRAM_OPTIONS_LDFLAGS}"
+
+   AC_MSG_CHECKING( Boost "program options" functionality )
+   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <boost/program_options.hpp> ], [ boost::program_options::options_description() ] ) ],
+                   [ boost_program_options_ok=yes ],
+                   [ boost_program_options_ok=no ] )
+   AC_MSG_RESULT( ${boost_program_options_ok} )
+fi
+
+dnl --------------------------------------------------------------------------------
+ENABLE_BOOST_PROGRAM_OPTIONS="${boost_program_options_ok}"
+AC_SUBST(ENABLE_BOOST_PROGRAM_OPTIONS)
 
 AC_LANG_RESTORE
-
 ])

@@ -45,9 +45,9 @@ unv2foam_ok=no
 dnl --------------------------------------------------------------------------------
 AC_ARG_WITH( [unv2foam],
              AC_HELP_STRING( [--with-unv2foam=<path>],
-		             [use <path> to look for unv2foam installation] ),
+                             [use <path> to look for unv2foam installation] ),
              [unv2foam_root_dir=${withval}],
-	     [withval=yes])
+             [withval=yes])
    
 dnl --------------------------------------------------------------------------------
 if test "x${withval}" = "xyes" ; then
@@ -75,10 +75,9 @@ if test "x${unv2foam_ok}" = "xyes" ; then
    UNV2FOAM_LDFLAGS="-L${unv2foam_root_dir}/lib -lunv2foam"
 
    dnl AC_MSG_CHECKING( for linking to unv2foam library )
-   dnl AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <unv2foam.H> ] ],
-   dnl    			          [ Foam::unv2foam( "dummy", Foam::Time() ) ] ) ],
-   dnl 					  [ unv2foam_ok=yes ],
-   dnl 					  [ unv2foam_ok=no ] )
+   dnl AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <unv2foam.H> ], [ Foam::unv2foam( "dummy", Foam::Time() ) ] ) ],
+   dnl                 [ unv2foam_ok=yes ],
+   dnl                 [ unv2foam_ok=no ] )
    dnl AC_MSG_RESULT( ${unv2foam_ok} )
 fi
 

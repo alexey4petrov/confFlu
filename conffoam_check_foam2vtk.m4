@@ -47,9 +47,9 @@ foam2vtk_ok=no
 dnl --------------------------------------------------------------------------------
 AC_ARG_WITH( [foam2vtk],
              AC_HELP_STRING( [--with-foam2vtk=<path>],
-		             [use <path> to look for foam2vtk installation] ),
+                             [use <path> to look for foam2vtk installation] ),
              [foam2vtk_root_dir=${withval}],
-	     [withval=yes])
+             [withval=yes])
    
 dnl --------------------------------------------------------------------------------
 if test "x${withval}" = "xyes" ; then
@@ -77,10 +77,9 @@ if test "x${foam2vtk_ok}" = "xyes" ; then
    FOAM2VTK_LDFLAGS="-L${foam2vtk_root_dir}/lib -lfoam2vtk"
 
    dnl AC_MSG_CHECKING( for linking to foam2vtk library )
-   dnl AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <vtkFoamInterfaces.H> ] ],
-   dnl    			                [ new Foam::vtkFoamInterface< Foam::scalar >() ] ) ],
-   dnl 					[ foam2vtk_ok=yes ],
-   dnl 					[ foam2vtk_ok=no ] )
+   dnl AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <vtkFoamInterfaces.H> ], [ new Foam::vtkFoamInterface< Foam::scalar >() ] ) ],
+   dnl                 [ foam2vtk_ok=yes ],
+   dnl                 [ foam2vtk_ok=no ] )
    dnl AC_MSG_RESULT( ${foam2vtk_ok} )
 fi
 

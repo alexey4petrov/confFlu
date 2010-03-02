@@ -42,9 +42,9 @@ dnl ----------------------------------------------------------------------------
 vtk_includes_ok=no
 AC_ARG_WITH( [vtk_includes],
              AC_HELP_STRING( [--with-vtk-includes=<path>],
-		             [use <path> to look for VTK includes] ),
+                             [use <path> to look for VTK includes] ),
              [],
-	     [ with_vtk_includes=no ] )
+             [ with_vtk_includes=no ] )
    
 dnl AC_MSG_NOTICE( \${with_vtk_includes} ${with_vtk_includes})
 
@@ -73,9 +73,9 @@ dnl ----------------------------------------------------------------------------
 vtk_libraries_ok=no
 AC_ARG_WITH( [vtk_libraries],
              AC_HELP_STRING( [--with-vtk-libraries=<path>],
-		             [use <path> to look for VTK libraries] ),
+                             [use <path> to look for VTK libraries] ),
              [],
-	     [ with_vtk_libraries=no ]  )
+             [ with_vtk_libraries=no ]  )
    
 if test "x${with_vtk_libraries}" = "xno" && test ! "x${VTKHOME}" = "x" ; then
    with_vtk_libraries=${VTKHOME}/lib
@@ -95,10 +95,9 @@ if test "x${vtk_libraries_ok}" = "xyes" ; then
    LDFLAGS="${VTK_LDFLAGS} -lvtkCommon -lvtkFiltering"
 
    AC_MSG_CHECKING( for linking to VTK libraries )
-   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <vtkPlane.h> ] ],
-      			                [ [ vtkPlane::New() ] ] ) ],
-					[ vtk_libraries_ok=yes ],
-					[ vtk_libraries_ok=no ] )
+   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <vtkPlane.h> ], [ vtkPlane::New() ] ) ],
+                   [ vtk_libraries_ok=yes ],
+                   [ vtk_libraries_ok=no ] )
    AC_MSG_RESULT( ${vtk_libraries_ok} )
 fi
 

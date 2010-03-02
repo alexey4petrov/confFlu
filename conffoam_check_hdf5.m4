@@ -52,9 +52,9 @@ dnl ----------------------------------------------------------------------------
 hdf5_includes_ok=no
 AC_ARG_WITH( [hdf5_includes],
              AC_HELP_STRING( [--with-hdf5-includes=<path>],
-		             [use <path> to look for HDF5 includes] ),
+                             [use <path> to look for HDF5 includes] ),
              [],
-	     [ with_hdf5_includes=no ] )
+             [ with_hdf5_includes=no ] )
 
 if test "x${with_hdf5_includes}" = "xno" ; then
    with_hdf5_includes="${hdf5_home}/include"
@@ -82,9 +82,9 @@ dnl ----------------------------------------------------------------------------
 hdf5_libraries_ok=no
 AC_ARG_WITH( [hdf5_libraries],
              AC_HELP_STRING( [--with-hdf5-libraries=<path>],
-		             [use <path> to look for HDF5 libraries] ),
+                             [use <path> to look for HDF5 libraries] ),
              [],
-	     [ with_hdf5_libraries=no ]  )
+             [ with_hdf5_libraries=no ]  )
    
 if test "x${with_hdf5_libraries}" = "xno" ; then
    with_hdf5_libraries=${hdf5_home}/lib
@@ -106,10 +106,9 @@ if test "x${hdf5_libraries_ok}" = "xyes" ; then
    LDFLAGS=${HDF5_LDFLAGS}
 
    AC_MSG_CHECKING( for linking to HDF5 libraries )
-   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <hdf5.h> ] ],
-      			                [ H5Tcopy( H5T_C_S1 ) ] ) ],
-					[ hdf5_libraries_ok=yes ],
-					[ hdf5_libraries_ok=no ] )
+   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <hdf5.h> ], [ H5Tcopy( H5T_C_S1 ) ] ) ],
+                   [ hdf5_libraries_ok=yes ],
+                   [ hdf5_libraries_ok=no ] )
    AC_MSG_RESULT( ${hdf5_libraries_ok} )
 fi
 

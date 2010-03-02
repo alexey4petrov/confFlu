@@ -56,8 +56,8 @@ AC_DEFUN([CONFFOAM_CHECK_MANDATORY],
     eval toto=\$$var
     if test x$toto != "xyes" ; then
         echo "FATAL ERROR: some mandatory products are missing."
-	echo "Installing the missing products is required before running the configure script".
-    	exit 1
+        echo "Installing the missing products is required before running the configure script".
+        exit 1
     fi
   done  
 ])

@@ -41,14 +41,14 @@ extfoam_ok=no
 
 AC_ARG_WITH( [extfoam],
              AC_HELP_STRING( [--with-extfoam=<path>],
-		             [use <path> to look for extFoam installation] ),
+                             [use <path> to look for extFoam installation] ),
              [extfoam_root_dir=${withval}],
-	     [withval=yes])
+             [withval=yes])
    
 if test ! "x${withval}" = "xno" ; then
    if test "x${withval}" = "xyes" ; then
       if test ! "x${DIFFUSION_ROOT_DIR}" = "x" && test -d ${DIFFUSION_ROOT_DIR} ; then
-      	 extfoam_root_dir=${DIFFUSION_ROOT_DIR}
+         extfoam_root_dir=${DIFFUSION_ROOT_DIR}
       fi
    fi
 

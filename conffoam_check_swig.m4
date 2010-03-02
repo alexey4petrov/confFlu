@@ -31,9 +31,9 @@ swig_ok=no
 dnl --------------------------------------------------------------------------------
 AC_ARG_WITH( [swig],
              AC_HELP_STRING( [--with-swig=<path>],
-		             [use <path> to look for swig utility] ),
+                             [use <path> to look for swig utility] ),
              [],
-	     [with_swig=`which swig`])
+             [with_swig=`which swig`])
    
 dnl --------------------------------------------------------------------------------
 AC_CHECK_FILE( [${with_swig}], [ swig_ok=yes ], [ swig_ok=no ] )

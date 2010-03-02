@@ -19,9 +19,10 @@ dnl Author : Alexey PETROV
 dnl
 
 
-AC_DEFUN([CONFFOAM_CHECK_BOOST],dnl
+dnl --------------------------------------------------------------------------------
+AC_DEFUN([CONFFOAM_CHECK_BOOST],
 [
-AC_CHECKING(for Boost Library)
+AC_CHECKING(for Boost Library in general)
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -32,56 +33,99 @@ AC_SUBST(BOOST_CPPFLAGS)
 BOOST_CXXFLAGS=""
 AC_SUBST(BOOST_CXXFLAGS)
 
-ENABLE_BOOST="no"
-AC_SUBST(ENABLE_BOOST)
+BOOST_LIBSUFFIX="-mt"
+AC_SUBST(BOOST_LIBSUFFIX)
 
 boost_ok=no
-AC_SUBST(boost_ok)
 
-AC_ARG_WITH( [boost],
-             AC_HELP_STRING([--with-boost=<path>],
-		            [use <path> to look for Boost installation]),
+dnl --------------------------------------------------------------------------------
+dnl Check for Boost includes
+boost_includes_ok=no
+AC_ARG_WITH( [boost_includes],
+             AC_HELP_STRING( [--with-boost-includes=<path>],
+                             [use <path> to look for BOOST includes] ),
              [],
-	     [withval=yes])
+             [ with_boost_includes="yes" ] )
    
-if test ! "x${withval}" = "xno" ; then
-   if test "x${withval}" = "xyes" ; then
-      if test ! "x${BOOSTDIR}" = "x" && test -d ${BOOSTDIR} ; then
-      	 boost_dir=${BOOSTDIR}
-      else
-	 boost_dir="/usr"
-      fi
-   else
-      boost_dir=${withval}
-   fi
+dnl First try to use SALOME environment   
+if test "x${with_boost_includes}" = "xyes" && test ! "x${BOOSTDIR}" = "x" ; then
+   with_boost_includes="${BOOSTDIR}/include"
+   AC_CHECK_FILE( [${with_boost_includes}/boost/version.hpp], [ boost_includes_ok=yes ], [ boost_includes_ok=no ] )
+fi
 
-   AC_CHECK_FILE( [${boost_dir}/include/boost/shared_ptr.hpp], [ boost_ok=yes ], [ boost_ok=no ] )
+dnl Try to use native environment
+if test "x${boost_includes_ok}" = "xno" ; then
+   with_boost_includes="/usr/include"
+   AC_CHECK_FILE( [${with_boost_includes}/boost/version.hpp], [ boost_includes_ok=yes ], [ boost_includes_ok=no ] )
+fi
 
-   if test "x${boost_ok}" = "xyes" ; then
-      test ! "x${boost_dir}" = "x/usr" && BOOST_CPPFLAGS="-I${boost_dir}/include"
-      CPPFLAGS="${BOOST_CPPFLAGS}"
+dnl Define corresponding common preprocessor & compiler flags
+if test "x${boost_includes_ok}" = "xyes" ; then
+   test ! "x${with_boost_includes}" = "x/usr/include" && BOOST_CPPFLAGS="-I${with_boost_includes}"
+   CPPFLAGS="${BOOST_CPPFLAGS}"
 
-      BOOST_CXXFLAGS="-ftemplate-depth-40"
-      CXXFLAGS="${BOOST_CXXFLAGS}"
+   BOOST_CXXFLAGS="-ftemplate-depth-40"
+   CXXFLAGS="${BOOST_CXXFLAGS}"
 
-      AC_CHECK_HEADERS( [boost/shared_ptr.hpp], [ boost_ok=yes ], [ boost_ok=no ] )
+   AC_CHECK_HEADERS( [boost/version.hpp], [ boost_includes_ok=yes ], [ boost_includes_ok=no ] )
+fi
 
-      if test "x${boost_ok}" = "xyes" ; then
-         AC_MSG_CHECKING( Boost shared_ptr functionality )
-      	 AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <boost/shared_ptr.hpp> ] ],
-      			                    [ [ boost::shared_ptr< int >( new int ) ] ] ) ],
-					    [ boost_ok=yes ],
-					    [ boost_ok=no ] )
-         AC_MSG_RESULT( ${boost_ok} )
-      fi
+if test "x${boost_includes_ok}" = "xno" ; then
+   AC_MSG_WARN( [use --with-boost-includes=<path> to define BOOST header files location] )
+fi
+
+dnl --------------------------------------------------------------------------------
+dnl Check for Boost libraries
+boost_libraries_ok=no
+AC_ARG_WITH( [boost_libraries],
+             AC_HELP_STRING( [--with-boost-libraries=<path>],
+                             [use <path> to look for BOOST libraries] ),
+             [],
+             [ with_boost_libraries="yes" ]  )
+
+dnl First try to use SALOME environment   
+if test "x${with_boost_libraries}" = "xyes" && test ! "x${BOOSTDIR}" = "x" ; then
+   with_boost_libraries="${BOOSTDIR}/lib"
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*so$" | tail --lines=1`
+   if test ! "x${a_boost_lib}" = "x" ; then
+      AC_CHECK_FILE( [${with_boost_libraries}/${a_boost_lib}], [ boost_libraries_ok=yes ], [ boost_libraries_ok=no ] )
    fi
 fi
 
-if test "x${boost_ok}" = "xno" ; then
-   AC_MSG_WARN([use either ${BOOSTDIR} or --with-boost=<path>])
+dnl Try to use native environment
+if test "x${boost_libraries_ok}" = "xno" ; then
+   with_boost_libraries="/usr/lib"
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*so$" | tail --lines=1`
+   if test ! "x${a_boost_lib}" = "x" ; then
+      AC_CHECK_FILE( [${with_boost_libraries}/${a_boost_lib}], [ boost_libraries_ok=yes ], [ boost_libraries_ok=no ] )
+   fi
 fi
 
-ENABLE_BOOST=${boost_ok}
+dnl Define corresponding common linker flags
+if test "x${boost_libraries_ok}" = "xyes" ; then
+   test ! "x${with_boost_libraries}" = "x/usr/lib" && BOOST_LDFLAGS="-L${with_boost_libraries}"
+   LDFLAGS="${BOOST_LDFLAGS}"
+   
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*${BOOST_LIBSUFFIX}\.so$" | tail --lines=1`
+   if test "x${a_boost_lib}" = "x" ; then
+      BOOST_LIBSUFFIX=""
+      a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*${BOOST_LIBSUFFIX}\.so$" | tail --lines=1`
+   fi
+fi
+
+if test "x${boost_libraries_ok}" = "xyes" ; then
+   AC_CHECK_FILE( [${with_boost_libraries}/${a_boost_lib}], [ boost_libraries_ok=yes ], [ boost_libraries_ok=no ] )
+   AC_MSG_NOTICE( @BOOST_LIBSUFFIX@ == "${BOOST_LIBSUFFIX}" )
+fi
+
+if test "x${boost_libraries_ok}" = "xno" ; then
+   AC_MSG_WARN( [use --with-boost-libraries=<path> to define BOOST libraries location] )
+fi
+
+dnl --------------------------------------------------------------------------------
+if test "x${boost_includes_ok}" = "xyes" && test "x${boost_libraries_ok}" = "xyes" ; then
+   boost_ok="yes"
+fi
 
 AC_LANG_RESTORE
 ])

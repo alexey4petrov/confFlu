@@ -19,69 +19,37 @@ dnl Author : Alexey PETROV
 dnl
 
 
-AC_DEFUN([CONFFOAM_CHECK_BOOST],dnl
+dnl --------------------------------------------------------------------------------
+AC_DEFUN([CONFFOAM_CHECK_BOOST_SHARED_PTR],
 [
-AC_CHECKING(for Boost Library)
+AC_CHECKING(for Boost "shared_ptr" library)
+
+AC_REQUIRE([CONFFOAM_CHECK_BOOST])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
 
-BOOST_CPPFLAGS=""
-AC_SUBST(BOOST_CPPFLAGS)
+boost_shared_ptr_ok=no
 
-BOOST_CXXFLAGS=""
-AC_SUBST(BOOST_CXXFLAGS)
+dnl --------------------------------------------------------------------------------
+if test "x${boost_includes_ok}" = "xyes" ; then
+   CPPFLAGS="${BOOST_CPPFLAGS}"
+   CXXFLAGS="${BOOST_CXXFLAGS}"
 
-ENABLE_BOOST="no"
-AC_SUBST(ENABLE_BOOST)
-
-boost_ok=no
-AC_SUBST(boost_ok)
-
-AC_ARG_WITH( [boost],
-             AC_HELP_STRING([--with-boost=<path>],
-		            [use <path> to look for Boost installation]),
-             [],
-	     [withval=yes])
-   
-if test ! "x${withval}" = "xno" ; then
-   if test "x${withval}" = "xyes" ; then
-      if test ! "x${BOOSTDIR}" = "x" && test -d ${BOOSTDIR} ; then
-      	 boost_dir=${BOOSTDIR}
-      else
-	 boost_dir="/usr"
-      fi
-   else
-      boost_dir=${withval}
-   fi
-
-   AC_CHECK_FILE( [${boost_dir}/include/boost/shared_ptr.hpp], [ boost_ok=yes ], [ boost_ok=no ] )
-
-   if test "x${boost_ok}" = "xyes" ; then
-      test ! "x${boost_dir}" = "x/usr" && BOOST_CPPFLAGS="-I${boost_dir}/include"
-      CPPFLAGS="${BOOST_CPPFLAGS}"
-
-      BOOST_CXXFLAGS="-ftemplate-depth-40"
-      CXXFLAGS="${BOOST_CXXFLAGS}"
-
-      AC_CHECK_HEADERS( [boost/shared_ptr.hpp], [ boost_ok=yes ], [ boost_ok=no ] )
-
-      if test "x${boost_ok}" = "xyes" ; then
-         AC_MSG_CHECKING( Boost shared_ptr functionality )
-      	 AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ [ #include <boost/shared_ptr.hpp> ] ],
-      			                    [ [ boost::shared_ptr< int >( new int ) ] ] ) ],
-					    [ boost_ok=yes ],
-					    [ boost_ok=no ] )
-         AC_MSG_RESULT( ${boost_ok} )
-      fi
-   fi
+   AC_CHECK_HEADERS( [boost/shared_ptr.hpp], [ boost_shared_ptr_ok=yes ], [ boost_shared_ptr_ok=no ] )
 fi
 
-if test "x${boost_ok}" = "xno" ; then
-   AC_MSG_WARN([use either ${BOOSTDIR} or --with-boost=<path>])
+if test "x${boost_shared_ptr_ok}" = "xyes" ; then
+   AC_MSG_CHECKING( Boost "shared_ptr" functionality )
+   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <boost/shared_ptr.hpp> ], [ boost::shared_ptr< int >( new int ) ] ) ],
+                   [ boost_shared_ptr_ok=yes ],
+                   [ boost_shared_ptr_ok=no ] )
+   AC_MSG_RESULT( ${boost_shared_ptr_ok} )
 fi
 
-ENABLE_BOOST=${boost_ok}
+dnl --------------------------------------------------------------------------------
+ENABLE_BOOST_SHARED_PTR="${boost_shared_ptr_ok}"
+AC_SUBST(ENABLE_BOOST_SHARED_PTR)
 
 AC_LANG_RESTORE
 ])

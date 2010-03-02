@@ -48,7 +48,7 @@ if test "x${openfoam_ok}" = "xyes" ; then
    if test "x${number_counter}" = "x3" ; then
       FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20\3%g"`]
    fi
-   AC_MSG_NOTICE( @FOAM_VERSION@ == ${FOAM_VERSION} )
+   AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
 fi
 
 dnl --------------------------------------------------------------------------------
