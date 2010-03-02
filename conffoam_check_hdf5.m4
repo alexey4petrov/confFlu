@@ -67,7 +67,8 @@ if test "x${hdf5_includes_ok}" = "xno" ; then
 fi
 
 if test "x${hdf5_includes_ok}" = "xyes" ; then
-   HDF5_CPPFLAGS="-I${with_hdf5_includes} -DH5_USE_16_API"
+   test ! "x${with_hdf5_includes}" = "x/usr/include" && HDF5_CPPFLAGS="-I${with_hdf5_includes}"
+   HDF5_CPPFLAGS="${HDF5_CPPFLAGS} -DH5_USE_16_API"
    CPPFLAGS="${HDF5_CPPFLAGS}"
 
    AC_CHECK_HEADERS( [hdf5.h], [ hdf5_includes_ok=yes ], [ hdf5_includes_ok=no ] )
