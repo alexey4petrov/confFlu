@@ -53,7 +53,7 @@ fi
 if test "x${boost_program_options_ok}" = "xyes" ; then
    LDFLAGS="${BOOST_PROGRAM_OPTIONS_LDFLAGS}"
 
-   AC_MSG_CHECKING( Boost "program options" functionality )
+   AC_MSG_CHECKING( Boost "program_options" functionality )
    AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <boost/program_options.hpp> ], [ boost::program_options::options_description() ] ) ],
                    [ boost_program_options_ok=yes ],
                    [ boost_program_options_ok=no ] )

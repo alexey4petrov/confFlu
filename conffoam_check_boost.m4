@@ -106,11 +106,12 @@ if test "x${boost_libraries_ok}" = "xyes" ; then
    test ! "x${with_boost_libraries}" = "x/usr/lib" && BOOST_LDFLAGS="-L${with_boost_libraries}"
    LDFLAGS="${BOOST_LDFLAGS}"
    
-   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*${BOOST_LIBSUFFIX}\.so$" | tail --lines=1`
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*-mt\.so$" | tail --lines=1`
    if test "x${a_boost_lib}" = "x" ; then
-      BOOST_LIBSUFFIX=""
-      a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*${BOOST_LIBSUFFIX}\.so$" | tail --lines=1`
+      a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*\.so$" | tail --lines=1`
    fi
+
+   BOOST_LIBSUFFIX=[`echo ${a_boost_lib} | sed -e "s%libboost_[a-z]*%%g" | sed -e "s%\.so%%g"`]
 fi
 
 if test "x${boost_libraries_ok}" = "xyes" ; then
