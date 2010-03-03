@@ -20,9 +20,21 @@
 
 
 #--------------------------------------------------------------------------------------
-export CONFFOAM_ROOT_DIR="/opt/conffoam/r0.1"
+# Process this file with autoconf to produce a configure script
+#--------------------------------------------------------------------------------------
+#AC_PREREQ(2.59)
+AC_INIT([conffoam Project], [0.1], [alexey.petrov.nnov@gmail.com], [conffoam])
 
-export PATH=${CONFFOAM_ROOT_DIR}:${PATH}
+# AC_CONFIG_AUX_DIR defines an alternative directory where to find the auxiliary
+# scripts such as config.guess, install-sh, ...
+#AC_PROG_INSTALL()
+AC_CONFIG_AUX_DIR(admin)
+AC_CONFIG_MACRO_DIR([admin])
+AM_INIT_AUTOMAKE([tar-pax -Wno-portability])
+
+
+#--------------------------------------------------------------------------------------
+AC_OUTPUT( [ bashrc ] )
 
 
 #--------------------------------------------------------------------------------------
