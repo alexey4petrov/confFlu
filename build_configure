@@ -1,4 +1,6 @@
 #!/bin/sh
+
+#--------------------------------------------------------------------------------------
 ## Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 ## 
 ## This program is free software: you can redistribute it and/or modify
@@ -28,10 +30,11 @@
 
 
 #--------------------------------------------------------------------------------------
-if test ! -d "${CONFFOAM_ROOT_DIR}"; then
-    echo "failed : \${CONFFOAM_ROOT_DIR} is not correct !"
-    exit 1
-fi
+conffoam_dir=${0%/*}; 
+#echo \${conffoam_dir} = "${conffoam_dir}"
+
+other_includes=$*
+#echo \${other_includes} = "${other_includes}"
 
 
 #--------------------------------------------------------------------------------------
@@ -41,7 +44,7 @@ fi
 #   aclocal.m4
 #   autom4te.cache (directory)
 echo "---------------------------------- aclocal --------------------------------------"
-aclocal -I ${CONFFOAM_ROOT_DIR} -I admin || exit 1
+aclocal ${other_includes} -I ${conffoam_dir} -I admin || exit 1
 
 
 #--------------------------------------------------------------------------------------

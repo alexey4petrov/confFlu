@@ -20,7 +20,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_UNV2FOAM],dnl
+AC_DEFUN([CONFFOAM_CHECK_UNV2FOAM],
 [
 AC_CHECKING(for unv2foam package)
 
