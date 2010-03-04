@@ -44,7 +44,7 @@ other_includes=$*
 #   aclocal.m4
 #   autom4te.cache (directory)
 echo "---------------------------------- aclocal --------------------------------------"
-aclocal ${other_includes} -I ${conffoam_dir} -I admin || exit 1
+aclocal ${other_includes} -I ${conffoam_dir}/admin -I admin || exit 1
 
 
 #--------------------------------------------------------------------------------------
