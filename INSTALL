@@ -1,0 +1,121 @@
+#--------------------------------------------------------------------------------------
+Installation Instructions
+#--------------------------------------------------------------------------------------
+
+Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+See https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/pyfoam
+
+
+#--------------------------------------------------------------------------------------
+Pre-requisites
+#--------------------------------------------------------------------------------------
+
+"pyFoam" Python OpenFOAM binding requires the following mandatory and optional
+pre-requisites.
+
+* Make sure that confFoam (common configuration package) is installed 
+  Can be found at https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/conffoam.
+  Please follow instructions from corresponding INSTALL file to setup confFoam
+  in your environment.
+
+* Make sure that OpenFOAM is installed (tested with versions 1.4.1-dev and 1.6).
+  Please follow instructions from corresponding INSTALL file to setup OpenFOAM
+  in your environment.
+
+* Make sure that Python (developement version, with Python.h header file) is 
+  installed (tested with 2.4 )
+  Please follow instructions from http://www.python.org/ web-site.
+
+* Make sure that SWIG is installed (tested with 1.3.36 - 1.3.40 )
+  Please follow instructions from http://www.python.org/ web-site.
+
+* Install extFoam (optional)
+  Can be found at https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/extfoam.
+  Please follow instructions from corresponding INSTALL file to setup extFoam
+  in your environment.
+
+* Install foam2vtk (optional)
+  Can be found at https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/foam2vtk.
+  Please follow instructions from corresponding INSTALL file to setup foam2vtk
+  in your environment.
+
+* Install unv2foam (optional)
+  Can be found at https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/unv2foam.
+  Please follow instructions from corresponding INSTALL file to setup unv2foam
+  in your environment.
+
+* Install boost library (optional) (tested with 1.35.0 )
+  Please follow instructions from http://www.boost.org/ web-site.
+
+Then follow below instructions in order to build and install the "pyFoam" - Python 
+OpenFOAM binding.
+
+
+#--------------------------------------------------------------------------------------
+Basic Installation
+#--------------------------------------------------------------------------------------
+
+The build procedure of the "pyFoam" package is based on GNU autoconf and make utilities. 
+In order to build the module you have to perform the following actions:
+
+1. Go to the source directory:
+
+   cd <path to the sources>
+
+2. Modify and source the provided "env.sh" & "bashrc" files to adjust to your 
+   local environment.
+
+3. Configuring the "pyFoam" build system:
+
+   build_configure
+   ./configure
+
+   Make sure that this step was passed succesfully.
+
+   Currently, the following options are available
+      --disable-singlelib
+      --enable-embeddedcxx
+      --with-swig=<path>
+      --with-python-includes=<path>
+      --with-python-libraries=<path>
+      --with-extfoam=<path>
+      --with-vtk-includes=<path>
+      --with-vtk-libraries=<path>
+      --with-foam2vtk=<path>
+      --with-unv2foam=<path>
+      --with-boost-includes=<path>
+      --with-boost-libraries=<path>
+
+  To see more details for the applicable options run ./configure --help.
+
+4. Build "pyFoam":
+
+   make
+
+
+#--------------------------------------------------------------------------------------
+"pyFoam" installation check
+#--------------------------------------------------------------------------------------
+
+Run the following "pyFoam" solver
+  ./Foam/applications/solvers/incompressible/icoFoam.py 
+on the appropriate OpenFOAM case 
+( use the same command line option as for referenced OpenFOAM implementation )
+
+
+#--------------------------------------------------------------------------------------
+
