@@ -19,6 +19,7 @@ dnl Author : Alexey PETROV
 dnl
 
 
+dnl --------------------------------------------------------------------------------
 AC_DEFUN([CONFFOAM_CHECK_SWIG],dnl
 [
 AC_CHECKING(for SWIG utitlity)
@@ -45,6 +46,7 @@ dnl ----------------------------------------------------------------------------
 if test "x${swig_ok}" = "xno" ; then
    AC_MSG_WARN( [use --with-swig=<path> to define SWIG installation] )
 fi
+])
+
 
 dnl --------------------------------------------------------------------------------
-])

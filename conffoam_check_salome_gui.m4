@@ -36,6 +36,7 @@ SALOME_GUI_LDRPATH=`echo ${GUI_LDFLAGS} | sed -e "s%-L%-Wl,-rpath-link %g"`
 AC_SUBST(SALOME_GUI_LDRPATH)
 
 salome_gui_ok=${SalomeGUI_ok}
+])
+
 
 dnl --------------------------------------------------------------------------------
-])

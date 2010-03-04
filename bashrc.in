@@ -31,9 +31,9 @@ fi
 #------------------------------------------------------------------------------
 source_openfoam()
 {
-   if test "${WM_PROJECT_VERSION}x" = "x" ; then
+   if test "${WM_PROJECT_DIR}x" = "x" ; then
       source $*
-      echo WM_PROJECT_VERSION=\"${WM_PROJECT_VERSION}\"
+      echo WM_PROJECT_DIR=\"${WM_PROJECT_DIR}\"
    fi
 }
 

@@ -36,6 +36,7 @@ SALOME_MED_LDRPATH=`echo ${MED_LDFLAGS} | sed -e "s%-L%-Wl,-rpath-link %g"`
 AC_SUBST(SALOME_MED_LDRPATH)
 
 salome_med_ok=${Med_ok}
+])
+
 
 dnl --------------------------------------------------------------------------------
-])

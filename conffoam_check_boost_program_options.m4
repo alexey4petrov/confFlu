@@ -66,3 +66,6 @@ AC_SUBST(ENABLE_BOOST_PROGRAM_OPTIONS)
 
 AC_LANG_RESTORE
 ])
+
+
+dnl --------------------------------------------------------------------------------

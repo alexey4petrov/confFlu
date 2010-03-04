@@ -36,6 +36,7 @@ SALOME_KERNEL_LDRPATH=`echo ${KERNEL_LDFLAGS} | sed -e "s%-L%-Wl,-rpath-link %g"
 AC_SUBST(SALOME_KERNEL_LDRPATH)
 
 salome_kernel_ok=${Kernel_ok}
+])
+
 
 dnl --------------------------------------------------------------------------------
-])

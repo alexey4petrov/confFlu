@@ -19,6 +19,7 @@ dnl Author : Alexey PETROV
 dnl
 
 
+dnl --------------------------------------------------------------------------------
 AC_DEFUN([CONFFOAM_CHECK_EXTFOAM],dnl
 [
 AC_CHECKING(for extFoam package)
@@ -39,12 +40,15 @@ AC_SUBST(ENABLE_EXTFOAM)
 
 extfoam_ok=no
 
+dnl --------------------------------------------------------------------------------
 AC_ARG_WITH( [extfoam],
              AC_HELP_STRING( [--with-extfoam=<path>],
                              [use <path> to look for extFoam installation] ),
              [extfoam_root_dir=${withval}],
              [withval=yes])
    
+
+dnl --------------------------------------------------------------------------------
 if test ! "x${withval}" = "xno" ; then
    if test "x${withval}" = "xyes" ; then
       if test ! "x${DIFFUSION_ROOT_DIR}" = "x" && test -d ${DIFFUSION_ROOT_DIR} ; then
@@ -63,10 +67,14 @@ if test ! "x${withval}" = "xno" ; then
    fi
 fi
 
+dnl --------------------------------------------------------------------------------
 if test "x${extfoam_ok}" = "xno" ; then
    AC_MSG_WARN([use either \${DIFFUSION_ROOT_DIR} or --with-extfoam=<path>])
 fi
 
+dnl --------------------------------------------------------------------------------
 ENABLE_EXTFOAM=${extfoam_ok}
 ])
 
+
+dnl --------------------------------------------------------------------------------

@@ -36,6 +36,7 @@ SALOME_VISU_LDRPATH=`echo ${VISU_LDFLAGS} | sed -e "s%-L%-Wl,-rpath-link %g"`
 AC_SUBST(SALOME_VISU_LDRPATH)
 
 salome_visu_ok=${Visu_ok}
+])
+
 
 dnl --------------------------------------------------------------------------------
-])

@@ -19,6 +19,7 @@ dnl Author : Alexey PETROV
 dnl
 
 
+dnl --------------------------------------------------------------------------------
 AC_DEFUN([CONFFOAM_CHECK_HDF5],
 [
 AC_CHECKING(for HDF5 environemnt)
@@ -123,3 +124,6 @@ fi
 
 AC_LANG_RESTORE
 ])
+
+
+dnl --------------------------------------------------------------------------------
