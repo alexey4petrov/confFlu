@@ -13,7 +13,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ## 
-## See https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/pyfoam
+## See https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/conffoam
 
 ## ------------------------------------------------------------------------------
 ##
@@ -25,16 +25,8 @@
 ##
 ## ------------------------------------------------------------------------------
 
-2009-02-09 Ivor CLIFFORD <Ivor.Clifford@pbmr.co.za>
+2010-04-04 Alexey PETROV <alexey.petrov.nnov@gmail.com>
 
     * Initial developmen
-
-2009-03-30 Alexey PETROV <Alexey.Petrov@pbmr.co.za>
-
-    * Approbation of the new development strategy
-
-2009-04-15 Alexey PETROV <Alexey.Petrov@pbmr.co.za>
-
-    * Introduction of 'hybrid scripting' capabilities
 
 	

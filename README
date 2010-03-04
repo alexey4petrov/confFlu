@@ -17,38 +17,41 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-See https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/pyfoam
+See https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/conffoam
+
 
 #--------------------------------------------------------------------------------------
 Introduction
 #--------------------------------------------------------------------------------------
 
-This is a Python OpenFOAM binding that allows interactivelly use OpenFOAM 
-(Open Source CFD Toolbox, see http://sourceforge.net/projects/foam/ )
-API into Python (see http://www.python.org/ ). 
-The main goals of development of Python OpenFOAM binding are 
- - to provide more convinient way to extend / customize OpenFOAM functionality
-   (as for analysts as for method developers);
- - support interaction with third-party libraries & utilities into a transparent 
-   and non-intruisive way;
- - perform all calculations and data processing interactively and in memory
-   (not through files).
+"confFoam" is a "common configuration package" for the realted OpenFOAM (Open
+Source CFD Toolbox, see http://sourceforge.net/projects/foam/ ) developement. 
+The neccessity for defintion of such kind of functionality appears from the
+issue that OpenFOAM referece build system does not provide corresponding
+capabilities. As result of lack of the configuration capabilties OpenFOAM
+users/developers strugle with compilation procidure trying to discover reasons
+for this or that failure.
+
+"confFoam" proposed implementation based on standard Linux/UNIX "GNU automake"
+tools. This set of tools allow users adjust the environment they are going to
+use for compilation of sources and check, wheter everything is correct, before
+starting actual compilation. As result, users become aware of the all
+prerequisites needed to compile the given sources and directly informed if
+something is wrong.
+
 
 #--------------------------------------------------------------------------------------
 Installation
 #--------------------------------------------------------------------------------------
 
-See the INSTALL file for more information about building of "pyFoam" package.
+See the INSTALL file for more information about building of "confFoam" package.
+
 
 #--------------------------------------------------------------------------------------
 Usage
 #--------------------------------------------------------------------------------------
 
-There are two ways to use "pyFoam"
-  - Use predefined set of solvers in the same way as referenced OpenFOAM ones
-    ( ${PYFOAM_ROOT_DIR}/Foam/applications/solvers/incompressible/icoFoam.py, for example )
-  - Write your own solver ( or modify existing one ) through usage of corresponding 
-    Python OpenFOAM API
-    (see, ${PYFOAM_ROOT_DIR}/Foam/applications/solvers/incompressible/icoFoam.py, for example ) 
+To use its functionality it is necessary to source the generated "bashrc" file
+
 
 #--------------------------------------------------------------------------------------
