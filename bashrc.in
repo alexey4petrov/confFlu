@@ -25,6 +25,11 @@ if test "${CONFFOAM_ROOT_DIR}x" = "x" ; then
    echo CONFFOAM_ROOT_DIR=\"${CONFFOAM_ROOT_DIR}\"
 
    export PATH=${CONFFOAM_ROOT_DIR}:${PATH}
+
+   # Patch for PBMR environment
+   # (to keep only one FORTRAN compiller in the PATH)
+   export PATH=`echo ${PATH} | sed -e"s%\([:]*\)/usr/local/lf9562/bin\([:]*\)%\1\2%g" | sed -e"s%::%:%g"`
+   export LD_LIBRARY_PATH=`echo ${LD_LIBRARY_PATH} | sed -e"s%\([:]*\)/usr/local/lf9562/lib\([:]*\)%\1\2%g" | sed -e"s%::%:%g"`
 fi
 
 
