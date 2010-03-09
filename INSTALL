@@ -40,10 +40,13 @@ The installation procedure for the "confFoam" consist of the two simple steps
 
    cd <path to the sources>
 
-3. Launch configure procidures:
+2. Launch configure procidures:
 
    ./build_configure
    ./configure
+
+   Make sure that after each configuration step "--- OK ---" message is
+   printed in your console.
 
 
 #--------------------------------------------------------------------------------------
@@ -51,6 +54,13 @@ The installation procedure for the "confFoam" consist of the two simple steps
 #--------------------------------------------------------------------------------------
 
 A new file "bashrc" should appear in the source directory
+
+
+#--------------------------------------------------------------------------------------
+"confFoam" utility environment
+#--------------------------------------------------------------------------------------
+
+Before start to use "confFoam" it is necessary to source the generated "bashrc" file
 
 
 #--------------------------------------------------------------------------------------

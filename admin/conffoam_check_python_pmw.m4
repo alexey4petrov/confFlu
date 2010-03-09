@@ -20,23 +20,25 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_SALOME_MED],
+AC_DEFUN([CONFFOAM_CHECK_PYTHON_PMW],
 [
-AC_CHECKING(for SALOME MED package)
+AC_CHECKING(for Python Pmw package)
 
-AC_REQUIRE([CHECK_KERNEL])
-AC_REQUIRE([CHECK_MED])
+AC_SUBST(ENABLE_PYTHON_PMW)
 
-SALOME_MED_CXXFLAGS=${MED_CXXFLAGS}
-AC_SUBST(SALOME_MED_CXXFLAGS)
+python_pmw_ok=no
 
-SALOME_MED_LDFLAGS=${MED_LDFLAGS}
-AC_SUBST(SALOME_MED_LDFLAGS)
+dnl --------------------------------------------------------------------------------
+test="python -c 'import Pmw'"
 
-SALOME_MED_LDRPATH=`echo ${MED_LDFLAGS} | sed -e "s%-L%-Wl,-rpath-link %g"`
-AC_SUBST(SALOME_MED_LDRPATH)
+if test `eval ${test}; echo $?` = "0" ; then
+   python_pmw_ok=yes
+fi
 
-salome_med_ok=${Med_ok}
+echo "checking for \`${test}\`... ${python_pmw_ok}"
+
+dnl --------------------------------------------------------------------------------
+ENABLE_PYTHON_PMW=${python_pmw_ok}
 ])
 
 
