@@ -36,11 +36,13 @@ Installation
 The installation procedure for the "confFoam" consist of the two simple steps
 (it is not necessary to compile anything):
 
-1. Go to the source directory:
+1. Start a new shell session (to ensure a clear environment).
+
+2. Go to the source directory:
 
    cd <path to the sources>
 
-2. Launch configure procidures:
+3. Launch configure procidures:
 
    ./build_configure
    ./configure
@@ -60,7 +62,7 @@ A new file "bashrc" should appear in the source directory
 "confFoam" utility environment
 #--------------------------------------------------------------------------------------
 
-Before start to use "confFoam" it is necessary to source the generated "bashrc" file
+Before one starts to use "confFoam" it is necessary to source the generated "bashrc" file
 
 
 #--------------------------------------------------------------------------------------
