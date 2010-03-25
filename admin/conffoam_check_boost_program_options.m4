@@ -14,7 +14,7 @@ dnl You should have received a copy of the GNU Lesser General Public
 dnl License along with this library; if not, write to the Free Software 
 dnl Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA 
 dnl 
-dnl See https://csrcs.pbmr.co.za/svn/nea/prototypes/reaktor/conffoam
+dnl See https://vulashaka.svn.sourceforge.net/svnroot/vulashaka/conffoam
 dnl
 dnl Author : Alexey PETROV
 dnl
