@@ -21,49 +21,50 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BOOST_PROGRAM_OPTIONS],
+AC_DEFUN([CONFFOAM_CHECK_BOOST_THREAD],
 [
-AC_CHECKING(for Boost "program_options" library)
+AC_CHECKING(for Boost "thread" library)
 
 AC_REQUIRE([CONFFOAM_CHECK_BOOST])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
 
-BOOST_PROGRAM_OPTIONS_LIBS="-lboost_program_options${BOOST_LIBSUFFIX}"
-AC_SUBST(BOOST_PROGRAM_OPTIONS_LIBS)
+BOOST_THREAD_LIBS="-lboost_thread${BOOST_LIBSUFFIX}"
+AC_SUBST(BOOST_THREAD_LIBS)
 
-boost_program_options_ok=no
+boost_thread_ok=no
 
 dnl --------------------------------------------------------------------------------
-dnl Check for Boost "program_options" header files
+dnl Check for Boost "thread" header files
 if test "x${boost_libraries_ok}" = "xyes" ; then
    CPPFLAGS="${BOOST_CPPFLAGS}"
    CXXFLAGS="${BOOST_CXXFLAGS}"
 
-   AC_CHECK_HEADERS( [boost/program_options.hpp], [ boost_program_options_ok=yes ], [ boost_program_options_ok=no ] )
+   AC_CHECK_HEADERS( [boost/thread/thread.hpp], [ boost_thread_ok=yes ], [ boost_thread_ok=no ] )
 fi
 
 dnl --------------------------------------------------------------------------------
-dnl Check for Boost "program_options" library
-if test "x${boost_program_options_ok}" = "xyes" ; then
-   AC_CHECK_FILE( [${with_boost_libraries}/libboost_program_options${BOOST_LIBSUFFIX}.so], [ boost_program_options_ok=yes ], [ boost_program_options_ok=no ] )
+dnl Check for Boost "thread" library
+if test "x${boost_thread_ok}" = "xyes" ; then
+   AC_CHECK_FILE( [${with_boost_libraries}/libboost_thread${BOOST_LIBSUFFIX}.so], [ boost_thread_ok=yes ], [ boost_thread_ok=no ] )
 fi
 
-if test "x${boost_program_options_ok}" = "xyes" ; then
+if test "x${boost_thread_ok}" = "xyes" ; then
    LDFLAGS="${BOOST_LDFLAGS}"
-   LIBS="${BOOST_PROGRAM_OPTIONS_LIBS}"
+   LIBS="${BOOST_THREAD_LIBS}"
 
-   AC_MSG_CHECKING( Boost "program_options" functionality )
-   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <boost/program_options.hpp> ], [ boost::program_options::options_description() ] ) ],
-                   [ boost_program_options_ok=yes ],
-                   [ boost_program_options_ok=no ] )
-   AC_MSG_RESULT( ${boost_program_options_ok} )
+   AC_MSG_CHECKING( Boost "thread" functionality )
+   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <boost/thread/thread.hpp> ], 
+                                      [ struct TBody{ void operator()(){} }; boost::thread( TBody() ) ] ) ],
+                   [ boost_thread_ok=yes ],
+                   [ boost_thread_ok=no ] )
+   AC_MSG_RESULT( ${boost_thread_ok} )
 fi
 
 dnl --------------------------------------------------------------------------------
-ENABLE_BOOST_PROGRAM_OPTIONS="${boost_program_options_ok}"
-AC_SUBST(ENABLE_BOOST_PROGRAM_OPTIONS)
+ENABLE_BOOST_THREAD="${boost_thread_ok}"
+AC_SUBST(ENABLE_BOOST_THREAD)
 
 AC_LANG_RESTORE
 ])

@@ -21,49 +21,38 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BOOST_PROGRAM_OPTIONS],
+AC_DEFUN([CONFFOAM_CHECK_BOOST_SERIALIZATION],
 [
-AC_CHECKING(for Boost "program_options" library)
+AC_CHECKING(for Boost "serialization" library)
 
 AC_REQUIRE([CONFFOAM_CHECK_BOOST])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
 
-BOOST_PROGRAM_OPTIONS_LIBS="-lboost_program_options${BOOST_LIBSUFFIX}"
-AC_SUBST(BOOST_PROGRAM_OPTIONS_LIBS)
+BOOST_SERIALIZATION_LIBS="-lboost_serialization${BOOST_LIBSUFFIX}"
+AC_SUBST(BOOST_SERIALIZATION_LIBS)
 
-boost_program_options_ok=no
+boost_serialization_ok=no
 
 dnl --------------------------------------------------------------------------------
-dnl Check for Boost "program_options" header files
+dnl Check for Boost "serialization" header files
 if test "x${boost_libraries_ok}" = "xyes" ; then
    CPPFLAGS="${BOOST_CPPFLAGS}"
    CXXFLAGS="${BOOST_CXXFLAGS}"
 
-   AC_CHECK_HEADERS( [boost/program_options.hpp], [ boost_program_options_ok=yes ], [ boost_program_options_ok=no ] )
+   AC_CHECK_HEADERS( [boost/serialization/serialization.hpp], [ boost_serialization_ok=yes ], [ boost_serialization_ok=no ] )
 fi
 
 dnl --------------------------------------------------------------------------------
-dnl Check for Boost "program_options" library
-if test "x${boost_program_options_ok}" = "xyes" ; then
-   AC_CHECK_FILE( [${with_boost_libraries}/libboost_program_options${BOOST_LIBSUFFIX}.so], [ boost_program_options_ok=yes ], [ boost_program_options_ok=no ] )
-fi
-
-if test "x${boost_program_options_ok}" = "xyes" ; then
-   LDFLAGS="${BOOST_LDFLAGS}"
-   LIBS="${BOOST_PROGRAM_OPTIONS_LIBS}"
-
-   AC_MSG_CHECKING( Boost "program_options" functionality )
-   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <boost/program_options.hpp> ], [ boost::program_options::options_description() ] ) ],
-                   [ boost_program_options_ok=yes ],
-                   [ boost_program_options_ok=no ] )
-   AC_MSG_RESULT( ${boost_program_options_ok} )
+dnl Check for Boost "serialization" library
+if test "x${boost_serialization_ok}" = "xyes" ; then
+   AC_CHECK_FILE( [${with_boost_libraries}/libboost_serialization${BOOST_LIBSUFFIX}.so], [ boost_serialization_ok=yes ], [ boost_serialization_ok=no ] )
 fi
 
 dnl --------------------------------------------------------------------------------
-ENABLE_BOOST_PROGRAM_OPTIONS="${boost_program_options_ok}"
-AC_SUBST(ENABLE_BOOST_PROGRAM_OPTIONS)
+ENABLE_BOOST_SERIALIZATION="${boost_serialization_ok}"
+AC_SUBST(ENABLE_BOOST_SERIALIZATION)
 
 AC_LANG_RESTORE
 ])
