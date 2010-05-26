@@ -25,8 +25,8 @@ See https://vulashaka.svn.sourceforge.net/svnroot/vulashaka/conffoam
 Pre-requisites
 #--------------------------------------------------------------------------------------
 
-"confFoam" is a "common configuration package" for the realted OpenFOAM
-developement. For it works it requires "GNU automake" (tested with 1.9.6 and
+"confFoam" is a "common configuration package" for the OpenFOAM related
+developement. For it's operation it requires "GNU automake" (tested with 1.9.6 and
 1.10.2) tools to be installed in your environment.
 
 
@@ -34,7 +34,7 @@ developement. For it works it requires "GNU automake" (tested with 1.9.6 and
 Installation
 #--------------------------------------------------------------------------------------
 
-The installation procedure for the "confFoam" consist of the two simple steps
+The installation procedure for the "confFoam" consists of the following simple steps
 (it is not necessary to compile anything):
 
 1. Start a new shell session (to ensure a clear environment).
@@ -48,7 +48,7 @@ The installation procedure for the "confFoam" consist of the two simple steps
    ./build_configure
    ./configure
 
-   Make sure that after each configuration step "--- OK ---" message is
+   Make sure that after each configuration step the "--- OK ---" message is
    printed in your console.
 
 
