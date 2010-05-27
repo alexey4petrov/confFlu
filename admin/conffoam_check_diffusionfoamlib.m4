@@ -21,62 +21,62 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BLOCKFVMATRIXLIB],dnl
+AC_DEFUN([CONFFOAM_CHECK_DIFFUSIONFOAMLIB],dnl
 [
-AC_CHECKING(for blockFvMatrixLib package)
+AC_CHECKING(for diffusionFoamLib package)
 
-AC_REQUIRE([CONFFOAM_CHECK_BLOCKLDUMATRIXLIB])
+AC_REQUIRE([CONFFOAM_CHECK_BLOCKFVMATRIXLIB])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
 
-BLOCKFVMATRIXLIB_CPPFLAGS="${BLOCKLDUMATRIXLIB_CPPFLAGS}"
-AC_SUBST(BLOCKFVMATRIXLIB_CPPFLAGS)
+DIFFUSIONFOAMLIB_CPPFLAGS="${BLOCKFVMATRIXLIB_CPPFLAGS}"
+AC_SUBST(DIFFUSIONFOAMLIB_CPPFLAGS)
 
-BLOCKFVMATRIXLIB_CXXFLAGS="${BLOCKLDUMATRIXLIB_CXXFLAGS}"
-AC_SUBST(BLOCKFVMATRIXLIB_CXXFLAGS)
+DIFFUSIONFOAMLIB_CXXFLAGS="${BLOCKFVMATRIXLIB_CXXFLAGS}"
+AC_SUBST(DIFFUSIONFOAMLIB_CXXFLAGS)
 
-BLOCKFVMATRIXLIB_LDFLAGS="${BLOCKLDUMATRIXLIB_LDFLAGS}"
-AC_SUBST(BLOCKFVMATRIXLIB_LDFLAGS)
+DIFFUSIONFOAMLIB_LDFLAGS="${BLOCKFVMATRIXLIB_LDFLAGS}"
+AC_SUBST(DIFFUSIONFOAMLIB_LDFLAGS)
 
-AC_SUBST(ENABLE_BLOCKFVMATRIXLIB)
+AC_SUBST(ENABLE_DIFFUSIONFOAMLIB)
 
-blockfvmatrixlib_ok=no
+diffusionfoamlib_ok=no
 
 dnl --------------------------------------------------------------------------------
-AC_ARG_WITH( [blockfvmatrixlib],
-             AC_HELP_STRING( [--with-blockfvmatrixlib=<path>],
-                             [use <path> to look for blockFvMatrixLib installation] ),
-             [blockfvmatrixlib_root_dir=${withval}],
+AC_ARG_WITH( [diffusionfoamlib],
+             AC_HELP_STRING( [--with-diffusionfoamlib=<path>],
+                             [use <path> to look for diffusionFoamLib installation] ),
+             [diffusionfoamlib_root_dir=${withval}],
              [withval=yes])
    
 
 dnl --------------------------------------------------------------------------------
 if test ! "x${withval}" = "xno" ; then
    if test "x${withval}" = "xyes" ; then
-      if test ! "x${BLOCKFVMATRIXLIB_ROOT_DIR}" = "x" && test -d ${BLOCKFVMATRIXLIB_ROOT_DIR} ; then
-         blockfvmatrixlib_root_dir=${BLOCKFVMATRIXLIB_ROOT_DIR}
+      if test ! "x${DIFFUSIONFOAMLIB_ROOT_DIR}" = "x" && test -d ${DIFFUSIONFOAMLIB_ROOT_DIR} ; then
+         diffusionfoamlib_root_dir=${DIFFUSIONFOAMLIB_ROOT_DIR}
       fi
    fi
 
-   AC_CHECK_FILE( [${blockfvmatrixlib_root_dir}/lnInclude], [ blockfvmatrixlib_ok=yes ], [ blockfvmatrixlib_ok=no ] )
+   AC_CHECK_FILE( [${diffusionfoamlib_root_dir}/lnInclude], [ diffusionfoamlib_ok=yes ], [ diffusionfoamlib_ok=no ] )
 
-   if test "x${blockfvmatrixlib_ok}" = "xyes" ; then
-      BLOCKFVMATRIXLIB_CPPFLAGS="${BLOCKFVMATRIXLIB_CPPFLAGS} -I${blockfvmatrixlib_root_dir}/lnInclude"
+   if test "x${diffusionfoamlib_ok}" = "xyes" ; then
+      DIFFUSIONFOAMLIB_CPPFLAGS="${DIFFUSIONFOAMLIB_CPPFLAGS} -I${diffusionfoamlib_root_dir}/lnInclude"
 
-      BLOCKFVMATRIXLIB_CXXFLAGS="${BLOCKFVMATRIXLIB_CXXFLAGS}"
+      DIFFUSIONFOAMLIB_CXXFLAGS="${DIFFUSIONFOAMLIB_CXXFLAGS}"
 
-      BLOCKFVMATRIXLIB_LDFLAGS="${BLOCKFVMATRIXLIB_LDFLAGS} -L${blockfvmatrixlib_root_dir}/lib -lblockFvMatrix"
+      DIFFUSIONFOAMLIB_LDFLAGS="${DIFFUSIONFOAMLIB_LDFLAGS} -L${diffusionfoamlib_root_dir}/lib -ldiffusionFoam"
    fi
 fi
 
 dnl --------------------------------------------------------------------------------
-if test "x${blockfvmatrixlib_ok}" = "xno" ; then
-   AC_MSG_WARN([use either \${BLOCKFVMATRIXLIB_ROOT_DIR} or --with-blockfvmatrixlib=<path>])
+if test "x${diffusionfoamlib_ok}" = "xno" ; then
+   AC_MSG_WARN([use either \${DIFFUSIONFOAMLIB_ROOT_DIR} or --with-diffusionfoamlib=<path>])
 fi
 
 dnl --------------------------------------------------------------------------------
-ENABLE_BLOCKFVMATRIXLIB=${blockfvmatrixlib_ok}
+ENABLE_DIFFUSIONFOAMLIB=${diffusionfoamlib_ok}
 ])
 
 
