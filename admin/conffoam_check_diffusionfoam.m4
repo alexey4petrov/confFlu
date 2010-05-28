@@ -80,6 +80,8 @@ if test ! "x${withval}" = "xno" ; then
       fi
    fi
 
+   AC_CHECK_FILE( [${diffusionfoam_root_dir}], [ diffusionfoam_ok=yes ], [ diffusionfoam_ok=no ] )
+
    if test "x${diffusionfoam_ok}" = "xyes" ; then
       BLOCKLDUMATRIXLIB_CPPFLAGS="-I${diffusionfoam_root_dir}/wikki/blockLduMatrixLib/lnInclude"
       BLOCKFVMATRIXLIB_CPPFLAGS="${BLOCKLDUMATRIXLIB_CPPFLAGS} -I${diffusionfoam_root_dir}/blockFvMatrixLib/lnInclude"
