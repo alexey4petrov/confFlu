@@ -60,6 +60,7 @@ if test ! "x${withval}" = "xno" ; then
    fi
 
    AC_CHECK_FILE( [${diffusionfoamlib_root_dir}/lnInclude], [ diffusionfoamlib_ok=yes ], [ diffusionfoamlib_ok=no ] )
+   AC_CHECK_FILE( [${diffusionfoamlib_root_dir}/lib/libdiffusionFoam.so], [ diffusionfoamlib_ok=yes ], [ diffusionfoamlib_ok=no ] )
 
    if test "x${diffusionfoamlib_ok}" = "xyes" ; then
       DIFFUSIONFOAMLIB_CPPFLAGS="${DIFFUSIONFOAMLIB_CPPFLAGS} -I${diffusionfoamlib_root_dir}/lnInclude"

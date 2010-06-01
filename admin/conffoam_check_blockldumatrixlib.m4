@@ -60,6 +60,7 @@ if test ! "x${withval}" = "xno" ; then
    fi
 
    AC_CHECK_FILE( [${blockldumatrixlib_root_dir}/lnInclude], [ blockldumatrixlib_ok=yes ], [ blockldumatrixlib_ok=no ] )
+   AC_CHECK_FILE( [${blockldumatrixlib_root_dir}/lib/libblockLduMatrix.so], [ blockldumatrixlib_ok=yes ], [ blockldumatrixlib_ok=no ] )
 
    if test "x${blockldumatrixlib_ok}" = "xyes" ; then
       BLOCKLDUMATRIXLIB_CPPFLAGS="-I${blockldumatrixlib_root_dir}/lnInclude"

@@ -60,6 +60,7 @@ if test ! "x${withval}" = "xno" ; then
    fi
 
    AC_CHECK_FILE( [${blockfvmatrixlib_root_dir}/lnInclude], [ blockfvmatrixlib_ok=yes ], [ blockfvmatrixlib_ok=no ] )
+   AC_CHECK_FILE( [${blockfvmatrixlib_root_dir}/lib/libblockFvMatrix.so], [ blockfvmatrixlib_ok=yes ], [ blockfvmatrixlib_ok=no ] )
 
    if test "x${blockfvmatrixlib_ok}" = "xyes" ; then
       BLOCKFVMATRIXLIB_CPPFLAGS="${BLOCKFVMATRIXLIB_CPPFLAGS} -I${blockfvmatrixlib_root_dir}/lnInclude"
