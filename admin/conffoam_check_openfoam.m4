@@ -28,7 +28,10 @@ AC_CHECKING(for OpenFOAM library)
 FOAM_VERSION=""
 AC_SUBST(FOAM_VERSION)
 
+AC_SUBST(ENABLE_OPENFOAM)
+
 openfoam_ok=no
+
 
 dnl --------------------------------------------------------------------------------
 AC_MSG_CHECKING(location of the OpenFOAM installation)
@@ -36,6 +39,7 @@ if test -d "${WM_PROJECT_DIR}" ; then
    openfoam_ok=yes
 fi
 AC_MSG_RESULT(${openfoam_ok})
+
 
 dnl --------------------------------------------------------------------------------
 if test "x${openfoam_ok}" = "xyes" ; then
@@ -52,11 +56,15 @@ if test "x${openfoam_ok}" = "xyes" ; then
    AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
 fi
 
+
 dnl --------------------------------------------------------------------------------
 if test "x${openfoam_ok}" = "xno" ; then
    AC_MSG_WARN([it is neceesary to source OpenFOAM environment first])
 fi
 
+
+dnl --------------------------------------------------------------------------------
+ENABLE_OPENFOAM=${openfoam_ok}
 ])
 
 
