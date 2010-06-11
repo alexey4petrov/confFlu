@@ -80,9 +80,12 @@ if  test "x${omniORB_ok}" = "xyes" ; then
     fi
   fi
 
-  OMNIORB_INCLUDES="-I${OMNIORB_ROOT}/include"
+  if test "x${OMNIORB_ROOT}" != "x/usr" ; then
+    OMNIORB_INCLUDES="-I${OMNIORB_ROOT}/include"
+  fi
+
   OMNIORB_INCLUDES="${OMNIORB_INCLUDES} -I${OMNIORB_ROOT}/include/omniORB${OMNIORB_VERSION}"
-  OMNIORB_INCLUDES="${OMNIORB_INCLUDES} -I${OMNIORB_ROOT}/include/COS"
+#  OMNIORB_INCLUDES="${OMNIORB_INCLUDES} -I${OMNIORB_ROOT}/include/COS"
 
   OMNIORB_CXXFLAGS="-DOMNIORB_VERSION=${OMNIORB_VERSION} -D__linux__ -D_REENTRANT"
 
@@ -107,11 +110,11 @@ if test "x${omniORB_ok}" = "xyes" ; then
   LIBS="${OMNIORB_LDFLAGS} -lomnithread"
   CXXFLAGS="${OMNIORB_CXXFLAGS} ${OMNIORB_INCLUDES}"
 
-  AC_MSG_CHECKING(whether we can link with omnithreads)
+  AC_MSG_CHECKING(linking to omnithreads)
   AC_LINK_IFELSE( AC_LANG_PROGRAM( [ #include <omnithread.h> ], [ omni_mutex my_mutex ] ),
                   [ omniORB_ok=yes ],
                   [ omniORB_ok=no ] )
-   AC_MSG_RESULT( ${omniORB_ok} )
+  AC_MSG_RESULT( ${omniORB_ok} )
 fi
 
   
@@ -120,8 +123,8 @@ if test "x${omniORB_ok}" = "xyes" ; then
   OMNIORB_LIBS="${OMNIORB_LDFLAGS}"
   OMNIORB_LIBS="${OMNIORB_LIBS} -lomniORB${OMNIORB_VERSION}"
   OMNIORB_LIBS="${OMNIORB_LIBS} -lomniDynamic${OMNIORB_VERSION}"
-  OMNIORB_LIBS="${OMNIORB_LIBS} -lCOS${OMNIORB_VERSION}"
-  OMNIORB_LIBS="${OMNIORB_LIBS} -lCOSDynamic${OMNIORB_VERSION}"
+#  OMNIORB_LIBS="${OMNIORB_LIBS} -lCOS${OMNIORB_VERSION}"
+#  OMNIORB_LIBS="${OMNIORB_LIBS} -lCOSDynamic${OMNIORB_VERSION}"
   OMNIORB_LIBS="${OMNIORB_LIBS} -lomnithread"
   OMNIORB_LIBS="${OMNIORB_LIBS} ${OMNIORB_RFLAGS}"
 
@@ -132,7 +135,7 @@ if test "x${omniORB_ok}" = "xyes" ; then
   CXXFLAGS="${OMNIORB_CXXFLAGS} ${OMNIORB_INCLUDES}"
   LIBS="${OMNIORB_LIBS}"
 
-  AC_MSG_CHECKING(whether we can link with omniORB)
+  AC_MSG_CHECKING(linking to omniORB)
   AC_LINK_IFELSE( AC_LANG_PROGRAM( [ #include <CORBA.h> ], [ CORBA::ORB_var orb ] ),
                   [ omniORB_ok=yes ],
                   [ omniORB_ok=no ] )
