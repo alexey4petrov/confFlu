@@ -192,13 +192,15 @@ fi
 
 
 dnl --------------------------------------------------------------------------------
-AC_MSG_RESULT(for omniORBpy: ${omniORBpy_ok})
-AC_MSG_RESULT(for omniORB: ${omniORB_ok})
-
 IDL=${OMNIORB_IDL}
 IDLGENFLAGS="-bcxx "
 AC_SUBST(IDL)	
 AC_SUBST(IDLGENFLAGS)	
+
+
+dnl --------------------------------------------------------------------------------
+AC_MSG_RESULT(for omniORBpy: ${omniORBpy_ok})
+AC_MSG_RESULT(for omniORB: ${omniORB_ok})
 
 
 dnl --------------------------------------------------------------------------------
