@@ -108,7 +108,7 @@ if test "x${omniORB_ok}" = "xyes" ; then
   fi
 
   LIBS="${OMNIORB_LDFLAGS} -lomnithread"
-  CXXFLAGS="${OMNIORB_CXXFLAGS} ${OMNIORB_INCLUDES}"
+  CPPFLAGS="${OMNIORB_CXXFLAGS} ${OMNIORB_INCLUDES}"
 
   AC_MSG_CHECKING(linking to omnithreads)
   AC_LINK_IFELSE( AC_LANG_PROGRAM( [ #include <omnithread.h> ], [ omni_mutex my_mutex ] ),
@@ -132,7 +132,7 @@ if test "x${omniORB_ok}" = "xyes" ; then
     OMNIORB_LIBS="${OMNIORB_LIBS} -ltcpwrapGK"
   fi
 
-  CXXFLAGS="${OMNIORB_CXXFLAGS} ${OMNIORB_INCLUDES}"
+  CPPFLAGS="${OMNIORB_CXXFLAGS} ${OMNIORB_INCLUDES}"
   LIBS="${OMNIORB_LIBS}"
 
   AC_MSG_CHECKING(linking to omniORB)
