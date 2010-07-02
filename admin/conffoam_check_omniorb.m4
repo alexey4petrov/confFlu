@@ -199,6 +199,14 @@ AC_SUBST(IDLGENFLAGS)
 
 
 dnl --------------------------------------------------------------------------------
+ENABLE_OMNIORB=${omniORB_ok}
+AC_SUBST(ENABLE_OMNIORB)
+
+ENABLE_OMNIORBPY=${omniORBpy_ok}
+AC_SUBST(ENABLE_OMNIORBPY)
+
+
+dnl --------------------------------------------------------------------------------
 AC_MSG_RESULT(for omniORBpy: ${omniORBpy_ok})
 AC_MSG_RESULT(for omniORB: ${omniORB_ok})
 
