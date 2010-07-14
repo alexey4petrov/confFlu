@@ -55,7 +55,7 @@ if test "x${withval}" = "xno" ; then
 fi
 
 dnl --------------------------------------------------------------------------------
-AC_CHECK_FILE( [${parafoam_root_dir}/lib/libparallel_base.so], [ parafoam_ok=yes ], [ parafoam_ok=no ] )
+AC_CHECK_FILE( [${parafoam_root_dir}/lib/libparallel_threading_base.so], [ parafoam_ok=yes ], [ parafoam_ok=no ] )
 
 dnl --------------------------------------------------------------------------------
 if test "x${parafoam_ok}" = "xno" ; then
