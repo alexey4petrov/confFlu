@@ -59,7 +59,7 @@ if test "x${openfoam_ok}" = "xyes" ; then
       FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20\3%g"`]
    fi
    if test "x${dev_branch}" = "xdev" ; then
-      DEV_BRANCH=[` echo true`]
+      DEV_BRANCH="yes"
    fi
    
    AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
