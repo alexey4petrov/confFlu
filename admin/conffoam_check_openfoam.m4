@@ -26,7 +26,11 @@ AC_DEFUN([CONFFOAM_CHECK_OPENFOAM],dnl
 AC_CHECKING(for OpenFOAM library)
 
 FOAM_VERSION=""
+DEV_BRANCH=""
+
 AC_SUBST(FOAM_VERSION)
+
+AC_SUBST(FOAM_BRANCH)
 
 AC_SUBST(ENABLE_OPENFOAM)
 
@@ -44,6 +48,7 @@ AC_MSG_RESULT(${openfoam_ok})
 dnl --------------------------------------------------------------------------------
 if test "x${openfoam_ok}" = "xyes" ; then
    project_version=[`echo ${WM_PROJECT_VERSION} | sed  -e"s%\([0-9\.]\+\)-dev%\1%g"`]
+   FOAM_BRANCH=[`echo ${WM_PROJECT_VERSION} | sed -e "s/[0-9,.,-]//g"`]
    number_counter=[`echo ${project_version} | sed -e"s%[^\.]%%g" | wc --bytes`]
 
    if test "x${number_counter}" = "x2" ; then
@@ -53,7 +58,9 @@ if test "x${openfoam_ok}" = "xyes" ; then
    if test "x${number_counter}" = "x3" ; then
       FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20\3%g"`]
    fi
+   
    AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
+   AC_MSG_NOTICE( @FOAM_BRANCH@ == "${FOAM_BRANCH}" )
 fi
 
 
@@ -69,3 +76,4 @@ ENABLE_OPENFOAM=${openfoam_ok}
 
 
 dnl --------------------------------------------------------------------------------
+
