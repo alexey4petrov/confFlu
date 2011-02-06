@@ -27,12 +27,19 @@ AC_CHECKING(for OpenFOAM library)
 
 FOAM_VERSION=""
 DEV_BRANCH=""
+FOAM_PACKAGE_NAME=""
+FOAM_PACKAGE_BUILD=""
 
 AC_SUBST(FOAM_VERSION)
 
 AC_SUBST(FOAM_BRANCH)
 
 AC_SUBST(ENABLE_OPENFOAM)
+
+AC_SUBST(FOAM_PACKAGE_NAME)
+
+AC_SUBST(FOAM_PACKAGE_BUILD)
+
 
 openfoam_ok=no
 
@@ -72,6 +79,26 @@ fi
 
 dnl --------------------------------------------------------------------------------
 ENABLE_OPENFOAM=${openfoam_ok}
+
+
+dnl --------------------------------------------------------------------------------
+if test "x${WM_PROJECT_VERSION}" = "x1.5-dev" ; then
+   FOAM_PACKAGE_NAME="openfoam-dev-1.5"
+fi
+
+if test "x${WM_PROJECT_VERSION}" = "x1.6-ext" ; then
+   FOAM_PACKAGE_NAME="openfoam-1.6-ext"
+fi
+
+if test "x${WM_PROJECT_VERSION}" = "x1.7.0" ; then
+   FOAM_PACKAGE_NAME="openfoam170"
+fi
+
+FOAM_PACKAGE_BUILD=[`dpkg -s ${FOAM_PACKAGE_NAME} | grep Version | sed 's/Version: //' `]
+
+AC_MSG_NOTICE( @FOAM_PACKAGE_NAME@ == "${FOAM_PACKAGE_NAME}" )
+AC_MSG_NOTICE( @FOAM_PACKAGE_BUILD@ == "${FOAM_PACKAGE_BUILD}" )
+
 ])
 
 
