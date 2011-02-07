@@ -21,22 +21,22 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_OS],
+AC_DEFUN([CONFFOAM_CHECK_OS],
 [
   AC_MSG_NOTICE(calculating OS parameters)
-  DISTRIBUTION=""
-  ARCHITECTURE=""
+  OS_CODENAME=""
+  OS_ARCHITECTURE=""
   
-  AC_SUBST(DISTRIBUTION)
+  AC_SUBST(OS_CODENAME)
   
-  AC_SUBST(ARCHITECTURE)
+  AC_SUBST(OS_ARCHITECTURE)
   
-  DISTRIBUTION=[`lsb_release -a 2>/dev/null | grep Codename | sed 's/Codename:\t//'`]
+  OS_CODENAME=[`lsb_release -a 2>/dev/null | grep Codename | sed 's/Codename:\t//'`]
   
-  ARCHITECTURE=[`dpkg --print-architecture`]
+  OS_ARCHITECTURE=[`dpkg --print-architecture`]
   
-  AC_MSG_NOTICE( @DISTRIBUTION@ == "${DISTRIBUTION}" )
-  AC_MSG_NOTICE( @ARCHITECTURE@ == "${ARCHITECTURE}" )
+  AC_MSG_NOTICE( @OS_CODENAME@ == "${OS_CODENAME}" )
+  AC_MSG_NOTICE( @OS_ARCHITECTURE@ == "${OS_ARCHITECTURE}" )
   
 ])
 
