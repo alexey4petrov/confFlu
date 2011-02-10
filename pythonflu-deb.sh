@@ -24,6 +24,7 @@
 
 #--------------------------------------------------------------------------------------
 usage="\
+
 Usage: $0 --foam-version=<foam version> --build-version=<build version> [--upload] [--step=<step name>]
 Parameters:
        --foam_version=<foam version> - version of the OpenFOAM( 1.5-dev, 1.6-ext,1.7.0, 1.7.1 etc )
@@ -82,6 +83,18 @@ source_foam()
 
 
 #--------------------------------------------------------------------------------------
+#Check is the first argument "--help" and then checking enviroment( CONFFOAM_ROOT_DIR exists )
+if [ "x$1" = "x--help" ]; then
+   echo "${usage}"
+   exit 0
+fi 
+if [ "x${CONFFOAM_ROOT_DIR}" == "x" ]; then
+   echo "$0: It is necessary to source CONFFOAM" >&2
+   exit -1
+fi
+
+
+#--------------------------------------------------------------------------------------
 #parsing the command line
 foam_version_exist=false
 build_version_exist=false
@@ -95,11 +108,13 @@ for arg in $* ;  do
       foam_version_exist=true
       correct_arg=true
    fi  
+
    if [ "`echo $arg | grep build-version=`" ]; then
       build_version=`echo ${arg} | awk "-F=" '{print $2}'`
       build_version_exist=true
       correct_arg=true
    fi  
+
    if [ "`echo $arg | grep upload`" ]; then
       upload=true
       correct_arg=true
@@ -108,7 +123,7 @@ for arg in $* ;  do
       step=`echo ${arg} | awk "-F=" '{print $2}'`
       correct_arg=true
    fi  
-   
+
    if [ "${correct_arg}" == "false" ]; then
       echo "${0}: invalid option: ${arg}" >&2; echo "${usage}"
       exit -1;
@@ -191,7 +206,7 @@ echo $WM_PROJECT_VERSION
 
 #------------------------------------------------------------------------------------------------
 #checkout and build pythonflu
-work_folder=`pwd`/deb-$RANDOM
+work_folder=`pwd`/pythonflu-deb-${foam_version}-${build_version}
 mkdir ${work_folder}
 
 conffoam_folder=${work_folder}/conffoam
@@ -200,12 +215,7 @@ mkdir ${conffoam_folder}
 pythonflu_folder=${work_folder}/pythonflu
 mkdir ${pythonflu_folder}
 
-#svn co  https://afgan.svn.sourceforge.net/svnroot/afgan/conffoam/trunk/ ${conffoam_folder}
 #svn co https://afgan.svn.sourceforge.net/svnroot/afgan/pyfoam/trunk/ ${pythonflu_folder}
-
-svn co https://afgan.svn.sourceforge.net/svnroot/afgan/conffoam/branches/r930_deb_package/ ${conffoam_folder}
 svn co https://afgan.svn.sourceforge.net/svnroot/afgan/pyfoam/branches/r928_deb_packages/ ${pythonflu_folder}
-(cd ${conffoam_folder} && ./build_configure && ./configure )
-source ${conffoam_folder}/bashrc
 (cd ${pythonflu_folder} && build_configure && ./configure )
 
