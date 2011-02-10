@@ -37,7 +37,7 @@ install_foam()
        fi
    done
    if [ ${os_support} == "false" ]; then
-      echo "There is no OpenFOAM-${foam_version} deb package for your OS( Codename: ${os_codename}"
+      echo "There is no OpenFOAM-${__FOAM_VERSION__} deb package for your OS( Codename: ${os_codename}"
       exit 1
    fi
   
@@ -72,9 +72,8 @@ source_foam()
 #--------------------------------------------------------------------------------------
 check_openfoam()
 {
-  foam_version=$1
-  if [ "x${WM_PROJECT_VERSION}" != "x${foam_version}" ]; then
-     echo "$0: The current OpenFOAM version is \"${WM_PROJECT_VERSION}\" and not equal \"${foam_version}\". It is necessary to source OpenFOAM-${foam_version}\
+  if [ "x${WM_PROJECT_VERSION}" != "x${__FOAM_VERSION__}" ]; then
+     echo "$0: The current OpenFOAM version is \"${WM_PROJECT_VERSION}\" and not equal \"${__FOAM_VERSION__}\". It is necessary to source OpenFOAM-${__FOAM_VERSION__}\
           or define another OpenFAOM in command line with --foam-version=" >&2
      exit -1
   fi
@@ -90,8 +89,8 @@ checkout_pythonflu()
   echo " checkout pythonFlu....."
   echo "-------------------------------------------------------------"
   
-  check_openfoam ${foam_version}
-  working_folder=`pwd`/pythonflu-deb-${foam_version}-${build_version}
+  check_openfoam 
+  working_folder=`pwd`/pythonflu-deb-${__FOAM_VERSION__}-${__BUILD_VERSION__}
 
   if [ -d ${working_folder} ]; then
      rm -rf ${working_folder}
@@ -116,7 +115,7 @@ checkout_pythonflu()
 #--------------------------------------------------------------------------------------
 build_configure_pythonflu()
 {
-  working_folder=`pwd`/pythonflu-deb-${foam_version}-${build_version}
+  working_folder=`pwd`/pythonflu-deb-${__FOAM_VERSION__}-${__BUILD_VERSION__}
   pythonflu_folder=${working_folder}/pythonflu
   
   bashrc_string=`cat ${pythonflu_folder}/env.sh | grep $CONFFOAM_ROOT_DIR`
@@ -132,21 +131,22 @@ build_configure_pythonflu()
 #--------------------------------------------------------------------------------------
 configure_pythonflu()
 {
-  working_folder=`pwd`/pythonflu-deb-${foam_version}-${build_version}
+  working_folder=`pwd`/pythonflu-deb-${__FOAM_VERSION__}-${__BUILD_VERSION__}
   pythonflu_folder=${working_folder}/pythonflu
   if [ -f ${pythonflu_folder}/configure ]; then
        source ${pythonflu_folder}/env.sh
-      ( cd ${pythonflu_folder} && ./configure build_version=${build_version} --disable-singlelib )
+      ( cd ${pythonflu_folder} && ./configure build_version=${__BUILD_VERSION__} --disable-singlelib )
   else
      echo "$0: There is no \"configure\" file in \" ${pythonflu_folder}\". It is necessary to run build_configure pythonFlu ( --step=build_configure )"
      exit -1
   fi
 }
 
+
 #--------------------------------------------------------------------------------------
 make_pythonflu()
 {
-  working_folder=`pwd`/pythonflu-deb-${foam_version}-${build_version}
+  working_folder=`pwd`/pythonflu-deb-${__FOAM_VERSION__}-${__BUILD_VERSION__}
   pythonflu_folder=${working_folder}/pythonflu
   if [ -f ${pythonflu_folder}/bashrc ]; then
      source ${pythonflu_folder}/bashrc
@@ -173,7 +173,7 @@ Options:
 "
 
 #--------------------------------------------------------------------------------------
-#Check is the first argument "--help" and then checking enviroment( variable CONFFOAM_ROOT_DIR exists )
+# Check is the first argument "--help" and then checking enviroment( variable CONFFOAM_ROOT_DIR exists )
 if [ "x$1" = "x--help" ]; then
    echo "${usage}"
    exit 0
@@ -185,7 +185,7 @@ fi
 
 
 #--------------------------------------------------------------------------------------
-#parsing the command line
+# parsing the command line
 foam_version_exist=false
 build_version_exist=false
 upload=false
@@ -262,8 +262,8 @@ case ${foam_version} in
    ;;
 esac
 
-export foam_version=${foam_version}
-export build_version=${build_version}
+export __FOAM_VERSION__=${foam_version}
+export __BUILD_VERSION__=${build_version}
 
 case ${step} in
    all)
@@ -301,3 +301,4 @@ case ${step} in
 esac
 
 
+#--------------------------------------------------------------------------------------
