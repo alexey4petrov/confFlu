@@ -21,19 +21,20 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-dnl I don't know why, but Autoconf does not like it if the name contains the word "version"
 AC_DEFUN([CONFFOAM_CHECK_BUILD_VERSION1],
 [
-  AC_MSG_NOTICE(define pythonFlu build version)
+  AC_MSG_NOTICE(define package build version)
   
-  BUILD_VERSION="1"
-    
   AC_SUBST(BUILD_VERSION)
-   
-  AC_ARG_ENABLE(build-version,
-                [  --enable-build-version=< pythonFlu build version, "1"- by default >],
-                [ BUILD_VERSION=$enableval ])
-     
+  
+  AC_ARG_VAR(buid_version, define package build version, build_version=<build version>)
+
+  BUILD_VERSION=${build_version}
+  
+  if test "x${build_version}" = "x"; then
+     BUILD_VERSION=1
+  fi
+    
   AC_MSG_NOTICE( @BUILD_VERSION@ == "${BUILD_VERSION}" )
     
 ])
