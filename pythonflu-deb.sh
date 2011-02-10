@@ -193,23 +193,23 @@ step=all
 
 for arg in $* ;  do
    correct_arg=false
-   if [ `echo $arg | grep foam-version=` ]; then
+   if [ `echo $arg | grep --regexp='--foam-version='` ]; then
       foam_version=`echo ${arg} | awk "-F=" '{print $2}'`
       foam_version_exist=true
       correct_arg=true
    fi  
 
-   if [ "`echo $arg | grep build-version=`" ]; then
+   if [ "`echo $arg | grep --regexp='--build-version='`" ]; then
       build_version=`echo ${arg} | awk "-F=" '{print $2}'`
       build_version_exist=true
       correct_arg=true
    fi  
 
-   if [ "`echo $arg | grep upload`" ]; then
+   if [ "`echo $arg | grep --regexp='--upload'`" ]; then
       upload=true
       correct_arg=true
    fi  
-   if [ "`echo $arg | grep step=`" ]; then
+   if [ "`echo $arg | grep --regexp='--step='`" ]; then
       step=`echo ${arg} | awk "-F=" '{print $2}'`
       correct_arg=true
    fi  
