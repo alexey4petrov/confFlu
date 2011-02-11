@@ -30,9 +30,12 @@ AC_DEFUN([CONFFOAM_CHECK_PGP_KEY_ID],
   AC_ARG_WITH( [pgp_key_id],
              AC_HELP_STRING( [--with-pgp-key-id=<pgp key id>],
                              [use <pgp key id> to define PGP key to sign deb package ( "gpg --list-keys" to see keys)] ),
-             [ with_pgp_key_id=$withval ],
+             [],
              [ with_pgp_key_id="" ]  )
-
+  
+  if test "x${with_pgp_key_id}" = "xno" ; then
+     with_pgp_key_id=""
+  fi
 
   PGP_KEY_ID=${with_pgp_key_id}
   

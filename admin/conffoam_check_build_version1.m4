@@ -29,9 +29,13 @@ AC_DEFUN([CONFFOAM_CHECK_BUILD_VERSION1],
   
   AC_ARG_WITH( [build_version],
              AC_HELP_STRING( [--with-build-version=<build version>],
-                             [use <build version> to define package build version] ),
-             [ with_build_version=$withval ],
+                             [use <build version> to define package build version,"1" by default] ),
+             [],
              [ with_build_version=1 ]  )
+
+  if test "x${with_build_version}" = "xno" ; then
+     with_build_version=""
+  fi
 
   BUILD_VERSION=${with_build_version}
   
