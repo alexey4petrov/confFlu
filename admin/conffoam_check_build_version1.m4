@@ -27,14 +27,14 @@ AC_DEFUN([CONFFOAM_CHECK_BUILD_VERSION1],
   
   AC_SUBST(BUILD_VERSION)
   
-  AC_ARG_VAR(buid_version, define package build version, build_version=<build version>)
+  AC_ARG_WITH( [build_version],
+             AC_HELP_STRING( [--with-build-version=<build version>],
+                             [use <build version> to define package build version] ),
+             [ with_build_version=$withval ],
+             [ with_build_version=1 ]  )
 
-  BUILD_VERSION=${build_version}
+  BUILD_VERSION=${with_build_version}
   
-  if test "x${build_version}" = "x"; then
-     BUILD_VERSION=1
-  fi
-    
   AC_MSG_NOTICE( @BUILD_VERSION@ == "${BUILD_VERSION}" )
     
 ])
