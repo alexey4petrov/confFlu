@@ -23,11 +23,21 @@
 
 
 #--------------------------------------------------------------------------------------
+check_openfoam()
+{
+  foam_exist=`dpkg -s ${__FOAM_PACKAGE_NAME__} 2>/dev/null`
+  if [ "x${foam_exist}" != "x" ]; then
+     export __FOAM_EXIST__=true
+     export __FOAM_BASHRC_PATH__=`dpkg -L ${__FOAM_PACKAGE_NAME__} | grep etc/bashrc`
+  fi
+}
+
+
+#--------------------------------------------------------------------------------------
 install_foam()
 {
-   foam_package_name=$1
-   supported_codenames=$2
-   foam_url=$3
+   supported_codenames=$1
+   foam_url=$2
    
    os_codename=`lsb_release -a 2>/dev/null | grep Codename | sed 's/Codename:\t//'`
    os_support=false
@@ -42,43 +52,25 @@ install_foam()
    fi
   
    echo "-------------------------------------------------------------"
-   echo "installing OpenFOAM-${foam_version}....."
+   echo "installing OpenFOAM-${__FOAM_VERSION__}....."
    echo "-------------------------------------------------------------"
    to_source_list="deb ${foam_url} ${os_codename} main"
    sudo bash -c "echo ${to_source_list} >> /etc/apt/sources.list"
    sudo apt-get update
-   sudo apt-get install ${foam_package_name}
+   sudo apt-get install ${__FOAM_PACKAGE_NAME__}
    echo "-------------------------------------------------------------"
 }
 
-
 #--------------------------------------------------------------------------------------
-source_foam()
+determine_openfoam()
 {
-  foam_package_name=${1}
-  supported_codenames=${2} 
-  foam_url=${3}
-  foam_exist=`dpkg -s ${foam_package_name} 2>/dev/null`
-
-  if [ "x${foam_exist}" == "x" ]; then
-     install_foam ${foam_package_name} "${supported_codenames}" ${foam_url} 
-  fi
-
-  path_to_foam_bashrc=`dpkg -L ${foam_package_name} | grep etc/bashrc`
-  source ${path_to_foam_bashrc}
-}
-
-
-#--------------------------------------------------------------------------------------
-check_openfoam()
-{
-  if [ "x${WM_PROJECT_VERSION}" != "x${__FOAM_VERSION__}" ]; then
-     echo "$0: The current OpenFOAM version is \"${WM_PROJECT_VERSION}\" and not equal \"${__FOAM_VERSION__}\". It is necessary to source OpenFOAM-${__FOAM_VERSION__}\
-          or define another OpenFAOM in command line with --foam-version=" >&2
-     exit -1
-  fi
+  supported_codenames=$1
+  foam_url=$2
   
-  export PATH_TO_FOAM_BASHRC=${WM_PROJECT_DIR}/etc/bashrc
+  check_openfoam
+  if [ "${__FOAM_EXIST__}" == "false" ]; then
+     install_foam ${supported_codenames} ${foam_url}
+  fi
 }
 
 
@@ -89,8 +81,13 @@ checkout_pythonflu()
   echo " checkout pythonFlu....."
   echo "-------------------------------------------------------------"
   
-  check_openfoam 
-
+  check_openfoam
+  
+  if [ "${__FOAM_EXIST__}" == "false" ]; then
+     echo "$0: It is necessary to install OpenFOAM-${__FOAM_VERSION__}" >&2
+     exit -1
+  fi
+  
   if [ -d ${__PYTHONFLU_FOLDER__} ]; then
      rm -rf ${__PYTHONFLU_FOLDER__}
   fi
@@ -99,7 +96,7 @@ checkout_pythonflu()
   svn co https://afgan.svn.sourceforge.net/svnroot/afgan/pyfoam/branches/r928_deb_packages/ ${__PYTHONFLU_FOLDER__}
   
   echo "source ${CONFFOAM_ROOT_DIR}/bashrc" > ${__PYTHONFLU_FOLDER__}/env_new.sh
-  echo "source_openfoam ${PATH_TO_FOAM_BASHRC}" >> ${__PYTHONFLU_FOLDER__}/env_new.sh
+  echo "source_openfoam ${__FOAM_BASHRC_PATH__}" >> ${__PYTHONFLU_FOLDER__}/env_new.sh
   
   mv ${__PYTHONFLU_FOLDER__}/env.sh ${__PYTHONFLU_FOLDER__}/env_old.sh
   mv ${__PYTHONFLU_FOLDER__}/env_new.sh ${__PYTHONFLU_FOLDER__}/env.sh
@@ -138,8 +135,7 @@ configure_pythonflu()
 make_pythonflu()
 {
   if [ -f ${__PYTHONFLU_FOLDER__}/bashrc ]; then
-     source ${__PYTHONFLU_FOLDER__}/bashrc
-     ( cd ${__PYTHONFLU_FOLDER__} && make )
+     ( source ${__PYTHONFLU_FOLDER__}/env.sh && cd ${__PYTHONFLU_FOLDER__} && make )
   else
      echo "$0: There is no \"bashrc\" file in \" ${__PYTHONFLU_FOLDER__}\". It is necessary to run configure pythonFlu ( --step=configure )" >&2
      exit -1
@@ -151,7 +147,7 @@ make_pythonflu()
 #--------------------------------------------------------------------------------------
 make_deb()
 {
-   source ${__PYTHONFLU_FOLDER__}/bashrc
+   source ${__PYTHONFLU_FOLDER__}/env.sh
    if [ "${__UPLOAD__}" = "true" ]; then
       ( cd ${__PYTHONFLU_FOLDER__} && make launchpad )
    else
@@ -289,10 +285,13 @@ export __BUILD_VERSION__=${build_version}
 export __PGP_KEY_ID__=${pgp_key_id}
 export __PYTHONFLU_FOLDER__=`pwd`/pythonflu-deb-${__FOAM_VERSION__}-${__BUILD_VERSION__}
 export __UPLOAD__=${upload}
+export __FOAM_PACKAGE_NAME__=${foam_package_name}
+export __FOAM_EXIST__=false #may be re-defined at "check_openfoam" function
+export __FOAM_BASHRC_PATH__= #Will be assigned at "check_openfoam" function
 
 case ${step} in
    all)
-      source_foam ${foam_package_name} "${supported_codenames}" ${foam_url}
+      determine_openfoam "${supported_codenames}" ${foam_url}
       checkout_pythonflu
       build_configure_pythonflu
       configure_pythonflu
