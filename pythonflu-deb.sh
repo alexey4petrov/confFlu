@@ -151,6 +151,7 @@ make_pythonflu()
 #--------------------------------------------------------------------------------------
 make_deb()
 {
+   source ${__PYTHONFLU_FOLDER__}/bashrc
    if [ "${__UPLOAD__}" = "true" ]; then
       ( cd ${__PYTHONFLU_FOLDER__} && make launchpad )
    else
