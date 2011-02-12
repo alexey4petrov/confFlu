@@ -23,6 +23,22 @@
 
 
 #--------------------------------------------------------------------------------------
+determine_packages()
+{
+  package_names=${1}
+  install_packages=""
+  for package_name in ${package_names}; do
+      package_exist=`dpkg -s ${package_name} 2>/dev/null`
+      if [ "x${package_exist}" == "x" ]; then
+         install_packages=${install_packages}" ${package_name}"
+      fi
+  done
+  if [ "x${install_packages}" != "x" ]; then
+     sudo apt-get install -y ${install_packages}
+  fi
+}
+
+#--------------------------------------------------------------------------------------
 check_openfoam()
 {
   foam_exist=`dpkg -s ${__FOAM_PACKAGE_NAME__} 2>/dev/null`
@@ -57,7 +73,7 @@ install_foam()
    to_source_list="deb ${foam_url} ${os_codename} main"
    sudo bash -c "echo ${to_source_list} >> /etc/apt/sources.list"
    sudo apt-get update
-   sudo apt-get install ${__FOAM_PACKAGE_NAME__}
+   sudo apt-get install -y ${__FOAM_PACKAGE_NAME__}
    echo "-------------------------------------------------------------"
 }
 
@@ -121,6 +137,8 @@ build_configure_pythonflu()
 #--------------------------------------------------------------------------------------
 configure_pythonflu()
 {
+  determine_packages "swig python-dev"
+  
   if [ -f ${__PYTHONFLU_FOLDER__}/configure ]; then
        source ${__PYTHONFLU_FOLDER__}/env.sh
       ( cd ${__PYTHONFLU_FOLDER__} && ./configure build_version=${__BUILD_VERSION__} pgp_key_id=${__PGP_KEY_ID__} --disable-singlelib )
@@ -147,6 +165,7 @@ make_pythonflu()
 #--------------------------------------------------------------------------------------
 make_deb()
 {
+   determine_packages "expect dh-make dpkg-dev"
    source ${__PYTHONFLU_FOLDER__}/env.sh
    if [ "${__UPLOAD__}" = "true" ]; then
       ( cd ${__PYTHONFLU_FOLDER__} && make launchpad )
