@@ -164,7 +164,7 @@ Parameters:
        --foam_version=<foam version> - version of the OpenFOAM( 1.5-dev, 1.6-ext,1.7.0, 1.7.1 etc )
        --build-version=<build version> - our build number
        --upload  - create source package and upload it to the launchpad( or if It not exists create deb package )
-       --pgp_key_id - pgp key id to sign package, to find it to run \"gpg --list-keys\"
+       --pgp-key-id - pgp key id to sign package, to find it to run \"gpg --list-keys\"
        --step=<step name> - we begin with this <step name> ( checkout, build_configure, configure, make, deb )
 Options:
        --help     display this help and exit.
@@ -209,7 +209,7 @@ for arg in $* ;  do
       correct_arg=true
    fi  
    
-   if [ "`echo $arg | grep --regexp='--pgp_key_id='`" ]; then
+   if [ "`echo $arg | grep --regexp='--pgp-key-id='`" ]; then
       pgp_key_id=`echo ${arg} | awk "-F=" '{print $2}'`
       correct_arg=true
    fi  
