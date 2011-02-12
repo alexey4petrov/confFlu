@@ -38,7 +38,7 @@ determine_packages()
       fi
   done
   if [ "x${install_packages}" != "x" ]; then
-     sudo apt-get install -y ${install_packages}
+     sudo apt-get install -y --force-yes ${install_packages}
   fi
 }
 
@@ -77,7 +77,7 @@ install_foam()
    to_source_list="deb ${foam_url} ${os_codename} main"
    sudo bash -c "echo ${to_source_list} >> /etc/apt/sources.list"
    sudo apt-get update
-   sudo apt-get install -y ${__FOAM_PACKAGE_NAME__}
+   sudo apt-get install -y --force-yes ${__FOAM_PACKAGE_NAME__}
    echo "-------------------------------------------------------------"
 }
 
