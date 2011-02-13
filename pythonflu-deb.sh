@@ -145,7 +145,7 @@ configure_pythonflu()
   
   if [ -f ${__PYTHONFLU_FOLDER__}/configure ]; then
        source ${__PYTHONFLU_FOLDER__}/env.sh
-      ( cd ${__PYTHONFLU_FOLDER__} && ./configure build_version=${__BUILD_VERSION__} pgp_key_id=${__PGP_KEY_ID__} --disable-singlelib )
+      ( cd ${__PYTHONFLU_FOLDER__} && ./configure --with-build-version=${__BUILD_VERSION__} --with-pgp-key-id=${__PGP_KEY_ID__} --disable-singlelib )
   else
      echo "$0: There is no \"configure\" file in \" ${__PYTHONFLU_FOLDER__}\". It is necessary to run build_configure pythonFlu ( --step=build_configure )" >&2
      exit -1
