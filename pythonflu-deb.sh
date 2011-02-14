@@ -182,7 +182,7 @@ make_deb()
 #--------------------------------------------------------------------------------------
 usage="\
 
-Usage: $0 --foam-version=<foam version> --build-version=<build version> [--upload --pgp_key_id=<pgp key id>] [--step=<step name>]
+Usage: $0 --foam-version=<foam version> --build-version=<build version> [--upload --pgp-key-id=<pgp key id>] [--step=<step name>]
 Parameters:
        --foam_version=<foam version> - version of the OpenFOAM( 1.5-dev, 1.6-ext,1.7.0, 1.7.1 etc )
        --build-version=<build version> - our build number
