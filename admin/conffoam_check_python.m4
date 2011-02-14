@@ -42,6 +42,10 @@ dnl ----------------------------------------------------------------------------
 python_ok=yes
 AC_SUBST(python_ok)
 
+PYTHON_VERSION=""
+
+AC_SUBST(PYTHON_VERSION)
+
 AC_CHECK_PROG( [python_ok], [python], [yes], [no] )
 
 if test "x${python_ok}" = "xno" ; then
@@ -49,6 +53,8 @@ if test "x${python_ok}" = "xno" ; then
 fi
 
 python_version=[`python -c "import sys; print sys.version[:3]"`]
+
+PYTHON_VERSION=${python_version}
 
 python_app=`which python`
 python_app_dir=`dirname ${python_app}`
@@ -120,6 +126,9 @@ fi
 if test "x${python_libraries_ok}" = "xno" ; then
    AC_MSG_WARN( [use --with-python-libraries=<path> to define Python libraries location] )
 fi
+
+AC_MSG_NOTICE( @PYTHON_VERSION@ == "${PYTHON_VERSION}" )
+
 
 dnl --------------------------------------------------------------------------------
 AC_LANG_RESTORE
