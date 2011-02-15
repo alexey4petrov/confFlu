@@ -113,7 +113,7 @@ checkout_pythonflu()
   fi
   mkdir ${__PYTHONFLU_FOLDER__}
   
-  svn co https://afgan.svn.sourceforge.net/svnroot/afgan/pyfoam/branches/r928_deb_packages/ ${__PYTHONFLU_FOLDER__}
+  svn co https://afgan.svn.sourceforge.net/svnroot/afgan/pyfoam/trunk/ ${__PYTHONFLU_FOLDER__}
   
   echo "source ${CONFFOAM_ROOT_DIR}/bashrc" > ${__PYTHONFLU_FOLDER__}/env_new.sh
   echo "source_openfoam ${__FOAM_BASHRC_PATH__}" >> ${__PYTHONFLU_FOLDER__}/env_new.sh
