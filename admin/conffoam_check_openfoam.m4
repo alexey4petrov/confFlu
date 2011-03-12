@@ -76,6 +76,9 @@ if test "x${openfoam_ok}" = "xyes" ; then
       FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20\3%g"`]
    fi
    
+   if test "x${FOAM_BRANCH}" != "x" ; then
+      FOAM_BRANCH="dev"
+   fi
    AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
    AC_MSG_NOTICE( @FOAM_BRANCH@ == "${FOAM_BRANCH}" )
 fi
@@ -122,10 +125,10 @@ if test ${FOAM_VERSION} -ge 010701; then
       HEADER_PATHS+="/patches/r1.7.1-${FOAM_BRANCH} "
    else
       HEADER_PATHS+="/patches/r1.7.1 "
+      LIST_VERSIONS+="\"010701\","
    fi
 
    TEST_CASES+="propogated/r1.7.1 "
-   LIST_VERSIONS+="\"010701\","
 fi
 
 if test ${FOAM_VERSION} -ge 010700; then
@@ -135,35 +138,34 @@ if test ${FOAM_VERSION} -ge 010700; then
       HEADER_PATHS+="/patches/r1.7.0-${FOAM_BRANCH} "
    else
       HEADER_PATHS+="/patches/r1.7.0 "
+      LIST_VERSIONS+="\"010700\","
    fi
    
    TEST_CASES+="propogated/r1.7.0 "
-   LIST_VERSIONS+="\"010700\","
 fi
 
 if test ${FOAM_VERSION} -ge 010600; then
    if test "x${FOAM_BRANCH}" != "x"; then
-      TEST_CASES+="propogated/r1.6-${FOAM_BRANCH} "
-      LIST_VERSIONS+="\010600_${FOAM_BRANCH}\","
-      HEADER_PATHS+="/patches/r1.6-${FOAM_BRANCH} "
+      TEST_CASES+="propogated/r1.6-ext "
+      LIST_VERSIONS+="\"010600_dev\","
+      HEADER_PATHS+="/patches/r1.6-ext "
    else
       HEADER_PATHS+="/patches/r1.6 "
+      LIST_VERSIONS+="\"010600\","
    fi
    TEST_CASES+="propogated/r1.6 "
-   LIST_VERSIONS+="\"010600\","
 fi
 
 if test ${FOAM_VERSION} -ge 010500; then
    if test "x${FOAM_BRANCH}" != "x" ; then
-      TEST_CASES+="propogated/r1.5-${FOAM_BRANCH} "
-      LIST_VERSIONS+="\"010500_${FOAM_BRANCH}\","
-      HEADER_PATHS+="/patches/r1.5-${FOAM_BRANCH} "
+      TEST_CASES+="propogated/r1.5-dev "
+      LIST_VERSIONS+="\"010500_dev\","
+      HEADER_PATHS+="/patches/r1.5-dev "
    else
       HEADER_PATHS+="/patches/r1.5 "
+      LIST_VERSIONS+="\"010500\","
    fi
    TEST_CASES+="propogated/r1.5 "
-   LIST_VERSIONS+="\"010500\","
-
 fi
 
 TEST_CASES+="propogated/r1.4.1-dev"
