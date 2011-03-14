@@ -76,7 +76,7 @@ if test "x${openfoam_ok}" = "xyes" ; then
       FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20\3%g"`]
    fi
    
-   if test "x${FOAM_BRANCH}" != "x" ; then
+   if test "x${FOAM_BRANCH}" == "xext" ; then
       FOAM_BRANCH="dev"
    fi
    AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
@@ -146,9 +146,9 @@ fi
 
 if test ${FOAM_VERSION} -ge 010600; then
    if test "x${FOAM_BRANCH}" != "x"; then
-      TEST_CASES+="propogated/r1.6-ext "
-      LIST_VERSIONS+="\"010600_dev\","
-      HEADER_PATHS+="/patches/r1.6-ext "
+      TEST_CASES+="propogated/r1.6-${FOAM_BRANCH} "
+      LIST_VERSIONS+="\"010600_${FOAM_BRANCH}\","
+      HEADER_PATHS+="/patches/r1.6-${FOAM_BRANCH} "
    else
       HEADER_PATHS+="/patches/r1.6 "
       LIST_VERSIONS+="\"010600\","
@@ -158,9 +158,9 @@ fi
 
 if test ${FOAM_VERSION} -ge 010500; then
    if test "x${FOAM_BRANCH}" != "x" ; then
-      TEST_CASES+="propogated/r1.5-dev "
-      LIST_VERSIONS+="\"010500_dev\","
-      HEADER_PATHS+="/patches/r1.5-dev "
+      TEST_CASES+="propogated/r1.5-${FOAM_BRANCH} "
+      LIST_VERSIONS+="\"010500_${FOAM_BRANCH}\","
+      HEADER_PATHS+="/patches/r1.5-${FOAM_BRANCH} "
    else
       HEADER_PATHS+="/patches/r1.5 "
       LIST_VERSIONS+="\"010500\","
