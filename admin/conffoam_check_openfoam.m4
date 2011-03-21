@@ -133,42 +133,41 @@ fi
 
 if test ${FOAM_VERSION} -ge 010700; then
    if test "x${FOAM_BRANCH}" != "x"; then
-      TEST_CASES+="propogated/r1.7.0-${FOAM_BRANCH} "
+      TEST_CASES+="r1.7.0-${FOAM_BRANCH} "
       LIST_VERSIONS+="\"010700_${FOAM_BRANCH}\","
       HEADER_PATHS+="/patches/r1.7.0-${FOAM_BRANCH} "
    else
       HEADER_PATHS+="/patches/r1.7.0 "
       LIST_VERSIONS+="\"010700\","
+      TEST_CASES+="r1.7.0 "
    fi
-   
-   TEST_CASES+="propogated/r1.7.0 "
 fi
 
 if test ${FOAM_VERSION} -ge 010600; then
    if test "x${FOAM_BRANCH}" != "x"; then
-      TEST_CASES+="propogated/r1.6-${FOAM_BRANCH} "
+      TEST_CASES+="r1.6-${FOAM_BRANCH} "
       LIST_VERSIONS+="\"010600_${FOAM_BRANCH}\","
       HEADER_PATHS+="/patches/r1.6-${FOAM_BRANCH} "
    else
       HEADER_PATHS+="/patches/r1.6 "
       LIST_VERSIONS+="\"010600\","
+      TEST_CASES+="r1.6 "      
    fi
-   TEST_CASES+="propogated/r1.6 "
 fi
 
 if test ${FOAM_VERSION} -ge 010500; then
    if test "x${FOAM_BRANCH}" != "x" ; then
-      TEST_CASES+="propogated/r1.5-${FOAM_BRANCH} "
+      TEST_CASES+="r1.5-${FOAM_BRANCH} "
       LIST_VERSIONS+="\"010500_${FOAM_BRANCH}\","
       HEADER_PATHS+="/patches/r1.5-${FOAM_BRANCH} "
    else
       HEADER_PATHS+="/patches/r1.5 "
       LIST_VERSIONS+="\"010500\","
+      TEST_CASES+="r1.5 "
    fi
-   TEST_CASES+="propogated/r1.5 "
 fi
 
-TEST_CASES+="propogated/r1.4.1-dev"
+TEST_CASES+="r1.4.1-dev"
 LIST_VERSIONS+=\"010401_dev\"
 HEADER_PATHS+="/patches/r1.4.1-dev "
 ])
