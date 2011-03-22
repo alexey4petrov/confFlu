@@ -120,15 +120,14 @@ AC_MSG_NOTICE( @FOAM_PACKAGE_BUILD@ == "${FOAM_PACKAGE_BUILD}" )
 dnl --------------------------------------------------------------------------------
 if test ${FOAM_VERSION} -ge 010701; then
    if test "x${FOAM_BRANCH}" != "x" ; then
-      TEST_CASES+="propogated/r1.7.1-${FOAM_BRANCH} "
+      TEST_CASES+="r1.7.1-${FOAM_BRANCH} "
       LIST_VERSIONS+="\"010701_${FOAM_BRANCH}\","
       HEADER_PATHS+="/patches/r1.7.1-${FOAM_BRANCH} "
    else
       HEADER_PATHS+="/patches/r1.7.1 "
       LIST_VERSIONS+="\"010701\","
+      TEST_CASES+="r1.7.1 "
    fi
-
-   TEST_CASES+="propogated/r1.7.1 "
 fi
 
 if test ${FOAM_VERSION} -ge 010700; then
