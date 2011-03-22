@@ -76,6 +76,9 @@ if test "x${openfoam_ok}" = "xyes" ; then
       FOAM_VERSION=[`echo ${project_version} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20\3%g"`]
    fi
    
+   if test "x${FOAM_BRANCH}" == "xext" ; then
+      FOAM_BRANCH="dev"
+   fi
    AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
    AC_MSG_NOTICE( @FOAM_BRANCH@ == "${FOAM_BRANCH}" )
 fi
@@ -117,51 +120,55 @@ AC_MSG_NOTICE( @FOAM_PACKAGE_BUILD@ == "${FOAM_PACKAGE_BUILD}" )
 dnl --------------------------------------------------------------------------------
 if test ${FOAM_VERSION} -ge 010701; then
    if test "x${FOAM_BRANCH}" != "x" ; then
-      TEST_CASES+="propogated/r1.7.1-${FOAM_BRANCH} "
+      TEST_CASES+="r1.7.1-${FOAM_BRANCH} "
       LIST_VERSIONS+="\"010701_${FOAM_BRANCH}\","
-      HEADER_PATHS+="/patches/propogated/r1.7.1-${FOAM_BRANCH} "
+      HEADER_PATHS+="/patches/r1.7.1-${FOAM_BRANCH} "
+   else
+      HEADER_PATHS+="/patches/r1.7.1 "
+      LIST_VERSIONS+="\"010701\","
+      TEST_CASES+="r1.7.1 "
    fi
-   TEST_CASES+="propogated/r1.7.1 "
-   LIST_VERSIONS+="\"010701\","
-   HEADER_PATHS+="/patches/propogated/r1.7.1 "
 fi
 
 if test ${FOAM_VERSION} -ge 010700; then
    if test "x${FOAM_BRANCH}" != "x"; then
-      TEST_CASES+="propogated/r1.7.0-${FOAM_BRANCH} "
+      TEST_CASES+="r1.7.0-${FOAM_BRANCH} "
       LIST_VERSIONS+="\"010700_${FOAM_BRANCH}\","
-      HEADER_PATHS+="/patches/propogated/r1.7.0-${FOAM_BRANCH} "
+      HEADER_PATHS+="/patches/r1.7.0-${FOAM_BRANCH} "
+   else
+      HEADER_PATHS+="/patches/r1.7.0 "
+      LIST_VERSIONS+="\"010700\","
+      TEST_CASES+="r1.7.0 "
    fi
-   TEST_CASES+="propogated/r1.7.0 "
-   LIST_VERSIONS+="\"010700\","
-   HEADER_PATHS+="/patches/propogated/r1.7.0 "
 fi
 
 if test ${FOAM_VERSION} -ge 010600; then
    if test "x${FOAM_BRANCH}" != "x"; then
-      TEST_CASES+="propogated/r1.6-${FOAM_BRANCH} "
-      LIST_VERSIONS+="\010600_${FOAM_BRANCH}\","
-      HEADER_PATHS+="/patches/propogated/r1.6-${FOAM_BRANCH} "
+      TEST_CASES+="r1.6-${FOAM_BRANCH} "
+      LIST_VERSIONS+="\"010600_${FOAM_BRANCH}\","
+      HEADER_PATHS+="/patches/r1.6-${FOAM_BRANCH} "
+   else
+      HEADER_PATHS+="/patches/r1.6 "
+      LIST_VERSIONS+="\"010600\","
+      TEST_CASES+="r1.6 "      
    fi
-   TEST_CASES+="propogated/r1.6 "
-   LIST_VERSIONS+="\"010600\","
-   HEADER_PATHS+="/patches/propogated/r1.6 "
 fi
 
 if test ${FOAM_VERSION} -ge 010500; then
    if test "x${FOAM_BRANCH}" != "x" ; then
-      TEST_CASES+="propogated/r1.5-${FOAM_BRANCH} "
+      TEST_CASES+="r1.5-${FOAM_BRANCH} "
       LIST_VERSIONS+="\"010500_${FOAM_BRANCH}\","
-      HEADER_PATHS+="/patches/propogated/r1.5-${FOAM_BRANCH} "
+      HEADER_PATHS+="/patches/r1.5-${FOAM_BRANCH} "
+   else
+      HEADER_PATHS+="/patches/r1.5 "
+      LIST_VERSIONS+="\"010500\","
+      TEST_CASES+="r1.5 "
    fi
-   TEST_CASES+="propogated/r1.5 "
-   LIST_VERSIONS+="\"010500\","
-   HEADER_PATHS+="/patches/propogated/r1.5 "
 fi
 
-TEST_CASES+="propogated/r1.4.1-dev"
+TEST_CASES+="r1.4.1-dev"
 LIST_VERSIONS+=\"010401_dev\"
-HEADER_PATHS+="/patches/propogated/r1.4.1-dev "
+HEADER_PATHS+="/patches/r1.4.1-dev "
 ])
 
 
