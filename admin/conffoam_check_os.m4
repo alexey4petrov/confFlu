@@ -50,7 +50,8 @@ AC_DEFUN([CONFFOAM_CHECK_OS],
   
   if test "${os}" == "openSUSE"; then
      SUSE_VERSION=[`lsb_release -a 2>/dev/null | grep Release | sed 's/Release:\t//'`]
-     OS_ARCHITECTURE=[`lsb_release -a 2>/dev/null | grep Description | sed 's/Description:\t//' | awk -F" " '{print $3}' | sed 's/^(//' | sed 's/)//'`]
+     string=[`lsb_release -a 2>/dev/null | grep Description | sed 's/Description:\t//'`]
+     OS_ARCHITECTURE=[`echo ${string} | sed "s/openSUSE ${SUSE_VERSION} (//" | sed 's/)//'`]
      AC_MSG_NOTICE( @SUSE_VERSION@ == "${SUSE_VERSION}" )
   fi
   
