@@ -111,7 +111,7 @@ if test "x${WM_PROJECT_VERSION}" = "x1.7.1" ; then
    FOAM_PACKAGE_NAME="openfoam171"
 fi
 
-FOAM_PACKAGE_BUILD=[`dpkg -s ${FOAM_PACKAGE_NAME} | grep Version | sed 's/Version://' `]
+FOAM_PACKAGE_BUILD=[`dpkg -s ${FOAM_PACKAGE_NAME} 2>/dev/null  | grep Version | sed 's/Version://' `]
 
 AC_MSG_NOTICE( @FOAM_PACKAGE_NAME@ == "${FOAM_PACKAGE_NAME}" )
 AC_MSG_NOTICE( @FOAM_PACKAGE_BUILD@ == "${FOAM_PACKAGE_BUILD}" )
