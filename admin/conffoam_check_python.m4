@@ -107,16 +107,6 @@ if test "x${python_libraries_ok}" = "xno" ; then
    AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
 fi
 
-if test "x${python_libraries_ok}" = "xno" ; then
-   with_python_libraries=/usr/lib64
-   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
-fi
-
-dnl checking path from --with-python-libraries=<path>
-if test "x${python_libraries_ok}" = "xno" ; then
-   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
-fi
-
 
 if test "x${python_libraries_ok}" = "xyes" ; then
    PYTHON_CXXFLAGS=""
