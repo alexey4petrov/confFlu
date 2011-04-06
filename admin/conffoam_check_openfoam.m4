@@ -67,8 +67,8 @@ AC_MSG_RESULT(${openfoam_ok})
 
 dnl --------------------------------------------------------------------------------
 if test "x${openfoam_ok}" = "xyes" ; then
-   project_version=[`echo ${WM_PROJECT_VERSION} | sed  -e"s%\([0-9\.]\+\)-[a-z]*%\1%g"`]
-   FOAM_BRANCH=[`echo ${WM_PROJECT_VERSION} | sed -e "s/[0-9,.,-]//g"`]
+   FOAM_BRANCH=[`echo ${WM_PROJECT_VERSION} | grep "-" | sed -e "s/\([^-]*\)-\(.*\)/\2/g"`]
+   project_version=[`echo ${WM_PROJECT_VERSION} | sed -e "s/-${FOAM_BRANCH}//g" | sed -e "s/[A-Za-z]/0/g"`]
    number_counter=[`echo ${project_version} | sed -e"s%[^\.]%%g" | wc --bytes`]
 
    if test "x${number_counter}" = "x2" ; then
