@@ -1,4 +1,5 @@
-## VulaSHAKA (Simultaneous Neutronic, Fuel Performance, Heat And Kinetics Analysis)
+## confFlu - pythonFlu configuration package
+## Copyright (C) 2010- Alexey Petrov
 ## Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 ## 
 ## This program is free software: you can redistribute it and/or modify
@@ -14,7 +15,7 @@
 ## You should have received a copy of the GNU General Public License
 ## along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ## 
-## See https://vulashaka.svn.sourceforge.net/svnroot/vulashaka/conffoam
+## See http://sourceforge.net/projects/pythonflu
 ##
 ## Author : Alexey PETROV
 ##
@@ -24,7 +25,7 @@
 # Process this file with autoconf to produce a configure script
 #--------------------------------------------------------------------------------------
 #AC_PREREQ(2.59)
-AC_INIT([conffoam Project], [0.1], [alexey.petrov.nnov@gmail.com], [conffoam])
+AC_INIT([confflu Project], [1.0], [alexey.petrov.nnov@gmail.com], [confflu])
 
 # AC_CONFIG_AUX_DIR defines an alternative directory where to find the auxiliary
 # scripts such as config.guess, install-sh, ...

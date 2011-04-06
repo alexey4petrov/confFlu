@@ -2,7 +2,8 @@
 NEWS
 ****
 
-VulaSHAKA (Simultaneous Neutronic, Fuel Performance, Heat And Kinetics Analysis)
+confFlu - pythonFlu configuration package
+Copyright (C) 2010- Alexey Petrov
 Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 
 This program is free software: you can redistribute it and/or modify
@@ -18,14 +19,26 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-See See https://vulashaka.svn.sourceforge.net/svnroot/vulashaka/conffoam
+See http://sourceforge.net/projects/pythonflu
+
+---------------------------------------------------------------------------
+Author(s) :  Alexey PETROV
+
+2011-04-04
+
+1. Adjusting to the latest advancements in pythonFlu (pyFoam recently)
+-------------------------------
+
+2. Separation from VulaSHAKA project
+-------------------------------
+
 
 ---------------------------------------------------------------------------
 Author(s) :  Alexey PETROV
 
 2010-04-04
 
-1. Introduction of "confFoam" package
+1. Introduction of "confFlu" package
 -------------------------------
 All OpenFOAM related developement starts to use this configuration package as
 a basis for its particular configuration systems.

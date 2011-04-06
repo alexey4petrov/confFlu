@@ -2,7 +2,8 @@
 README
 #--------------------------------------------------------------------------------------
 
-VulaSHAKA (Simultaneous Neutronic, Fuel Performance, Heat And Kinetics Analysis)
+confFlu - pythonFlu configuration package
+Copyright (C) 2010- Alexey Petrov
 Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 
 This program is free software: you can redistribute it and/or modify
@@ -18,14 +19,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-See https://vulashaka.svn.sourceforge.net/svnroot/vulashaka/conffoam
+See http://sourceforge.net/projects/pythonflu
 
 
 #--------------------------------------------------------------------------------------
 Introduction
 #--------------------------------------------------------------------------------------
 
-"confFoam" is a "common configuration package" for the realted OpenFOAM (Open
+"confFlu" is a "common configuration package" for the realted OpenFOAM (Open
 Source CFD Toolbox, see http://sourceforge.net/projects/foam/ ) developement. 
 The neccessity for defintion of such kind of functionality appears from the
 issue that OpenFOAM referece build system does not provide corresponding
@@ -33,7 +34,7 @@ capabilities. As result of lack of the configuration capabilties OpenFOAM
 users/developers strugle with compilation procidure trying to discover reasons
 for this or that failure.
 
-"confFoam" proposed implementation based on standard Linux/UNIX "GNU automake"
+"confFlu" proposed implementation based on standard Linux/UNIX "GNU automake"
 tools. This set of tools allow users adjust the environment they are going to
 use for compilation of sources and check, wheter everything is correct, before
 starting actual compilation. As result, users become aware of the all
@@ -45,7 +46,7 @@ something is wrong.
 Installation
 #--------------------------------------------------------------------------------------
 
-See the INSTALL file for more information about building of "confFoam" package.
+See the INSTALL file for more information about building of "confFlu" package.
 
 
 #--------------------------------------------------------------------------------------
