@@ -42,8 +42,8 @@ AC_ARG_WITH( [pyfoam],
    
 dnl --------------------------------------------------------------------------------
 if test "x${withval}" = "xyes" ; then
-   if test ! "x${PYFOAM_ROOT_DIR}" = "x" && test -d ${PYFOAM_ROOT_DIR} ; then
-      pyfoam_root_dir=${PYFOAM_ROOT_DIR}
+   if test ! "x${PYTHONFLU_ROOT_DIR}" = "x" && test -d ${PYTHONFLU_ROOT_DIR} ; then
+      pyfoam_root_dir=${PYTHONFLU_ROOT_DIR}
    fi
 fi
 
@@ -56,7 +56,7 @@ AC_CHECK_FILE( [${pyfoam_root_dir}/Foam/_pyfoam.so], [ pyfoam_ok=yes ], [ pyfoam
 
 dnl --------------------------------------------------------------------------------
 if test "x${pyfoam_ok}" = "xno" ; then
-   AC_MSG_WARN([use either \${PYFOAM_ROOT_DIR} or --with-pyfoam=<path>])
+   AC_MSG_WARN([use either \${PYTHONFLU_ROOT_DIR} or --with-pyfoam=<path>])
 fi
 
 dnl --------------------------------------------------------------------------------
