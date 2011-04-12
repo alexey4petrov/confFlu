@@ -24,31 +24,41 @@ dnl ----------------------------------------------------------------------------
 AC_DEFUN([CONFFOAM_CHECK_OS],
 [
   AC_MSG_NOTICE(calculating OS parameters)
-  OS_CODENAME=""
+  
+  OS_NAME=""
+  UBUNTU_CODENAME=""
   OS_ARCHITECTURE=""
   SUSE_VERSION=""
   
-  AC_SUBST(OS_CODENAME)
+  AC_SUBST(OS_NAME)
+  
+  AC_SUBST(UBUNTU_CODENAME)
   
   AC_SUBST(OS_ARCHITECTURE)
   
   AC_SUBST(SUSE_VERSION)
   
   os_suse=[`lsb_release -a 2>/dev/null | grep "openSUSE"`]
+  
+  os_ubuntu=[`lsb_release -a 2>/dev/null | grep "Ubuntu"`]
 
-  if test "x${os_suse}" == "x"; then
-     os="UBUNTU"
-  else
-     os="openSUSE"
-  fi
-
-  if test "${os}" == "UBUNTU"; then
-     OS_CODENAME=[`lsb_release -a 2>/dev/null | grep Codename | sed 's/Codename:\t//'`]
-     OS_ARCHITECTURE=[`dpkg --print-architecture`]
-     AC_MSG_NOTICE( @OS_CODENAME@ == "${OS_CODENAME}" )
+  if test "x${os_suse}" != "x"; then
+     OS_NAME="openSUSE"
   fi
   
-  if test "${os}" == "openSUSE"; then
+  if test "x${os_ubuntu}" != "x"; then
+     OS_NAME="Ubuntu"
+  fi
+
+  AC_MSG_NOTICE( @OS_NAME@ == "${OS_NAME}" )
+  
+  if test "${OS_NAME}" == "Ubuntu"; then
+     UBUNTU_CODENAME=[`lsb_release -a 2>/dev/null | grep Codename | sed 's/Codename:\t//'`]
+     OS_ARCHITECTURE=[`dpkg --print-architecture`]
+     AC_MSG_NOTICE( @UBUNTU_CODENAME@ == "${UBUNTU_CODENAME}" )
+  fi
+  
+  if test "${OS_NAME}" == "openSUSE"; then
      SUSE_VERSION=[`lsb_release -a 2>/dev/null | grep Release | sed 's/Release:\t//'`]
      string=[`lsb_release -a 2>/dev/null | grep Description | sed 's/Description:\t//'`]
      OS_ARCHITECTURE=[`echo ${string} | sed "s/openSUSE ${SUSE_VERSION} (//" | sed 's/)//'`]
