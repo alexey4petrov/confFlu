@@ -55,6 +55,19 @@ dnl ----------------------------------------------------------------------------
 AC_CHECK_FILE( [${pyfoam_root_dir}/Foam/_pyfoam.so], [ pyfoam_ok=yes ], [ pyfoam_ok=no ] )
 
 dnl --------------------------------------------------------------------------------
+python_version=[`python -c "import sys; print sys.version[:3]"`]
+if test "x${pyfoam_ok}" = "xno" ; then
+   pyfoam_root_dir=/usr/local/lib/python${python_version}/dist-packages
+   AC_CHECK_FILE( [${pyfoam_root_dir}/Foam/_pyfoam.so], [ pyfoam_ok=yes ], [ pyfoam_ok=no ] )
+fi
+
+dnl --------------------------------------------------------------------------------
+if test "x${pyfoam_ok}" = "xno" ; then
+   pyfoam_root_dir=/usr/local/lib/python${python_version}/site-packages
+   AC_CHECK_FILE( [${pyfoam_root_dir}/Foam/_pyfoam.so], [ pyfoam_ok=yes ], [ pyfoam_ok=no ] )
+fi
+
+dnl --------------------------------------------------------------------------------
 if test "x${pyfoam_ok}" = "xno" ; then
    AC_MSG_WARN([use either \${PYTHONFLU_ROOT_DIR} or --with-pyfoam=<path>])
 fi
