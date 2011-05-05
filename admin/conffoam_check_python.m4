@@ -86,8 +86,9 @@ if test "x${python_includes_ok}" = "xyes" ; then
 fi
 
 if test "x${python_includes_ok}" = "xno" ; then
-   AC_MSG_WARN( [use --with-python-includes=<path> to define Python header files location] )
+   AC_MSG_ERROR( [python-dev need to be installed or use --with-python-includes=<path> to define Python header files location] )
 fi
+
 
 dnl --------------------------------------------------------------------------------
 python_libraries_ok=no
@@ -134,7 +135,7 @@ if test "x${python_libraries_ok}" = "xyes" ; then
 fi
 
 if test "x${python_libraries_ok}" = "xno" ; then
-   AC_MSG_WARN( [use --with-python-libraries=<path> to define Python libraries location] )
+   AC_MSG_ERROR( [python-dev need to be installed or use --with-python-libraries=<path> to define Python libraries location] )
 fi
 
 AC_MSG_NOTICE( @PYTHON_VERSION@ == "${PYTHON_VERSION}" )
