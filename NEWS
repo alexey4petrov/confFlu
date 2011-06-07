@@ -21,16 +21,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 See http://sourceforge.net/projects/pythonflu
 
+
+---------------------------------------------------------------------------
+Author(s) :  Alexey PETROV
+
+2011-05-27
+
+* To reflect pythonFlu build system improvements
+
+
 ---------------------------------------------------------------------------
 Author(s) :  Alexey PETROV
 
 2011-04-04
 
 1. Adjusting to the latest advancements in pythonFlu (pyFoam recently)
--------------------------------
 
 2. Separation from VulaSHAKA project
--------------------------------
 
 
 ---------------------------------------------------------------------------
@@ -44,5 +51,6 @@ All OpenFOAM related developement starts to use this configuration package as
 a basis for its particular configuration systems.
 
 2. Writing corresponding "user information"
--------------------------------
 
+
+---------------------------------------------------------------------------

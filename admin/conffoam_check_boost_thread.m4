@@ -1,3 +1,5 @@
+dnl confFlu - pythonFlu configuration package
+dnl Copyright (C) 2010- Alexey Petrov
 dnl Copyright (C) 2009 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 dnl 
 dnl This library is free software; you can redistribute it and/or 
@@ -14,7 +16,7 @@ dnl You should have received a copy of the GNU Lesser General Public
 dnl License along with this library; if not, write to the Free Software 
 dnl Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA 
 dnl 
-dnl See https://vulashaka.svn.sourceforge.net/svnroot/vulashaka/conffoam
+dnl See http://sourceforge.net/projects/pythonflu
 dnl
 dnl Author : Alexey PETROV
 dnl

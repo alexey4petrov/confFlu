@@ -25,7 +25,7 @@
 # Process this file with autoconf to produce a configure script
 #--------------------------------------------------------------------------------------
 #AC_PREREQ(2.59)
-AC_INIT([confflu Project], [1.0], [alexey.petrov.nnov@gmail.com], [confflu])
+AC_INIT([confflu Project], [1.1-Elvis], [alexey.petrov.nnov@gmail.com], [confflu])
 
 # AC_CONFIG_AUX_DIR defines an alternative directory where to find the auxiliary
 # scripts such as config.guess, install-sh, ...

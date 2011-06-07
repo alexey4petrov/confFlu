@@ -26,9 +26,9 @@ See See http://sourceforge.net/projects/pythonflu
 Pre-requisites
 #--------------------------------------------------------------------------------------
 
-"confFlu" is a "common configuration package" for the OpenFOAM related
-developement. For it's operation it requires "GNU automake" (tested with 1.9.6 and
-1.10.2) tools to be installed in your environment.
+"confFlu" is a "common configuration package" for the "pythonFlu" related
+developement. For it's operation it requires "GNU automake" tools (tested with 1.9.6 and
+1.10.2) to be installed in your environment.
 
 
 #--------------------------------------------------------------------------------------
@@ -38,7 +38,7 @@ Installation
 The installation procedure for the "confFlu" consists of the following simple steps
 (it is not necessary to compile anything):
 
-1. Start a new shell session (to ensure a clear environment).
+1. Start a new shell session to ensure a clear environment.
 
 2. Go to the source directory:
 
