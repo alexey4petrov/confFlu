@@ -1,4 +1,5 @@
-dnl VulaSHAKA (Simultaneous Neutronic, Fuel Performance, Heat And Kinetics Analysis)
+dnl confFlu - pythonFlu configuration package
+dnl Copyright (C) 2010- Alexey Petrov
 dnl Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 dnl 
 dnl This program is free software: you can redistribute it and/or modify
@@ -14,7 +15,7 @@ dnl
 dnl You should have received a copy of the GNU General Public License
 dnl along with this program.  If not, see <http://www.gnu.org/licenses/>.
 dnl 
-dnl See https://vulashaka.svn.sourceforge.net/svnroot/vulashaka/conffoam
+dnl See http://sourceforge.net/projects/pythonflu
 dnl
 dnl Author : Alexey PETROV
 dnl
@@ -86,8 +87,9 @@ if test "x${python_includes_ok}" = "xyes" ; then
 fi
 
 if test "x${python_includes_ok}" = "xno" ; then
-   AC_MSG_WARN( [use --with-python-includes=<path> to define Python header files location] )
+   AC_MSG_ERROR( [python-dev need to be installed or use --with-python-includes=<path> to define Python header files location] )
 fi
+
 
 dnl --------------------------------------------------------------------------------
 python_libraries_ok=no
@@ -134,7 +136,7 @@ if test "x${python_libraries_ok}" = "xyes" ; then
 fi
 
 if test "x${python_libraries_ok}" = "xno" ; then
-   AC_MSG_WARN( [use --with-python-libraries=<path> to define Python libraries location] )
+   AC_MSG_ERROR( [python-dev need to be installed or use --with-python-libraries=<path> to define Python libraries location] )
 fi
 
 AC_MSG_NOTICE( @PYTHON_VERSION@ == "${PYTHON_VERSION}" )

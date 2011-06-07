@@ -1,4 +1,5 @@
-dnl VulaSHAKA (Simultaneous Neutronic, Fuel Performance, Heat And Kinetics Analysis)
+dnl confFlu - pythonFlu configuration package
+dnl Copyright (C) 2010- Alexey Petrov
 dnl Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 dnl 
 dnl This program is free software: you can redistribute it and/or modify
@@ -14,7 +15,7 @@ dnl
 dnl You should have received a copy of the GNU General Public License
 dnl along with this program.  If not, see <http://www.gnu.org/licenses/>.
 dnl 
-dnl See https://vulashaka.svn.sourceforge.net/svnroot/vulashaka/conffoam
+dnl See http://sourceforge.net/projects/pythonflu
 dnl
 dnl Author : Alexey PETROV
 dnl
@@ -34,43 +35,12 @@ AC_SUBST(ENABLE_PYFOAM)
 pyfoam_ok=no
 
 dnl --------------------------------------------------------------------------------
-AC_ARG_WITH( [pyfoam],
-             AC_HELP_STRING( [--with-pyfoam=<path>],
-                             [use <path> to look for pyfoam installation] ),
-             [pyfoam_root_dir=${withval}],
-             [withval=yes])
-   
-dnl --------------------------------------------------------------------------------
-if test "x${withval}" = "xyes" ; then
-   if test ! "x${PYTHONFLU_ROOT_DIR}" = "x" && test -d ${PYTHONFLU_ROOT_DIR} ; then
-      pyfoam_root_dir=${PYTHONFLU_ROOT_DIR}
-   fi
+check_pyfoam=[`python -c "import Foam.finiteVolume; print \"ok\"" 2>/dev/null`]
+
+if test "${check_pyfoam}" == "ok"; then
+    pyfoam_ok=yes
 fi
 
-if test "x${withval}" = "xno" ; then
-   pyfoam_ok=no
-fi
-
-dnl --------------------------------------------------------------------------------
-AC_CHECK_FILE( [${pyfoam_root_dir}/Foam/_pyfoam.so], [ pyfoam_ok=yes ], [ pyfoam_ok=no ] )
-
-dnl --------------------------------------------------------------------------------
-python_version=[`python -c "import sys; print sys.version[:3]"`]
-if test "x${pyfoam_ok}" = "xno" ; then
-   pyfoam_root_dir=/usr/local/lib/python${python_version}/dist-packages
-   AC_CHECK_FILE( [${pyfoam_root_dir}/Foam/_pyfoam.so], [ pyfoam_ok=yes ], [ pyfoam_ok=no ] )
-fi
-
-dnl --------------------------------------------------------------------------------
-if test "x${pyfoam_ok}" = "xno" ; then
-   pyfoam_root_dir=/usr/local/lib/python${python_version}/site-packages
-   AC_CHECK_FILE( [${pyfoam_root_dir}/Foam/_pyfoam.so], [ pyfoam_ok=yes ], [ pyfoam_ok=no ] )
-fi
-
-dnl --------------------------------------------------------------------------------
-if test "x${pyfoam_ok}" = "xno" ; then
-   AC_MSG_WARN([use either \${PYTHONFLU_ROOT_DIR} or --with-pyfoam=<path>])
-fi
 
 dnl --------------------------------------------------------------------------------
 ENABLE_PYFOAM=${pyfoam_ok}
