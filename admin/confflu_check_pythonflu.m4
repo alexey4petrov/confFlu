@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_PYFOAM],
+AC_DEFUN([CONFFLU_CHECK_PYTHONFLU],
 [
 AC_CHECKING(for pyFoam package)
 
@@ -30,20 +30,23 @@ AC_REQUIRE([CONFFOAM_CHECK_OPENFOAM])
 AC_REQUIRE([CONFFOAM_CHECK_SWIG])
 AC_REQUIRE([CONFFOAM_CHECK_PYTHON])
 
-AC_SUBST(ENABLE_PYFOAM)
+AC_SUBST(ENABLE_PYTHONFLU)
+AC_SUBST(PYTHONFLU_ROOT_DIR)
 
-pyfoam_ok=no
+pythonflu_ok=no
+PYTHONFLU_ROOT_DIR=""
 
 dnl --------------------------------------------------------------------------------
-check_pyfoam=[`python -c "import Foam.finiteVolume; print \"ok\"" 2>/dev/null`]
+check_pythonflu=[`python -c "import Foam.finiteVolume; print \"ok\"" 2>/dev/null`]
 
-if test "${check_pyfoam}" == "ok"; then
-    pyfoam_ok=yes
+if test "${check_pythonflu}" == "ok"; then
+    pythonflu_ok=yes
+    PYTHONFLU_ROOT_DIR=[`python -c "import os; import Foam; print os.path.dirname( os.path.dirname( os.path.abspath( Foam.__file__ ) ) )"`]
 fi
 
 
 dnl --------------------------------------------------------------------------------
-ENABLE_PYFOAM=${pyfoam_ok}
+ENABLE_PYTHONFLU=${pythonflu_ok}
 ])
 
 
