@@ -47,13 +47,9 @@ PYTHON_VERSION=""
 
 AC_SUBST(PYTHON_VERSION)
 
-PYTHON_LIB=""
+PYTHONDIR=""
 
-AC_SUBST(PYTHON_LIB)
-
-NATIVE_PYTHON_INSTALL_PATH=yes
-
-AC_SUBST(NATIVE_PYTHON_INSTALL_PATH)
+AC_SUBST(PYTHONDIR)
 
 AC_CHECK_PROG( [python_ok], [python], [yes], [no] )
 
@@ -149,31 +145,21 @@ fi
 
 AC_MSG_NOTICE( @PYTHON_VERSION@ == "${PYTHON_VERSION}" )
 
-default_prefix=/usr/local
 
-if test "${prefix}" = "NONE"; then
-   PREFIX=${default_prefix}
-   python_prefix=${PREFIX}/lib
-   if test "${python_home}" != "/usr"; then
-      python_prefix=${python_home}/lib
-      NATIVE_PYTHON_INSTALL_PATH=no
-   fi
+dnl --------------------------------------------------------------------------------
+AC_ARG_WITH( [pythondir],
+             AC_HELP_STRING( [--with-pythondir=<path>],
+                             [ <path> to install Python modules] ),
+             [],
+             [ with_pythondir=`python -c  "from distutils.sysconfig import get_python_lib; print get_python_lib()" 2>/dev/null` ]  )
+
+if test "x${with_pythondir}" = "x"; then
+   AC_MSG_ERROR( [python-setuptools need to be installed or use --with-pythondir=<path> where to install Python Modules ] )
 fi
 
-if test "${prefix}" != "NONE"; then
-   PREFIX=${prefix}
-   python_prefix=${prefix}/lib
-   NATIVE_PYTHON_INSTALL_PATH=no
-fi   
+PYTHONDIR=${with_pythondir}
 
-bindir=${PREFIX}/bin
-libdir=${PREFIX}/lib
-PYTHON_LIB=${python_prefix}/python${PYTHON_VERSION}
-
-
-AC_MSG_NOTICE( @PYTHON_LIB@ == "${PYTHON_LIB}" )
-
-AC_MSG_NOTICE( @NATIVE_PYTHON_INSTALL_PATH@ == "${NATIVE_PYTHON_INSTALL_PATH}" )
+AC_MSG_NOTICE( @PYTHONDIR@ == "${PYTHONDIR}" )
 
 
 dnl --------------------------------------------------------------------------------
