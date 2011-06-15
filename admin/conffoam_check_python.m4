@@ -47,6 +47,14 @@ PYTHON_VERSION=""
 
 AC_SUBST(PYTHON_VERSION)
 
+PYTHON_LIB=""
+
+AC_SUBST(PYTHON_LIB)
+
+NATIVE_PYTHON_INSTALL_PATH=yes
+
+AC_SUBST(NATIVE_PYTHON_INSTALL_PATH)
+
 AC_CHECK_PROG( [python_ok], [python], [yes], [no] )
 
 if test "x${python_ok}" = "xno" ; then
@@ -140,6 +148,32 @@ if test "x${python_libraries_ok}" = "xno" ; then
 fi
 
 AC_MSG_NOTICE( @PYTHON_VERSION@ == "${PYTHON_VERSION}" )
+
+default_prefix=/usr/local
+
+if test "${prefix}" = "NONE"; then
+   PREFIX=${default_prefix}
+   python_prefix=${PREFIX}/lib
+   if test "${python_home}" != "/usr"; then
+      python_prefix=${python_home}/lib
+      NATIVE_PYTHON_INSTALL_PATH=no
+   fi
+fi
+
+if test "${prefix}" != "NONE"; then
+   PREFIX=${prefix}
+   python_prefix=${prefix}/lib
+   NATIVE_PYTHON_INSTALL_PATH=no
+fi   
+
+bindir=${PREFIX}/bin
+libdir=${PREFIX}/lib
+PYTHON_LIB=${python_prefix}/python${PYTHON_VERSION}
+
+
+AC_MSG_NOTICE( @PYTHON_LIB@ == "${PYTHON_LIB}" )
+
+AC_MSG_NOTICE( @NATIVE_PYTHON_INSTALL_PATH@ == "${NATIVE_PYTHON_INSTALL_PATH}" )
 
 
 dnl --------------------------------------------------------------------------------
