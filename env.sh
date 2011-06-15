@@ -22,18 +22,30 @@
 
 
 #--------------------------------------------------------------------------------------
-if test "${CONFFLU_ROOT_DIR}x" = "x" ; then
-   export CONFFLU_ROOT_DIR="@abs_top_builddir@"
-   echo CONFFLU_ROOT_DIR=\"${CONFFLU_ROOT_DIR}\"
+source_openfoam()
+{
+   if test "${WM_PROJECT_DIR}x" = "x" ; then
+      # To prevent data to be overriden 
+      tmp_PATH=${PATH}
+      tmp_LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
 
-   export PATH=${CONFFLU_ROOT_DIR}:${PATH}
-   
-   source ${CONFFLU_ROOT_DIR}/env.sh
-   # Patch for PBMR environment
-   # (to keep only one FORTRAN compiller in the PATH)
-   export PATH=`echo ${PATH} | sed -e"s%\([:]*\)/usr/local/lf9562/bin\([:]*\)%\1\2%g" | sed -e"s%::%:%g"`
-   export LD_LIBRARY_PATH=`echo ${LD_LIBRARY_PATH} | sed -e"s%\([:]*\)/usr/local/lf9562/lib\([:]*\)%\1\2%g" | sed -e"s%::%:%g"`
-fi
+      source $*
+      echo WM_PROJECT_DIR=\"${WM_PROJECT_DIR}\"
+
+      export PATH=${PATH}:${tmp_PATH}
+      export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${tmp_LD_LIBRARY_PATH}
+   fi
+}
 
 
 #------------------------------------------------------------------------------
+source_salome()
+{
+   if test "${KERNEL_ROOT_DIR}x" = "x" ; then
+      source $*
+      echo KERNEL_ROOT_DIR=\"${KERNEL_ROOT_DIR}\"
+   fi
+}
+
+
+#--------------------------------------------------------------------------------------
