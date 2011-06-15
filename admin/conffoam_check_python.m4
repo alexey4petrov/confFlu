@@ -27,6 +27,8 @@ AC_DEFUN([CONFFOAM_CHECK_PYTHON],dnl
 echo "--------------------------------------------------------------------------------------"
 AC_CHECKING(for Python environemnt)
 
+AC_REQUIRE([CONFFOAM_CHECK_OS])
+
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
 
@@ -154,7 +156,17 @@ AC_ARG_WITH( [pythondir],
              [ with_pythondir=`python -c  "from distutils.sysconfig import get_python_lib; print get_python_lib()" 2>/dev/null` ]  )
 
 if test "x${with_pythondir}" = "x"; then
-   AC_MSG_ERROR( [python-setuptools need to be installed or use --with-pythondir=<path> where to install Python Modules ] )
+  if test "${OS_NAME}" == "Ubuntu"; then
+     with_pythondir=/usr/local/lib/python${PYTHON_VERSION}/dist-packages
+  fi
+  
+  if test "${OS_NAME}" == "openSUSE"; then
+     with_pythondir=/usr/local/lib/python${PYTHON_VERSION}/site-packages
+  fi
+
+  if test "x${OS_NAME}" == "x"; then
+     AC_MSG_ERROR( [python-setuptools need to be installed or use --with-pythondir=<path> where to install Python Modules] )
+  fi
 fi
 
 PYTHONDIR=${with_pythondir}
