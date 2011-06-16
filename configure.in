@@ -25,7 +25,7 @@
 # Process this file with autoconf to produce a configure script
 #--------------------------------------------------------------------------------------
 #AC_PREREQ(2.59)
-AC_INIT([confflu Project], [1.1-Elvis], [alexey.petrov.nnov@gmail.com], [confflu])
+AC_INIT([confflu Project], [1.2-hybrid], [alexey.petrov.nnov@gmail.com], [confflu])
 
 # AC_CONFIG_AUX_DIR defines an alternative directory where to find the auxiliary
 # scripts such as config.guess, install-sh, ...
@@ -34,10 +34,25 @@ AC_CONFIG_AUX_DIR(admin)
 AC_CONFIG_MACRO_DIR([admin])
 AM_INIT_AUTOMAKE([tar-pax -Wno-portability])
 
+echo "--------------------------------------------------------------------------------------"
+CONFFOAM_CHECK_BUILD_VERSION1
+echo 
+
+echo "--------------------------------------------------------------------------------------"
+CONFFOAM_CHECK_PGP_KEY_ID
+echo 
+
+echo "--------------------------------------------------------------------------------------"
+CONFFOAM_CHECK_OS
+echo 
+
 
 #--------------------------------------------------------------------------------------
 AC_OUTPUT( [ bashrc \
-             Makefile ] )
+             make-deb.sh \
+             ChangeLog \
+             Makefile ],
+             [ chmod 755 make-deb.sh ] )
 
 
 echo "------------------------------------ OK -----------------------------------------"
