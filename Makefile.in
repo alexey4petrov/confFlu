@@ -28,8 +28,17 @@ conffludir:=${datarootdir}/confFlu
 
 
 #--------------------------------------------------------------------------------------
+DESTDIR=
+
+conffludir:=$(DESTDIR)$(conffludir)
+
 All:
 	@ echo "Nothing to be done"
+deb:
+	@./make-deb.sh deb
+	
+launchpad:
+	@./make-deb.sh launchpad
 
 install:
 	@ rm -rf $(conffludir)
