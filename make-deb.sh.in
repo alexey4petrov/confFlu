@@ -1,5 +1,6 @@
 #!/bin/bash
 
+## confFlu - pythonFlu configuration package
 ## Copyright (C) 2010- Alexey Petrov
 ## Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 ## 
@@ -64,7 +65,7 @@ pgp_key_id=@PGP_KEY_ID@
 
 
 #--------------------------------------------------------------------------------------
-# Prepare folder for deb-packaging and copy folder "Foam" to it 
+# Prepare folder for deb-packaging and copy necessary files to it 
 # first cleaning package files, folders with the same name( ${package_name}-${package_version} ) from the last attempt
 rm -rf ${package_name}-${package_version}*
 rm -rf ${package_name}_${package_version}*
