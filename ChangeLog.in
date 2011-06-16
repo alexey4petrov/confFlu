@@ -1,6 +1,6 @@
 #PACKAGE# (#VERSION#) @UBUNTU_CODENAME@; urgency=high
 
-  *
+  * To support compilation for third-party pythonFlu extensions
 
  -- #USERNAME# <#EMAIL#>  #DATE#
  
