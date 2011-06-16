@@ -50,9 +50,11 @@ echo
 #--------------------------------------------------------------------------------------
 AC_OUTPUT( [ bashrc \
              make-deb.sh \
+             make-rpm.sh \
+             rpm-template/rpm.spec \
              ChangeLog \
              Makefile ],
-             [ chmod 755 make-deb.sh ] )
+             [ chmod 755 make-deb.sh make-rpm.sh ] )
 
 
 echo "------------------------------------ OK -----------------------------------------"
