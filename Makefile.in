@@ -40,6 +40,10 @@ deb:
 launchpad:
 	@./make-deb.sh launchpad
 
+rpm:
+	@./make-rpm.sh
+	
+	
 install:
 	@ rm -rf $(conffludir)
 	@ echo "install @abs_top_builddir@/build_configure --> $(conffludir)/"
