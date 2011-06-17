@@ -42,47 +42,93 @@ AC_SUBST(FOAM2VTK_CXXFLAGS)
 FOAM2VTK_LDFLAGS=""
 AC_SUBST(FOAM2VTK_LDFLAGS)
 
+FOAM2VTK_LIBS=""
+AC_SUBST(FOAM2VTK_LIBS)
+
 AC_SUBST(ENABLE_FOAM2VTK)
 
 foam2vtk_ok=no
 
 dnl --------------------------------------------------------------------------------
-AC_ARG_WITH( [foam2vtk],
-             AC_HELP_STRING( [--with-foam2vtk=<path>],
-                             [use <path> to look for foam2vtk installation] ),
-             [foam2vtk_root_dir=${withval}],
-             [withval=yes])
+AC_ARG_WITH( [foam2vtk-includes],
+             AC_HELP_STRING( [--with-foam2vtk-includes=<path>],
+                             [use <path> to look for foam2vtk headers] ),
+             [],
+             [with_foam2vtk_includes=""])
    
-dnl --------------------------------------------------------------------------------
-if test "x${withval}" = "xyes" ; then
+foam2vtk_header_dir=${with_foam2vtk_includes}
+
+if test "x${with_foam2vtk_includes}" = "x" ; then
    if test ! "x${FOAM2VTK_ROOT_DIR}" = "x" && test -d ${FOAM2VTK_ROOT_DIR} ; then
-      foam2vtk_root_dir=${FOAM2VTK_ROOT_DIR}
+      foam2vtk_header_dir=${FOAM2VTK_ROOT_DIR}/lib
    fi
 fi
 
-dnl --------------------------------------------------------------------------------
-AC_CHECK_FILE( [${foam2vtk_root_dir}/lib/vtkFoamInterfaces.H], [ foam2vtk_ok=yes ], [ foam2vtk_ok=no ] )
+AC_CHECK_FILE( [${foam2vtk_header_dir}/vtkFoamInterfaces.H], [ foam2vtk_includes=yes ], [ foam2vtk_includes=no ] )
 
-if test "x${foam2vtk_ok}" = "xyes" ; then
-   FOAM2VTK_CPPFLAGS="-I${foam2vtk_root_dir}/lib"
-   CPPFLAGS="${FOAM2VTK_CPPFLAGS}"
-
-   dnl AC_CHECK_HEADERS( [vtkFoamInterfaces.H], [ foam2vtk_ok=yes ], [ foam2vtk_ok=no ] )
+if test "x${foam2vtk_includes}" = "xno" ; then
+   foam2vtk_header_dir=/usr/local/include/foam2vtk
+   AC_CHECK_FILE( [${foam2vtk_header_dir}/vtkFoamInterfaces.H], [ foam2vtk_includes=yes ], [ foam2vtk_includes=no ] )
 fi
 
+if test "x${foam2vtk_includes}" = "xyes" ; then
+   FOAM2VTK_CPPFLAGS="-I${foam2vtk_header_dir}"
+fi
+
+if test "x${foam2vtk_includes}" = "xno" ; then
+   AC_MSG_WARN( [use --with-foam2vtk-includes=<path> to define path to foam2vtk libraries] )
+fi
+
+
 dnl --------------------------------------------------------------------------------
-AC_CHECK_FILE( [${foam2vtk_root_dir}/lib/libfoam2vtk.so], [ foam2vtk_ok=yes ], [ foam2vtk_ok=no ] )
+AC_ARG_WITH( [foam2vtk-libraries],
+             AC_HELP_STRING( [--with-foam2vtk-libraries=<path>],
+                             [use <path> to look for foam2vtk libraries] ),
+             [],
+             [with_foam2vtk_libraries=""])
 
-if test "x${foam2vtk_ok}" = "xyes" ; then
-   FOAM2VTK_CXXFLAGS=""
+foam2vtk_libraries_dir=${with_foam2vtk_libraries}
 
-   FOAM2VTK_LDFLAGS="-L${foam2vtk_root_dir}/lib -lfoam2vtk"
+if test "x${with_foam2vtk_libraries}" = "x" ; then
+   if test ! "x${FOAM2VTK_ROOT_DIR}" = "x" && test -d ${FOAM2VTK_ROOT_DIR} ; then
+      foam2vtk_libraries_dir="${FOAM2VTK_ROOT_DIR}/lib"
+   fi
+fi
 
-   dnl AC_MSG_CHECKING( for linking to foam2vtk library )
-   dnl AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <vtkFoamInterfaces.H> ], [ new Foam::vtkFoamInterface< Foam::scalar >() ] ) ],
-   dnl                 [ foam2vtk_ok=yes ],
-   dnl                 [ foam2vtk_ok=no ] )
-   dnl AC_MSG_RESULT( ${foam2vtk_ok} )
+AC_CHECK_FILE( [${foam2vtk_libraries_dir}/libfoam2vtk.so], [ foam2vtk_libraries=yes ], [ foam2vtk_libraries=no ] )
+
+if test "x${foam2vtk_libraries}" = "xno" ; then
+   foam2vtk_libraries_dir=/usr/local/lib
+   AC_CHECK_FILE( [${foam2vtk_libraries_dir}/libfoam2vtk.so], [ foam2vtk_libraries=yes ], [ foam2vtk_libraries=no ] )
+fi
+
+if test "x${foam2vtk_libraries}" = "xyes" ; then
+   FOAM2VTK_LDFLAGS="-L${foam2vtk_libraries_dir}"
+   FOAM2VTK_LIBS="-lfoam2vtk"
+dnl   AC_MSG_CHECKING( for linking to foam2vtk library )
+dnl   AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <vtkFoamInterfaces.H> ], [ new Foam::vtkFoamInterface< Foam::scalar >() ] ) ],
+dnl                    [ foam2vtk_ok=yes ],
+dnl                    [ foam2vtk_ok=no ] )
+dnl   AC_MSG_RESULT( ${foam2vtk_ok} )
+fi
+
+if test "x${foam2vtk_libraries}" = "xno" ; then
+   AC_MSG_WARN( [use --with-foam2vtk-libraries=<path> to define path to foam2vtk libraries] )
+fi
+
+
+dnl --------------------------------------------------------------------------------
+AC_CHECK_PROG( [foam2vtk_exe], [foam2vtk], [yes], [no] )
+
+
+dnl --------------------------------------------------------------------------------
+foam2vtk_wrapper=no
+foam2vtk_wrapper=[`python -c "import foam2vtk; print \"yes\"" 2>/dev/null`]
+
+
+dnl --------------------------------------------------------------------------------
+if test "${foam2vtk_libraries}" = "yes" && test "${foam2vtk_includes}" = "yes" && test "${foam2vtk_wrapper}" = "yes" && test "${foam2vtk_exe}" = "yes"; then 
+   foam2vtk_ok=yes
 fi
 
 if test "x${foam2vtk_ok}" = "xno" ; then
