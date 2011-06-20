@@ -53,21 +53,12 @@ AC_SUBST(HEADER_PATHS)
 
 AC_SUBST(LIST_VERSIONS)
 
-
-
 openfoam_ok=no
 
 
 dnl --------------------------------------------------------------------------------
-AC_MSG_CHECKING(location of the OpenFOAM installation)
 if test -d "${WM_PROJECT_DIR}" ; then
-   openfoam_ok=yes
-fi
-AC_MSG_RESULT(${openfoam_ok})
-
-
-dnl --------------------------------------------------------------------------------
-if test "x${openfoam_ok}" = "xyes" ; then
+   dnl Look for OpenCFD and Extended OpenFOAM fork distributions
    FOAM_BRANCH=[`echo ${WM_PROJECT_VERSION} | grep "-" | sed -e "s/\([^-]*\)-\(.*\)/\2/g"`]
    project_version=[`echo ${WM_PROJECT_VERSION} | sed -e "s/-${FOAM_BRANCH}//g" | sed -e "s/[A-Za-z]/0/g"`]
    number_counter=[`echo ${project_version} | sed -e"s%[^\.]%%g" | wc --bytes`]
@@ -83,19 +74,48 @@ if test "x${openfoam_ok}" = "xyes" ; then
    if test "x${FOAM_BRANCH}" == "xext" ; then
       FOAM_BRANCH="dev"
    fi
-   AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
-   AC_MSG_NOTICE( @FOAM_BRANCH@ == "${FOAM_BRANCH}" )
+else
+   dnl Look for FreeFOAM distribution
+   if test "${FF_INSTALL_PREFIX}x" = "x" ; then
+      FF_INSTALL_PREFIX="/usr/local"
+   fi
+   AC_MSG_NOTICE( @FF_INSTALL_PREFIX@ == "${FF_INSTALL_PREFIX}" )
+
+   FF_PROJECT_NAME=[`ls ${FF_INSTALL_PREFIX}/include | grep FreeFOAM`]
+   AC_MSG_NOTICE( @FF_PROJECT_NAME@ == "${FF_PROJECT_NAME}" )
+
+   if test "${FF_INSTALL_HEADER_PATH}x" = "x" ; then
+      FF_INSTALL_HEADER_PATH=${FF_INSTALL_PREFIX}/include/${FF_PROJECT_NAME}
+   fi 
+   AC_MSG_NOTICE( @FF_INSTALL_HEADER_PATH@ == "${FF_INSTALL_HEADER_PATH}" )
+
+   if test "${FF_INSTALL_LIB_PATH}x" = "x" ; then
+      FF_INSTALL_LIB_PATH=${FF_INSTALL_PREFIX}/lib/${FF_PROJECT_NAME}
+   fi 
+   AC_MSG_NOTICE( @FF_INSTALL_LIB_PATH@ == "${FF_INSTALL_LIB_PATH}" )
+
+   if test -d "${FF_INSTALL_HEADER_PATH}" -a -d "${FF_INSTALL_LIB_PATH}" ; then
+      FOAM_BRANCH="free"
+      dnl ${FOAM_VERSION} should be exracted from the FreeFOAM somehow
+      FOAM_VERSION=010600 
+   fi
+   AC_MSG_NOTICE( @FOAM_PACKAGE_NAME@ == "${FOAM_PACKAGE_NAME}" )
 fi
+AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
+AC_MSG_NOTICE( @FOAM_BRANCH@ == "${FOAM_BRANCH}" )
 
 
 dnl --------------------------------------------------------------------------------
-if test "x${openfoam_ok}" = "xno" ; then
-   AC_MSG_WARN([it is neceesary to source OpenFOAM environment first])
+if test -z "${FOAM_BRANCH}" -a -z "${FOAM_VERSION}" ; then
+   AC_MSG_ERROR([it is neceesary to source an OpenFOAM environment first])
+else
+   openfoam_ok=yes
 fi
 
 
 dnl --------------------------------------------------------------------------------
 ENABLE_OPENFOAM=${openfoam_ok}
+AC_MSG_NOTICE( @ENABLE_OPENFOAM@ == "${ENABLE_OPENFOAM}" )
 
 
 dnl --------------------------------------------------------------------------------
