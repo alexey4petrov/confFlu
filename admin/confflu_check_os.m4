@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_OS],
+AC_DEFUN([CONFFLU_CHECK_OS],
 [
   AC_MSG_NOTICE(calculating OS parameters)
   

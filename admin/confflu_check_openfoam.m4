@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_OPENFOAM],dnl
+AC_DEFUN([CONFFLU_CHECK_OPENFOAM],dnl
 [
 AC_CHECKING(for OpenFOAM library)
 

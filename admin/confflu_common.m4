@@ -51,7 +51,7 @@ AC_DEFUN([CONFFOAM_PRINT_SUMMURY],
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_MANDATORY],
+AC_DEFUN([CONFFLU_CHECK_MANDATORY],
 [
   variables=$*
   for var in $variables ; do

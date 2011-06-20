@@ -23,11 +23,11 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BOOST_SERIALIZATION],
+AC_DEFUN([CONFFLU_CHECK_BOOST_SERIALIZATION],
 [
 AC_CHECKING(for Boost "serialization" library)
 
-AC_REQUIRE([CONFFOAM_CHECK_BOOST])
+AC_REQUIRE([CONFFLU_CHECK_BOOST])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS

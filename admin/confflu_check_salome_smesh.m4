@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_SALOME_SMESH],
+AC_DEFUN([CONFFLU_CHECK_SALOME_SMESH],
 [
 AC_CHECKING(for SALOME SMESH package)
 

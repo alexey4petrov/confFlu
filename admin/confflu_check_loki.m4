@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_LOKI],dnl
+AC_DEFUN([CONFFLU_CHECK_LOKI],dnl
 [
 AC_CHECKING(for Loki Library)
 

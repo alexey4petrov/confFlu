@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_SALOME_GEOM],
+AC_DEFUN([CONFFLU_CHECK_SALOME_GEOM],
 [
 AC_CHECKING(for SALOME GEOM package)
 

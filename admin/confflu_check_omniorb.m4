@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_OMNIORB],
+AC_DEFUN([CONFFLU_CHECK_OMNIORB],
 [
 echo "--------------------------------------------------------------------------------------"
 AC_CHECKING(for omniORB environemnt)
@@ -175,7 +175,7 @@ fi
 
 
 dnl --------------------------------------------------------------------------------
-AC_REQUIRE([CONFFOAM_CHECK_PYTHON])
+AC_REQUIRE([CONFFLU_CHECK_PYTHON])
 
 omniORBpy_ok=no
 

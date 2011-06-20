@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BOOST],
+AC_DEFUN([CONFFLU_CHECK_BOOST],
 [
 AC_CHECKING(for Boost Library in general)
 

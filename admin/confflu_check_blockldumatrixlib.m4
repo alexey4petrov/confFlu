@@ -22,11 +22,11 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BLOCKLDUMATRIXLIB],dnl
+AC_DEFUN([CONFFLU_CHECK_BLOCKLDUMATRIXLIB],dnl
 [
 AC_CHECKING(for blockLduMatrixLib package)
 
-AC_REQUIRE([CONFFOAM_CHECK_OPENFOAM])
+AC_REQUIRE([CONFFLU_CHECK_OPENFOAM])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS

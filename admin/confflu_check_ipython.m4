@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_IPYTHON],
+AC_DEFUN([CONFFLU_CHECK_IPYTHON],
 [
 AC_CHECKING(for IPython package)
 

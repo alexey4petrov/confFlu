@@ -22,11 +22,11 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_UNV2FOAM],
+AC_DEFUN([CONFFLU_CHECK_UNV2FOAM],
 [
 AC_CHECKING(for unv2foam package)
 
-AC_REQUIRE([CONFFOAM_CHECK_OPENFOAM])
+AC_REQUIRE([CONFFLU_CHECK_OPENFOAM])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS

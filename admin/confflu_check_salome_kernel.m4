@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_SALOME_KERNEL],
+AC_DEFUN([CONFFLU_CHECK_SALOME_KERNEL],
 [
 AC_CHECKING(for SALOME KERNEL package)
 

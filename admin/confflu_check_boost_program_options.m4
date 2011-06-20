@@ -23,11 +23,11 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BOOST_PROGRAM_OPTIONS],
+AC_DEFUN([CONFFLU_CHECK_BOOST_PROGRAM_OPTIONS],
 [
 AC_CHECKING(for Boost "program_options" library)
 
-AC_REQUIRE([CONFFOAM_CHECK_BOOST])
+AC_REQUIRE([CONFFLU_CHECK_BOOST])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS

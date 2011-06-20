@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_BUILD_VERSION1],
+AC_DEFUN([CONFFLU_CHECK_BUILD_VERSION1],
 [
   AC_MSG_NOTICE(define package build version)
   

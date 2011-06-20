@@ -22,11 +22,11 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_DIFFUSIONFOAMLIB],dnl
+AC_DEFUN([CONFFLU_CHECK_DIFFUSIONFOAMLIB],dnl
 [
 AC_CHECKING(for diffusionFoamLib package)
 
-AC_REQUIRE([CONFFOAM_CHECK_BLOCKFVMATRIXLIB])
+AC_REQUIRE([CONFFLU_CHECK_BLOCKFVMATRIXLIB])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS

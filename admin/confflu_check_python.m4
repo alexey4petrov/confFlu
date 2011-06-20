@@ -22,12 +22,12 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_PYTHON],dnl
+AC_DEFUN([CONFFLU_CHECK_PYTHON],dnl
 [
 echo "--------------------------------------------------------------------------------------"
 AC_CHECKING(for Python environemnt)
 
-AC_REQUIRE([CONFFOAM_CHECK_OS])
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS

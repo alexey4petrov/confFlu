@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_PYTHON_TKINTER],
+AC_DEFUN([CONFFLU_CHECK_PYTHON_TKINTER],
 [
 AC_CHECKING(for Python Tkinter package)
 

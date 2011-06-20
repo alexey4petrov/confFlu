@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_PGP_KEY_ID],
+AC_DEFUN([CONFFLU_CHECK_PGP_KEY_ID],
 [
   AC_MSG_NOTICE(define PGP key to sign deb package)
   

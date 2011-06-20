@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_PYTHON_PMW],
+AC_DEFUN([CONFFLU_CHECK_PYTHON_PMW],
 [
 AC_CHECKING(for Python Pmw package)
 

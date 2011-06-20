@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_CHECK_SALOME_GUI],
+AC_DEFUN([CONFFLU_CHECK_SALOME_GUI],
 [
 AC_CHECKING(for SALOME GUI package)
 
