@@ -228,7 +228,7 @@ c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-Wextra %%g")
 all:
 	@echo $(c++FLAGS)
 END
-   OPENFOAM_CXXFLAGS=`make -s -f conf.cxxflags.makefile`
+   OPENFOAM_CXXFLAGS=`make --makefile=conf.cxxflags.makefile`
    AC_MSG_NOTICE( @OPENFOAM_CXXFLAGS@ == "${OPENFOAM_CXXFLAGS}" )
 
 
