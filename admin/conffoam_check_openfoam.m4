@@ -58,7 +58,7 @@ openfoam_ok=no
 
 dnl --------------------------------------------------------------------------------
 if test -d "${WM_PROJECT_DIR}" ; then
-   dnl Look for OpenCFD and Extended OpenFOAM fork distributions
+   dnl Look for OpenCFD or Extended OpenFOAM
    FOAM_BRANCH=[`echo ${WM_PROJECT_VERSION} | grep "-" | sed -e "s/\([^-]*\)-\(.*\)/\2/g"`]
    project_version=[`echo ${WM_PROJECT_VERSION} | sed -e "s/-${FOAM_BRANCH}//g" | sed -e "s/[A-Za-z]/0/g"`]
    number_counter=[`echo ${project_version} | sed -e"s%[^\.]%%g" | wc --bytes`]
@@ -75,7 +75,7 @@ if test -d "${WM_PROJECT_DIR}" ; then
       FOAM_BRANCH="dev"
    fi
 else
-   dnl Look for FreeFOAM distribution
+   dnl Look for FreeFOAM
    if test "${FF_INSTALL_PREFIX}x" = "x" ; then
       FF_INSTALL_PREFIX="/usr/local"
    fi
@@ -203,6 +203,62 @@ HEADER_PATHS+="/patches/r1.4.1-dev "
 AC_MSG_NOTICE( @LIST_VERSIONS@ == "${LIST_VERSIONS}" )
 AC_MSG_NOTICE( @HEADER_PATHS@ == "${HEADER_PATHS}" )
 AC_MSG_NOTICE( @TEST_CASES@ == "${TEST_CASES}" )
+
+
+dnl --------------------------------------------------------------------------------
+case "x${FOAM_BRANCH}" in
+"xfree" )
+   ;;
+* )
+   dnl --------------------------------------------------------------------------------
+cat > conf.cxxflags.makefile << 'END'
+GENERAL_RULES = $(WM_DIR)/rules/General
+RULES         = $(WM_DIR)/rules/$(WM_ARCH)$(WM_COMPILER)
+BIN           = $(WM_DIR)/bin/$(WM_ARCH)$(WM_COMPILER)
+
+include $(GENERAL_RULES)/general
+include $(RULES)/general
+include $(RULES)/$(WM_LINK_LANGUAGE)
+
+c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-Wold-style-cast %%g")
+c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-Wall %%g")
+c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-Wextra %%g")
+# c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-O3 %-ggdb3 -DFULLDEBUG %g")
+
+all:
+	@echo $(c++FLAGS)
+END
+   OPENFOAM_CXXFLAGS=`make -s -f conf.cxxflags.makefile`
+   AC_MSG_NOTICE( @OPENFOAM_CXXFLAGS@ == "${OPENFOAM_CXXFLAGS}" )
+
+
+   dnl --------------------------------------------------------------------------------
+   LIB_SRC=${WM_PROJECT_DIR}/src
+   LIB_DIR=${WM_PROJECT_DIR}/lib
+   LIB_WM_OPTIONS_DIR=${LIB_DIR}/${WM_OPTIONS}
+   LIB_WM_OPTIONS_DIR_BINARY_INSTALL=${LIB_DIR}
+
+   PROJECT_INC="-I${LIB_SRC}/${WM_PROJECT}/lnInclude -I${LIB_SRC}"
+
+   if test ${FOAM_VERSION} -eq 010500 ; then
+      PROJECT_INC="${PROJECT_INC} -I${LIB_SRC}/OSspecific/${WM_OS}/lnInclude"
+   fi
+
+   if test ${FOAM_VERSION} -ge 010600 ; then
+      PROJECT_INC="${PROJECT_INC} -I${LIB_SRC}/OSspecific/${WM_OSTYPE}/lnInclude"
+   fi
+
+   OPENFOAM_CPPFLAGS=${PROJECT_INC}
+   AC_MSG_NOTICE( @OPENFOAM_CPPFLAGS@ == "${OPENFOAM_CPPFLAGS}" )
+
+   PROJECT_LIBS=-l${WM_PROJECT}
+   OPENFOAM_LIBS=${PROJECT_LIBS}
+   AC_MSG_NOTICE( @OPENFOAM_LIBS@ == "${OPENFOAM_LIBS}" )
+;;
+esac
+
+
+dnl --------------------------------------------------------------------------------
 ])
 
 
