@@ -99,7 +99,6 @@ else
       dnl ${FOAM_VERSION} should be exracted from the FreeFOAM somehow
       FOAM_VERSION=010600 
    fi
-   AC_MSG_NOTICE( @FOAM_PACKAGE_NAME@ == "${FOAM_PACKAGE_NAME}" )
 fi
 AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
 AC_MSG_NOTICE( @FOAM_BRANCH@ == "${FOAM_BRANCH}" )
@@ -119,24 +118,29 @@ AC_MSG_NOTICE( @ENABLE_OPENFOAM@ == "${ENABLE_OPENFOAM}" )
 
 
 dnl --------------------------------------------------------------------------------
-if test "x${WM_PROJECT_VERSION}" = "x1.5-dev" ; then
-   FOAM_PACKAGE_NAME="openfoam-dev-1.5"
-fi
-
-if test "x${WM_PROJECT_VERSION}" = "x1.6-ext" ; then
-   FOAM_PACKAGE_NAME="openfoam-1.6-ext"
-fi
-
-if test "x${WM_PROJECT_VERSION}" = "x1.7.0" ; then
-   FOAM_PACKAGE_NAME="openfoam170"
-fi
-
-if test "x${WM_PROJECT_VERSION}" = "x1.7.1" ; then
-   FOAM_PACKAGE_NAME="openfoam171"
-fi
-
+case "x${FOAM_BRANCH}" in
+"xfree" )
+   case "x${FOAM_VERSION}" in
+   "x010600" )
+       FOAM_PACKAGE_NAME="freefoam-0.1.0" ;;
+   * )
+       FOAM_PACKAGE_NAME="freefoam-2.0.0" ;;
+   esac
+   FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/freefoam//'`] ;;
+* )
+   case "x${WM_PROJECT_VERSION}" in
+   "x1.5-dev" )
+   	FOAM_PACKAGE_NAME="openfoam-dev-1.5" ;;
+   "x1.6-ext" )
+	FOAM_PACKAGE_NAME="openfoam-1.6-ext" ;;
+   "x1.7.0" )
+	FOAM_PACKAGE_NAME="openfoam170" ;;
+   "x1.7.1" )
+	FOAM_PACKAGE_NAME="openfoam171" ;;
+   esac
+   FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/openfoam//'`] ;;
+esac
 FOAM_PACKAGE_BUILD=[`dpkg -s ${FOAM_PACKAGE_NAME} 2>/dev/null  | grep Version | sed 's/Version://' `]
-FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/openfoam//'`]
 
 AC_MSG_NOTICE( @FOAM_PACKAGE_NAME@ == "${FOAM_PACKAGE_NAME}" )
 AC_MSG_NOTICE( @FOAM_PACKAGE_SUFFIX@ == "${FOAM_PACKAGE_SUFFIX}" )
@@ -195,6 +199,10 @@ fi
 TEST_CASES+="r1.4.1-dev"
 LIST_VERSIONS+=\"010401_dev\"
 HEADER_PATHS+="/patches/r1.4.1-dev "
+
+AC_MSG_NOTICE( @LIST_VERSIONS@ == "${LIST_VERSIONS}" )
+AC_MSG_NOTICE( @HEADER_PATHS@ == "${HEADER_PATHS}" )
+AC_MSG_NOTICE( @TEST_CASES@ == "${TEST_CASES}" )
 ])
 
 
