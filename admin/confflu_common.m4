@@ -22,7 +22,7 @@ dnl
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_INIT],
+AC_DEFUN([CONFFLU_INIT],
 [
   project_name=${1} ; project_version=${2} ; email_address=${3}
 
@@ -37,7 +37,7 @@ AC_DEFUN([CONFFOAM_INIT],
 
 
 dnl --------------------------------------------------------------------------------
-AC_DEFUN([CONFFOAM_PRINT_SUMMURY],
+AC_DEFUN([CONFFLU_PRINT_SUMMURY],
 [
   variables=$*
   for var in $variables ; do
