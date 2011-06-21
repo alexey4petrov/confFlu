@@ -209,6 +209,7 @@ dnl ----------------------------------------------------------------------------
 case "x${FOAM_BRANCH}" in
 "xfree" )
    OPENFOAM_CPPFLAGS="-I${FF_INSTALL_HEADER_PATH} -I${FF_INSTALL_HEADER_PATH}/OpenFOAM"
+   OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -I${FF_INSTALL_HEADER_PATH}/OSspecific"
    OPENFOAM_GFLAGS="-DOpenFOAM_EXPORTS -DDP -DNoRepository -Dlinux64"
    OPENFOAM_CXXFLAGS="${OPENFOAM_GFLAGS} -fPIC -ggdb3 -DFULLDEBUG"
    OPENFOAM_LINKLIBSO="c++ -shared" 
