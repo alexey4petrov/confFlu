@@ -209,9 +209,9 @@ dnl ----------------------------------------------------------------------------
 case "x${FOAM_BRANCH}" in
 "xfree" )
    OPENFOAM_CPPFLAGS="-I${FF_INSTALL_HEADER_PATH} -I${FF_INSTALL_HEADER_PATH}/OpenFOAM"
-   OPENFOAM_GFLAGS="-Dlinux64 -DDP"
-   OPENFOAM_CXXFLAGS="-DOpenFOAM_EXPORTS -Dlinux64 -DDP -Wno-unused-parameter -Wnon-virtual-dtor -O3 -DNoRepository -ftemplate-depth-40 -fPIC"
-   OPENFOAM_LINKLIBSO="g++ -m64 -Dlinux64 -DDP -Wno-unused-parameter -Wnon-virtual-dtor -O3 -DNoRepository -ftemplate-depth-40 -fPIC -shared" 
+   OPENFOAM_GFLAGS="-DOpenFOAM_EXPORTS -DDP -DNoRepository -Dlinux64"
+   OPENFOAM_CXXFLAGS="${OPENFOAM_GFLAGS} -fPIC -ggdb3 -DFULLDEBUG"
+   OPENFOAM_LINKLIBSO="c++ -shared" 
    OPENFOAM_LDFLAGS=-L${FF_INSTALL_LIB_PATH}
    OPENFOAM_LIBS=-lOpenFOAM
    ;;
@@ -280,6 +280,8 @@ END
    dnl --------------------------------------------------------------------------------
    PROJECT_LIBS=-l${WM_PROJECT}
    OPENFOAM_LIBS=${PROJECT_LIBS}
+
+   rm -fr conf.include.makefile
 ;;
 esac
 
@@ -290,14 +292,14 @@ if test "${FOAM_BRANCH}x" != "x" ; then
    OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_BRANCH__=${FOAM_BRANCH}"
 fi
 
+AC_MSG_NOTICE( @OPENFOAM_GFLAGS@ == "${OPENFOAM_GFLAGS}" )
+AC_SUBST(OPENFOAM_GFLAGS)
+
 AC_MSG_NOTICE( @OPENFOAM_CPPFLAGS@ == "${OPENFOAM_CPPFLAGS}" )
 AC_SUBST(OPENFOAM_CPPFLAGS)
 
 AC_MSG_NOTICE( @OPENFOAM_CXXFLAGS@ == "${OPENFOAM_CXXFLAGS}" )
 AC_SUBST(OPENFOAM_CXXFLAGS)
-
-AC_MSG_NOTICE( @OPENFOAM_GFLAGS@ == "${OPENFOAM_GFLAGS}" )
-AC_SUBST(OPENFOAM_GFLAGS)
 
 AC_MSG_NOTICE( @OPENFOAM_LINKLIBSO@ == "${OPENFOAM_LINKLIBSO}" )
 AC_SUBST(OPENFOAM_LINKLIBSO)
