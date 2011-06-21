@@ -81,7 +81,7 @@ else
    fi
    AC_MSG_NOTICE( FF_INSTALL_PREFIX == "${FF_INSTALL_PREFIX}" )
 
-   FF_PROJECT_NAME=[`ls ${FF_INSTALL_PREFIX}/include | grep FreeFOAM`]
+   FF_PROJECT_NAME=[`ls ${FF_INSTALL_PREFIX}/include | grep -E "freefoam|FreeFOAM"`]
    AC_MSG_NOTICE( FF_PROJECT_NAME == "${FF_PROJECT_NAME}" )
 
    if test "${FF_INSTALL_HEADER_PATH}x" = "x" ; then
@@ -94,7 +94,7 @@ else
    fi 
    AC_MSG_NOTICE( FF_INSTALL_LIB_PATH == "${FF_INSTALL_LIB_PATH}" )
 
-   if test -d "${FF_INSTALL_HEADER_PATH}" -a -d "${FF_INSTALL_LIB_PATH}" ; then
+   if test "${FF_PROJECT_NAME}x" != "x" -a -d "${FF_INSTALL_HEADER_PATH}"; then
       FOAM_BRANCH="free"
       dnl ${FOAM_VERSION} should be exracted from the FreeFOAM somehow
       FOAM_VERSION=010500 
@@ -121,7 +121,7 @@ dnl ----------------------------------------------------------------------------
 case "x${FOAM_BRANCH}" in
 "xfree" )
    case "x${FOAM_VERSION}" in
-   "x010600" )
+   "x010500" )
        FOAM_PACKAGE_NAME="freefoam-0.1.0" ;;
    * )
        FOAM_PACKAGE_NAME="freefoam-2.0.0" ;;
