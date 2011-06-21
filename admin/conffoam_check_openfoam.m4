@@ -97,7 +97,7 @@ else
    if test -d "${FF_INSTALL_HEADER_PATH}" -a -d "${FF_INSTALL_LIB_PATH}" ; then
       FOAM_BRANCH="free"
       dnl ${FOAM_VERSION} should be exracted from the FreeFOAM somehow
-      FOAM_VERSION=010600 
+      FOAM_VERSION=010500 
    fi
 fi
 AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
