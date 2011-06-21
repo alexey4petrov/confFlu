@@ -213,7 +213,7 @@ case "x${FOAM_BRANCH}" in
    OPENFOAM_CXXFLAGS="${OPENFOAM_GFLAGS} -fPIC -ggdb3 -DFULLDEBUG"
    OPENFOAM_LINKLIBSO="c++ -shared" 
    OPENFOAM_LDFLAGS=-L${FF_INSTALL_LIB_PATH}
-   OPENFOAM_LIBS=-lOpenFOAM
+   OPENFOAM_LIBS="-lOpenFOAM -lmpiPstream"
    ;;
 * )
    dnl --------------------------------------------------------------------------------
