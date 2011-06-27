@@ -35,7 +35,7 @@ AC_CONFIG_MACRO_DIR([admin])
 AM_INIT_AUTOMAKE([tar-pax -Wno-portability])
 
 echo "--------------------------------------------------------------------------------------"
-CONFFLU_CHECK_BUILD_VERSION1
+CONFFLU_CHECK_PROJECT_VERSION1
 echo 
 
 echo "--------------------------------------------------------------------------------------"
