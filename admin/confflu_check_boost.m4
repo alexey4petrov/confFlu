@@ -28,6 +28,9 @@ AC_CHECKING(for Boost Library in general)
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
+STORE_CPPFLAGS=${CPPFLAGS}
+STORE_CXXFLAGS=${CXXFLAGS}
+STORE_LDFLAGS=${LDFLAGS}
 
 BOOST_CPPFLAGS=""
 AC_SUBST(BOOST_CPPFLAGS)
@@ -134,6 +137,9 @@ if test "x${boost_includes_ok}" = "xyes" && test "x${boost_libraries_ok}" = "xye
 fi
 
 AC_LANG_RESTORE
+CPPFLAGS=${STORE_CPPFLAGS}
+CXXFLAGS=${STORE_CXXFLAGS}
+LDFLAGS=${STORE_LDFLAGS}
 ])
 
 

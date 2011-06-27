@@ -31,6 +31,10 @@ AC_REQUIRE([CONFFLU_CHECK_BOOST])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
+STORE_CPPFLAGS=${CPPFLAGS}
+STORE_CXXFLAGS=${CXXFLAGS}
+STORE_LDFLAGS=${LDFLAGS}
+STORE_LIBS=${LIBS}
 
 BOOST_THREAD_LIBS="-lboost_thread${BOOST_LIBSUFFIX}"
 AC_SUBST(BOOST_THREAD_LIBS)
@@ -38,6 +42,7 @@ AC_SUBST(BOOST_THREAD_LIBS)
 boost_thread_ok=no
 
 dnl --------------------------------------------------------------------------------
+
 dnl Check for Boost "thread" header files
 if test "x${boost_libraries_ok}" = "xyes" ; then
    CPPFLAGS="${BOOST_CPPFLAGS}"
@@ -69,6 +74,11 @@ ENABLE_BOOST_THREAD="${boost_thread_ok}"
 AC_SUBST(ENABLE_BOOST_THREAD)
 
 AC_LANG_RESTORE
+CPPFLAGS=${STORE_CPPFLAGS}
+CXXFLAGS=${STORE_CXXFLAGS}
+LDFLAGS=${STORE_LDFLAGS}
+LIBS=${STORE_LIBS}
+
 ])
 
 

@@ -39,6 +39,10 @@ omniORB_ok=yes
 dnl --------------------------------------------------------------------------------
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
+STORE_CPPFLAGS=${CPPFLAGS}
+STORE_CXXFLAGS=${CXXFLAGS}
+STORE_LDFLAGS=${LDFLAGS}
+STORE_LIBS=${LIBS}
 
 
 dnl --------------------------------------------------------------------------------
@@ -214,6 +218,10 @@ AC_MSG_RESULT(for omniORB: ${omniORB_ok})
 
 dnl --------------------------------------------------------------------------------
 AC_LANG_RESTORE
+CPPFLAGS=${STORE_CPPFLAGS}
+CXXFLAGS=${STORE_CXXFLAGS}
+LDFLAGS=${STORE_LDFLAGS}
+LIBS=${STORE_LIBS}
 ])
 
 
