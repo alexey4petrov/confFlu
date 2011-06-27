@@ -1,6 +1,6 @@
 Summary: confflu package
 
-%define version @PACKAGE_VERSION@
+%define version @NUMBER_PART_VERSION@
 
 License: GPL
 
