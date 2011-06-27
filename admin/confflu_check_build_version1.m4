@@ -28,6 +28,9 @@ AC_DEFUN([CONFFLU_CHECK_BUILD_VERSION1],
   
   AC_SUBST(BUILD_VERSION)
   
+  AC_SUBST(NUMBER_PART_VERSION)
+  AC_SUBST(SYMBOLICAL_PART_VERSION)
+  
   AC_ARG_WITH( [build_version],
              AC_HELP_STRING( [--with-build-version=<build version>],
                              [use <build version> to define package build version,"1" by default] ),
@@ -41,7 +44,10 @@ AC_DEFUN([CONFFLU_CHECK_BUILD_VERSION1],
   BUILD_VERSION=${with_build_version}
   
   AC_MSG_NOTICE( @BUILD_VERSION@ == "${BUILD_VERSION}" )
-    
+  
+  NUMBER_PART_VERSION=[`echo ${PACKAGE_VERSION} | sed -e "s/-[A-z,a-z]*$//"`]
+  SYMBOLICAL_PART_VERSION=[`echo ${PACKAGE_VERSION} | sed -e "s/^${NUMBER_PART_VERSION}-//"`]
+
 ])
 
 
