@@ -27,7 +27,7 @@
 # Prepare variables for substition in  control,changelog etc files
 confflu_version=@PACKAGE_VERSION@
 
-number_part_version=@NUMBER_PART_VERSION@
+version_number_part=@VERSION_NUMBER_PART@
 
 package_name="confflu"
 
@@ -111,7 +111,7 @@ echo "%doc README INSTALL NEWS" >> ${specs_folder}/${package_name}.spec
 echo "create package"
 echo "--------------------------------------------------------------------------------"
 rpmbuild -bb ${specs_folder}/${package_name}.spec
-a_package_file=${rpm_package_folder}/RPMS/noarch/${package_name}-${number_part_version}-${build_version}.noarch.rpm
+a_package_file=${rpm_package_folder}/RPMS/noarch/${package_name}-${version_number_part}-${build_version}.noarch.rpm
 a_new_filename=${package_name}-${package_version}.rpm
 mv ${a_package_file} ${a_new_filename}
 
