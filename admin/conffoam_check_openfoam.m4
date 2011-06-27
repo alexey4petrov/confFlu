@@ -81,7 +81,10 @@ else
    fi
    AC_MSG_NOTICE( FF_INSTALL_PREFIX == "${FF_INSTALL_PREFIX}" )
 
-   FF_PROJECT_NAME=[`ls ${FF_INSTALL_PREFIX}/include | grep -E "freefoam|FreeFOAM"`]
+   FF_PROJECT_NAME=""
+   FF_PROJECT_NAMES=[`ls ${FF_INSTALL_PREFIX}/include | grep -E "freefoam|FreeFOAM"`]
+   # Loop over all existing FreeFOAM installations to find the latest one
+   for FF_PROJECT_NAME in ${FF_PROJECT_NAMES} ; do echo test > /dev/null ; done
    AC_MSG_NOTICE( FF_PROJECT_NAME == "${FF_PROJECT_NAME}" )
 
    if test "${FF_INSTALL_HEADER_PATH}x" = "x" ; then
@@ -94,11 +97,17 @@ else
    fi 
    AC_MSG_NOTICE( FF_INSTALL_LIB_PATH == "${FF_INSTALL_LIB_PATH}" )
 
-   if test "${FF_PROJECT_NAME}x" != "x" -a -d "${FF_INSTALL_HEADER_PATH}"; then
+   if test "${FF_PROJECT_NAME}x" != "x" ; then
       FOAM_BRANCH="free"
-      dnl ${FOAM_VERSION} should be exracted from the FreeFOAM somehow
-      FOAM_VERSION=010500 
    fi
+
+   dnl ${FOAM_VERSION} should be exracted from the FreeFOAM somehow
+   case ${FF_PROJECT_NAME} in
+   "FreeFOAM-0.1.0" )
+      FOAM_VERSION=010500 ;;
+   * )
+      FOAM_VERSION=010701 ;;
+   esac
 fi
 AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
 AC_MSG_NOTICE( @FOAM_BRANCH@ == "${FOAM_BRANCH}" )
@@ -124,7 +133,7 @@ case "x${FOAM_BRANCH}" in
    "x010500" )
        FOAM_PACKAGE_NAME="freefoam-0.1.0" ;;
    * )
-       FOAM_PACKAGE_NAME="freefoam-2.0.0" ;;
+       FOAM_PACKAGE_NAME="freefoam-0.2.0" ;;
    esac
    FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/freefoam//'`] ;;
 * )
@@ -220,6 +229,9 @@ case "x${FOAM_BRANCH}" in
 
    OPENFOAM_LINKLIBSO="c++ -shared" 
    OPENFOAM_LDFLAGS=-L${FF_INSTALL_LIB_PATH}
+   if test ${FOAM_VERSION} -ge 010701 ; then
+      OPENFOAM_LDFLAGS="${OPENFOAM_LDFLAGS} -L${FF_INSTALL_LIB_PATH}/plugins1"
+   fi
    OPENFOAM_LIBS="-lOpenFOAM -lmpiPstream"
 
    OPENFOAM_MESHTOOLS_CPPFLAGS="-I${FF_INSTALL_HEADER_PATH}/meshTools"
