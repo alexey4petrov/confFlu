@@ -76,38 +76,49 @@ if test -d "${WM_PROJECT_DIR}" ; then
    fi
 else
    dnl Look for FreeFOAM
-   if test "${FF_INSTALL_PREFIX}x" = "x" ; then
-      FF_INSTALL_PREFIX="/usr/local"
-   fi
-   AC_MSG_NOTICE( FF_INSTALL_PREFIX == "${FF_INSTALL_PREFIX}" )
-
-   FF_PROJECT_NAME=""
-   FF_PROJECT_NAMES=[`ls ${FF_INSTALL_PREFIX}/include | grep -E "freefoam|FreeFOAM"`]
-   # Loop over all existing FreeFOAM installations to find the latest one
-   for FF_PROJECT_NAME in ${FF_PROJECT_NAMES} ; do echo test > /dev/null ; done
-   AC_MSG_NOTICE( FF_PROJECT_NAME == "${FF_PROJECT_NAME}" )
-
-   if test "${FF_INSTALL_HEADER_PATH}x" = "x" ; then
-      FF_INSTALL_HEADER_PATH=${FF_INSTALL_PREFIX}/include/${FF_PROJECT_NAME}
-   fi 
+   dnl --------------------------------------------------------------------------------
+cat > CMakeLists.txt << 'END'
+cmake_minimum_required(VERSION 2.8)
+find_package(FreeFOAM REQUIRED)
+message( ${FOAM_INCLUDE_DIRS} )
+END
+   FF_INSTALL_HEADER_PATH=`cmake . >/dev/null 2>CMakeOuput.txt && cat CMakeOuput.txt && rm -fr CMake*.*`
    AC_MSG_NOTICE( FF_INSTALL_HEADER_PATH == "${FF_INSTALL_HEADER_PATH}" )
-
-   if test "${FF_INSTALL_LIB_PATH}x" = "x" ; then
-      FF_INSTALL_LIB_PATH=${FF_INSTALL_PREFIX}/lib/${FF_PROJECT_NAME}
-   fi 
+   
+   dnl --------------------------------------------------------------------------------
+cat > CMakeLists.txt << 'END'
+cmake_minimum_required(VERSION 2.8)
+find_package(FreeFOAM REQUIRED)
+message( ${FOAM_LIBRARY_DIRS} )
+END
+   FF_INSTALL_LIB_PATH=`cmake . >/dev/null 2>CMakeOuput.txt && cat CMakeOuput.txt && rm -fr CMake*.*`
    AC_MSG_NOTICE( FF_INSTALL_LIB_PATH == "${FF_INSTALL_LIB_PATH}" )
 
-   if test "${FF_PROJECT_NAME}x" != "x" ; then
+   dnl --------------------------------------------------------------------------------
+cat > CMakeLists.txt << 'END'
+cmake_minimum_required(VERSION 2.8)
+find_package(FreeFOAM REQUIRED)
+message( "${FOAM_DEFINITIONS}" )
+END
+   FF_DEFINITIONS=`cmake . >/dev/null 2>CMakeOuput.txt && cat CMakeOuput.txt && rm -fr CMake*.*`
+   FF_DEFINITIONS=`echo ${FF_DEFINITIONS} | sed -e "s%;% %g"`
+   AC_MSG_NOTICE( FF_DEFINITIONS == "${FF_DEFINITIONS}" )
+
+   dnl --------------------------------------------------------------------------------
+   FF_VERSION_FULL=`python -c "from FreeFOAM import VERSION_FULL; print VERSION_FULL"`
+   AC_MSG_NOTICE( FF_VERSION_FULL == "${FF_VERSION_FULL}" )
+
+   dnl --------------------------------------------------------------------------------
+   if test "${FF_VERSION_FULL}x" != "x" -a "${FF_DEFINITIONS}x" != "x" ; then
+      case ${FF_VERSION_FULL} in
+      "0.1.0" )
+      	  FOAM_VERSION=010500 ;;
+      * )
+      	  FOAM_VERSION=010701 ;;
+      esac
+
       FOAM_BRANCH="free"
    fi
-
-   dnl ${FOAM_VERSION} should be exracted from the FreeFOAM somehow
-   case ${FF_PROJECT_NAME} in
-   "FreeFOAM-0.1.0" )
-      FOAM_VERSION=010500 ;;
-   * )
-      FOAM_VERSION=010701 ;;
-   esac
 fi
 AC_MSG_NOTICE( @FOAM_VERSION@ == "${FOAM_VERSION}" )
 AC_MSG_NOTICE( @FOAM_BRANCH@ == "${FOAM_BRANCH}" )
@@ -222,7 +233,7 @@ case "x${FOAM_BRANCH}" in
    OPENFOAM_CPPFLAGS="-I${FF_INSTALL_HEADER_PATH} -I${FF_INSTALL_HEADER_PATH}/OpenFOAM"
    OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -I${FF_INSTALL_HEADER_PATH}/OSspecific"
 
-   OPENFOAM_GFLAGS="-DOpenFOAM_EXPORTS -DDP -DNoRepository -Dlinux64"
+   OPENFOAM_GFLAGS="-DOpenFOAM_EXPORTS ${FF_DEFINITIONS}"
 
    OPENFOAM_CXXFLAGS="${OPENFOAM_GFLAGS} -fPIC"
    # OPENFOAM_CXXFLAGS="${OPENFOAM_CXXFLAGS} -ggdb3 -DFULLDEBUG"
