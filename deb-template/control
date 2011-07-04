@@ -1,0 +1,13 @@
+Source: #PACKAGE#
+Section: python
+Priority: extra
+Maintainer: #USERNAME# <#EMAIL#>
+Build-Depends: #BUILD_DEPS#
+Standards-Version: #POLICY#
+Homepage: http://sourceforge.net/projects/pythonflu/
+
+Package: #PACKAGE#
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, automake, libtool, autoconf
+Description: pythonFlu configuration package
+

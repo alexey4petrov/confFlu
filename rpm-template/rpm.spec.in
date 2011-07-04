@@ -1,0 +1,45 @@
+Summary: confflu package
+
+%define version @VERSION_NUMBER_PART@
+
+License: GPL
+
+Name: confflu
+
+Version: %{version} 
+
+Release: @BUILD_VERSION@
+
+URL: http://sourceforge.net/projects/pythonflu/
+
+Group: Applications / Engineering
+
+BuildArch: noarch
+
+Packager: Alexey Petrov <alexey.petrov.nnov@gmail.com>
+
+Requires: automake, libtool, autoconf
+
+Buildroot: /tmp/%{name}-%{version}-root
+
+%description
+pythonFlu configuration package
+
+%prep 
+
+%build
+
+%install
+
+rm -rf $RPM_BUILD_ROOT
+
+make install DESTDIR=$RPM_BUILD_ROOT
+
+%clean 
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(-, root, root)
+
+
+

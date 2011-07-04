@@ -1,0 +1,21 @@
+#PACKAGE# (#VERSION#) @UBUNTU_CODENAME@; urgency=high
+
+  * To support compilation for third-party pythonFlu extensions
+
+ -- #USERNAME# <#EMAIL#>  #DATE#
+ 
+confflu (1.1) lucid; urgency=high
+
+  * To reflect pythonFlu build system improvements
+
+ -- Alexey PETROV <alexey.petrov.nnov@gmail.com> Mon, 04 April 2011 21:09:12 +0300
+
+
+confflu (0.1) lucid; urgency=high
+
+  * Initial development
+
+ -- Alexey PETROV <alexey.petrov.nnov@gmail.com> Sun, 04 April 2010 16:26:29 +0300
+
+
+	

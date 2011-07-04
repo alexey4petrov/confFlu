@@ -1,4 +1,4 @@
-## confFlu - pythonFlu configuration package
+## pythonFlu - Python wrapping for OpenFOAM C++ API
 ## Copyright (C) 2010- Alexey Petrov
 ## Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
 ## 
@@ -22,18 +22,25 @@
 
 
 #--------------------------------------------------------------------------------------
-if test "${CONFFLU_ROOT_DIR}x" = "x" ; then
-   export CONFFLU_ROOT_DIR="@abs_top_builddir@"
-   echo CONFFLU_ROOT_DIR=\"${CONFFLU_ROOT_DIR}\"
+DESTDIR=
+confflu_path=$(DESTDIR)/usr/local/share/confFlu
 
-   export PATH=${CONFFLU_ROOT_DIR}:${PATH}
-   
-   source ${CONFFLU_ROOT_DIR}/env.sh
-   # Patch for PBMR environment
-   # (to keep only one FORTRAN compiller in the PATH)
-   export PATH=`echo ${PATH} | sed -e"s%\([:]*\)/usr/local/lf9562/bin\([:]*\)%\1\2%g" | sed -e"s%::%:%g"`
-   export LD_LIBRARY_PATH=`echo ${LD_LIBRARY_PATH} | sed -e"s%\([:]*\)/usr/local/lf9562/lib\([:]*\)%\1\2%g" | sed -e"s%::%:%g"`
-fi
+BUILD_DIR=/usr/src/packages/BUILD
+preparation_dir=$(BUILD_DIR)/confFlu
+
+preparation:$(preparation_dir)/build_configure
+
+$(preparation_dir)/build_configure:
+	@ install -d $(preparation_dir)
+	@ cp -rf admin build_configure env.sh Makefile $(preparation_dir)/
+	@ mv $(preparation_dir)/env.sh $(preparation_dir)/bashrc
+
+install: $(confflu_path)/build_configure
+
+$(confflu_path)/build_configure: 
+	@ install -d $(confflu_path)
+	@ cp -rf $(preparation_dir)/* $(confflu_path)/
 
 
-#------------------------------------------------------------------------------
+
+#--------------------------------------------------------------------------------------     	
