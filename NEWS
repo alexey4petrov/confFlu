@@ -25,6 +25,14 @@ See http://sourceforge.net/projects/pythonflu
 ---------------------------------------------------------------------------
 Author(s) :  Alexey PETROV
 
+2011-07-04
+
+* To support compilation for third-party pythonFlu extensions
+
+
+---------------------------------------------------------------------------
+Author(s) :  Alexey PETROV
+
 2011-05-27
 
 * To reflect pythonFlu build system improvements

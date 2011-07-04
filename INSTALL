@@ -52,19 +52,22 @@ The installation procedure for the "confFlu" consists of the following simple st
    Make sure that after each configuration step the "--- OK ---" message is
    printed in your console.
 
+4. Install confFlu:  
+   
+   make install
 
 #--------------------------------------------------------------------------------------
 "confFlu" installation check
 #--------------------------------------------------------------------------------------
 
-A new file "bashrc" should appear in the source directory
+A file "build_configure" should appear in the /usr/local/share/confFlu
 
 
 #--------------------------------------------------------------------------------------
 "confFlu" utility environment
 #--------------------------------------------------------------------------------------
 
-Before one starts to use "confFlu" it is necessary to source the generated "bashrc" file
+To use "confFlu" functionality, include "/usr/local/share/confFlu/build_configure" launching in your "build_configure" script
 
 
 #--------------------------------------------------------------------------------------

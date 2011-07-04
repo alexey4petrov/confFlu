@@ -53,7 +53,7 @@ See the INSTALL file for more information about building of "confFlu" package.
 Usage
 #--------------------------------------------------------------------------------------
 
-To use its functionality it is necessary to source the generated "bashrc" file
+To use "confFlu" functionality, include "/usr/local/share/confFlu/build_configure" launching in your "build_configure" script
 
 
 #--------------------------------------------------------------------------------------
