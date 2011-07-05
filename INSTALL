@@ -54,7 +54,7 @@ The installation procedure for the "confFlu" consists of the following simple st
 
 4. Install confFlu:  
    
-   make install
+   sudo make install
 
 #--------------------------------------------------------------------------------------
 "confFlu" installation check
