@@ -53,7 +53,9 @@ AC_SUBST(HEADER_PATHS)
 
 AC_SUBST(LIST_VERSIONS)
 
+AC_SUBST(LIB_DIR)
 
+AC_SUBST(LIB_WM_OPTIONS_DIR)
 
 openfoam_ok=no
 
@@ -115,6 +117,10 @@ if test "x${WM_PROJECT_VERSION}" = "x1.7.1" ; then
    FOAM_PACKAGE_NAME="openfoam171"
 fi
 
+if test "x${WM_PROJECT_VERSION}" = "x2.0.0" ; then
+   FOAM_PACKAGE_NAME="openfoam200"
+fi
+
 FOAM_PACKAGE_BUILD=[`dpkg -s ${FOAM_PACKAGE_NAME} 2>/dev/null  | grep Version | sed 's/Version://' `]
 FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/openfoam//'`]
 
@@ -124,6 +130,25 @@ AC_MSG_NOTICE( @FOAM_PACKAGE_BUILD@ == "${FOAM_PACKAGE_BUILD}" )
 
 
 dnl --------------------------------------------------------------------------------
+LIB_DIR="${WM_PROJECT_DIR}/lib"
+
+LIB_WM_OPTIONS_DIR="${LIB_DIR}/${WM_OPTIONS}"
+
+
+if test ${FOAM_VERSION} -ge 020000; then
+   if test "x${FOAM_BRANCH}" != "x" ; then
+      TEST_CASES+="r2.0.0-${FOAM_BRANCH} "
+      LIST_VERSIONS+="\"020000_${FOAM_BRANCH}\","
+      HEADER_PATHS+="/patches/r2.0.0-${FOAM_BRANCH} "
+   else
+      HEADER_PATHS+="/patches/r2.0.0 "
+      LIST_VERSIONS+="\"020000\","
+      TEST_CASES+="r2.0.0 "
+   fi
+   LIB_DIR=${WM_PROJECT_DIR}/platforms
+   LIB_WM_OPTIONS_DIR=${LIB_DIR}/${WM_OPTIONS}/lib
+fi
+
 if test ${FOAM_VERSION} -ge 010701; then
    if test "x${FOAM_BRANCH}" != "x" ; then
       TEST_CASES+="r1.7.1-${FOAM_BRANCH} "
