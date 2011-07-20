@@ -396,10 +396,41 @@ esac
 
 dnl --------------------------------------------------------------------------------
 OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_VERSION__=${FOAM_VERSION}"
-if test "${FOAM_BRANCH}x" != "x" ; then
-   OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_BRANCH__=${FOAM_BRANCH}"
-fi
 
+
+dnl --------------------------------------------------------------------------------
+IFS_STORE=${IFS}
+IFS=''
+SWIG_DEFINE_BRANCHES=$(cat <<'EOTEXT'
+%define __OPENFOAM_EXT__ 1 %enddef
+%define __FREEFOAM__ 2 %enddef
+EOTEXT
+)
+
+AC_SUBST(SWIG_DEFINE_BRANCHES)
+
+CXX_DEFINE_BRANCHES=$(cat <<'EOTEXT'
+#define __OPENFOAM_EXT__ 1
+#define __FREEFOAM__ 2
+EOTEXT
+)
+IFS=${IFS_STORE}
+
+AC_SUBST(CXX_DEFINE_BRANCHES)
+
+
+dnl --------------------------------------------------------------------------------
+case "x${FOAM_BRANCH}" in
+"xfree")
+   OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_BRANCH__=__FREEFOAM__"
+;;
+"xdev")
+   OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_BRANCH__=__OPENFOAM_EXT__"
+;;
+esac
+
+
+dnl --------------------------------------------------------------------------------
 AC_MSG_NOTICE( @OPENFOAM_GFLAGS@ == "${OPENFOAM_GFLAGS}" )
 AC_SUBST(OPENFOAM_GFLAGS)
 
