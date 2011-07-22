@@ -182,7 +182,6 @@ xfree )
   fi
 ;;
 xdev )
-  echo "DEV BRANCH"
   if test ${FOAM_VERSION} -ge 010600; then
      TEST_CASES+="r1.6-${FOAM_BRANCH} "
      LIST_VERSIONS+="\"010600_${FOAM_BRANCH}\","
@@ -200,7 +199,6 @@ xdev )
   HEADER_PATHS+="/patches/r1.4.1-dev "
 ;;
 *)
-  echo "EMPTY BRANCH"
   if test ${FOAM_VERSION} -ge 010701; then
      HEADER_PATHS+="/patches/r1.7.1 "
      LIST_VERSIONS+="\"010701\","
@@ -254,8 +252,10 @@ case "x${FOAM_BRANCH}" in
    FOAM_LIBS_SUFFIX=".so"
    
    OPENFOAM_LIBS="${FOAM_LIBS_PREFIX}OpenFOAM${FOAM_LIBS_SUFFIX}"
+   OPENFOAM_RPATHS="-Wl,-rpath=${FF_INSTALL_LIB_PATH}"
    if test ${FOAM_VERSION} -ge 010701 ; then
       OPENFOAM_LIBS="${FOAM_LIBS_PREFIX}OpenFOAM${FOAM_LIBS_SUFFIX} ${FF_INSTALL_LIB_PATH}/plugins1/libmpiPstream.so"
+      OPENFOAM_RPATHS="-Wl,-rpath=${FF_INSTALL_LIB_PATH} -Wl,-rpath=${FF_INSTALL_LIB_PATH}/plugins1"
    fi
 
    OPENFOAM_MESHTOOLS_CPPFLAGS="-I${FF_INSTALL_HEADER_PATH}/meshTools"
@@ -357,6 +357,8 @@ END
    dnl --------------------------------------------------------------------------------
    FOAM_LIBS_PREFIX="-l"
    FOAM_LIBS_SUFFIX=""
+   
+   OPENFOAM_RPATHS=""
 
    PROJECT_LIBS=${FOAM_LIBS_PREFIX}${WM_PROJECT}${FOAM_LIBS_SUFFIX}
    OPENFOAM_LIBS=${PROJECT_LIBS}
@@ -464,6 +466,10 @@ AC_SUBST(OPENFOAM_LDFLAGS)
 
 AC_MSG_NOTICE( @OPENFOAM_LIBS@ == "${OPENFOAM_LIBS}" )
 AC_SUBST(OPENFOAM_LIBS)
+
+AC_MSG_NOTICE( @OPENFOAM_RPATHS@ == "${OPENFOAM_RPATHS}" )
+AC_SUBST(OPENFOAM_RPATHS)
+
 
 dnl --------------------------------------------------------------------------------
 AC_MSG_NOTICE( @OPENFOAM_MESHTOOLS_CPPFLAGS@ == "${OPENFOAM_MESHTOOLS_CPPFLAGS}" )
