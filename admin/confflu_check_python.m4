@@ -108,24 +108,33 @@ AC_ARG_WITH( [python_libraries],
              [],
              [ with_python_libraries=no ]  )
    
+case `uname -s` in
+Darwin)
+	SOEXTENSION=dylib
+;;
+*)
+	SOEXTENSION=so
+;;
+esac
+
 if test "x${with_python_libraries}" = "xno" ; then
    with_python_libraries=${python_home}/lib
-   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
+   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.${SOEXTENSION}], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
 fi
 
 if test "x${python_libraries_ok}" = "xno" ; then
    with_python_libraries=/usr/lib
-   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
+   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.${SOEXTENSION}], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
 fi
 
 if test "x${python_libraries_ok}" = "xno" ; then
    with_python_libraries=/usr/lib64
-   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
+   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.${SOEXTENSION}], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
 fi
 
 dnl checking path from --with-python-libraries=<path>
 if test "x${python_libraries_ok}" = "xno" ; then
-   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.so], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
+   AC_CHECK_FILE( [${with_python_libraries}/libpython${python_version}.${SOEXTENSION}], [ python_libraries_ok=yes ], [ python_libraries_ok=no ] )
 fi
 
 
