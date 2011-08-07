@@ -59,8 +59,15 @@ aclocal ${other_includes} -I ${confflu_dir}/admin -I admin || exit 1
 #   ./admin/config.sub
 #   ./admin/ltmain.sh
 echo "--------------------------------- libtoolize ------------------------------------"
-libtoolize --force --copy --automake || exit 1
-
+case `uname -s` in
+Darwin)
+   # use the libtools from MacPorts
+   glibtoolize --force --copy --automake || exit 1
+;;
+*)
+   libtoolize --force --copy --automake || exit 1
+;;
+esac
 
 #--------------------------------------------------------------------------------------
 # autoconf creates the configure script from the file configure.ac (or
@@ -68,7 +75,8 @@ libtoolize --force --copy --automake || exit 1
 # output:
 #   configure
 echo "---------------------------------- autoconf -------------------------------------"
-autoconf
+
+autoconf || exit 1
 
 
 #--------------------------------------------------------------------------------------
@@ -85,7 +93,9 @@ autoconf
 #   ./admin/py-compile
 #   Makefile.in (from Makefile.am)
 echo "---------------------------------- automake -------------------------------------"
-automake --add-missing --copy --gnu
+
+# Add possibility to fail for missing Makefile.am
+automake --add-missing --copy --gnu || exit 1
 
 
 echo "------------------------------------ OK -----------------------------------------"
