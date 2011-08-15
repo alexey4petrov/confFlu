@@ -59,9 +59,9 @@ openfoam_ok=no
 dnl --------------------------------------------------------------------------------
 case `uname -s` in 
 Darwin)
-alias wc=gwc
-alias tail=gtail
-;;
+  alias wc=gwc
+  alias tail=gtail
+  ;;
 esac
 
 if test -d "${WM_PROJECT_DIR}" ; then
