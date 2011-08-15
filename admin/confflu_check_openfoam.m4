@@ -57,6 +57,13 @@ openfoam_ok=no
 
 
 dnl --------------------------------------------------------------------------------
+case `uname -s` in 
+Darwin)
+alias wc=gwc
+alias tail=gtail
+;;
+esac
+
 if test -d "${WM_PROJECT_DIR}" ; then
    dnl Look for OpenCFD or Extended OpenFOAM
    FOAM_BRANCH=[`echo ${WM_PROJECT_VERSION} | grep "-" | sed -e "s/\([^-]*\)-\(.*\)/\2/g"`]
