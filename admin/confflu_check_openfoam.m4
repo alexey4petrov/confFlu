@@ -57,6 +57,13 @@ openfoam_ok=no
 
 
 dnl --------------------------------------------------------------------------------
+case `uname -s` in 
+Darwin)
+  alias wc=gwc
+  alias tail=gtail
+  ;;
+esac
+
 if test -d "${WM_PROJECT_DIR}" ; then
    dnl Look for OpenCFD or Extended OpenFOAM
    FOAM_BRANCH=[`echo ${WM_PROJECT_VERSION} | grep "-" | sed -e "s/\([^-]*\)-\(.*\)/\2/g"`]
@@ -157,6 +164,8 @@ case "x${FOAM_BRANCH}" in
 	FOAM_PACKAGE_NAME="openfoam170" ;;
    "x1.7.1" )
 	FOAM_PACKAGE_NAME="openfoam171" ;;
+   "x2.0.0" )
+	FOAM_PACKAGE_NAME="openfoam200" ;;
    esac
    FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/openfoam//'`] ;;
 esac
@@ -199,6 +208,12 @@ xdev )
   HEADER_PATHS+="/patches/r1.4.1-dev "
 ;;
 *)
+  if test ${FOAM_VERSION} -ge 020000; then
+     HEADER_PATHS+="/patches/r2.0.0 "
+     LIST_VERSIONS+="\"020000\","
+     TEST_CASES+="r2.0.0 "
+  fi
+
   if test ${FOAM_VERSION} -ge 010701; then
      HEADER_PATHS+="/patches/r1.7.1 "
      LIST_VERSIONS+="\"010701\","
@@ -341,6 +356,12 @@ END
    LIB_SRC=${WM_PROJECT_DIR}/src
    LIB_DIR=${WM_PROJECT_DIR}/lib
    LIB_WM_OPTIONS_DIR=${LIB_DIR}/${WM_OPTIONS}
+      
+   if test ${FOAM_VERSION} -ge 020000 ; then   
+      LIB_DIR=${WM_PROJECT_DIR}/platforms
+      LIB_WM_OPTIONS_DIR=${LIB_DIR}/${WM_OPTIONS}/lib
+   fi
+
    LIB_WM_OPTIONS_DIR_BINARY_INSTALL=${LIB_DIR}
 
    PROJECT_INC="-I${LIB_SRC}/${WM_PROJECT}/lnInclude -I${LIB_SRC}"
@@ -365,8 +386,12 @@ END
    OPENFOAM_MESHTOOLS_CPPFLAGS="-I${LIB_SRC}/meshTools/lnInclude"
 
    OPENFOAM_BASICTHERMOPHYSICALMODELS_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/basic/lnInclude"
-
-   OPENFOAM_RADIATION_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/radiation/lnInclude"
+   
+   if test ${FOAM_VERSION} -lt 020000 ; then
+     OPENFOAM_RADIATION_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/radiation/lnInclude"
+   else
+     OPENFOAM_RADIATION_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/radiationModels/lnInclude"
+   fi
 
    OPENFOAM_SPECIE_CPPFLAGS=""
 
@@ -404,6 +429,10 @@ END
       OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS="${OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS} -I${LIB_SRC}/turbulenceModels/compressible/RAS/lnInclude"
    fi
 
+   if test ${FOAM_VERSION} -ge 020000 ; then
+      OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS="${OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS} -I${LIB_SRC}/turbulenceModels/compressible/turbulenceModel/lnInclude"
+   fi
+   
    OPENFOAM_INTERFACEPROPERTIES_CPPFLAGS="-I${LIB_SRC}/transportModels/interfaceProperties/lnInclude"
 
    rm -fr conf.include.makefile
@@ -488,8 +517,10 @@ AC_MSG_NOTICE( @OPENFOAM_RADIATION_CPPFLAGS@ == "${OPENFOAM_RADIATION_CPPFLAGS}"
 AC_SUBST(OPENFOAM_RADIATION_CPPFLAGS)
 
 OPENFOAM_RADIATION_LIBS=""
-if test ${FOAM_VERSION} -ge 010500 ; then
-   OPENFOAM_RADIATION_LIBS="${OPENFOAM_RADIATION_LIBS} ${FOAM_LIBS_PREFIX}radiation${FOAM_LIBS_SUFFIX}"
+if test ${FOAM_VERSION} -ge 010500 -a ${FOAM_VERSION} -lt 020000 ; then
+     OPENFOAM_RADIATION_LIBS="${OPENFOAM_RADIATION_LIBS} ${FOAM_LIBS_PREFIX}radiation${FOAM_LIBS_SUFFIX}"
+elif test ${FOAM_VERSION} -ge 020000; then
+   OPENFOAM_RADIATION_LIBS="${OPENFOAM_RADIATION_LIBS} ${FOAM_LIBS_PREFIX}radiationModels${FOAM_LIBS_SUFFIX}"
 fi
 AC_MSG_NOTICE( @OPENFOAM_RADIATION_LIBS@ == "${OPENFOAM_RADIATION_LIBS}" )
 AC_SUBST(OPENFOAM_RADIATION_LIBS)
