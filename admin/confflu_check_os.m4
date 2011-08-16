@@ -43,6 +43,8 @@ AC_DEFUN([CONFFLU_CHECK_OS],
   
   os_ubuntu=[`cat /etc/*-release | grep "Ubuntu"`]
 
+  OS_NAME=[`uname -s`]
+
   if test "x${os_suse}" != "x"; then
      OS_NAME="openSUSE"
   fi
