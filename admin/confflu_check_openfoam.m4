@@ -34,6 +34,8 @@ FOAM_PACKAGE_BUILD=""
 TEST_CASES=""
 HEADER_PATHS=""
 LIST_VERSIONS=""
+DEFINE_FOAM_BRANCH=""
+DEFINE_FOAM_VERSION=""
 
 AC_SUBST(FOAM_VERSION)
 
@@ -52,6 +54,10 @@ AC_SUBST(TEST_CASES)
 AC_SUBST(HEADER_PATHS)
 
 AC_SUBST(LIST_VERSIONS)
+
+AC_SUBST(DEFINE_FOAM_BRANCH)
+
+AC_SUBST(DEFINE_FOAM_VERSION)
 
 openfoam_ok=no
 
@@ -441,7 +447,8 @@ esac
 
 
 dnl --------------------------------------------------------------------------------
-OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_VERSION__=${FOAM_VERSION}"
+DEFINE_FOAM_VERSION="-D__FOAM_VERSION__=${FOAM_VERSION}"
+OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} ${DEFINE_FOAM_VERSION}"
 
 
 dnl --------------------------------------------------------------------------------
@@ -468,12 +475,14 @@ AC_SUBST(CXX_DEFINE_BRANCHES)
 dnl --------------------------------------------------------------------------------
 case "x${FOAM_BRANCH}" in
 "xfree")
-   OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_BRANCH__=__FREEFOAM__"
+   DEFINE_FOAM_BRANCH="-D__FOAM_BRANCH__=__FREEFOAM__"
 ;;
 "xdev")
-   OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_BRANCH__=__OPENFOAM_EXT__"
+   DEFINE_FOAM_BRANCH="-D__FOAM_BRANCH__=__OPENFOAM_EXT__"
 ;;
 esac
+
+OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} ${DEFINE_FOAM_BRANCH}"
 
 
 dnl --------------------------------------------------------------------------------
