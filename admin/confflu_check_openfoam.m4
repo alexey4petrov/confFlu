@@ -403,10 +403,14 @@ END
      OPENFOAM_RADIATION_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/radiationModels/lnInclude"
    fi
 
-   OPENFOAM_SPECIE_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/specie/lnInclude"
-   
+   OPENFOAM_SPECIE_CPPFLAGS=""
    if test ${FOAM_VERSION} -ge 020000 ; then
      OPENFOAM_SPECIE_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/specie/lnInclude"   
+   fi
+
+   OPENFOAM_SOLID_CPPFLAGS=""
+   if test ${FOAM_VERSION} -ge 020000 ; then
+     OPENFOAM_SOLID_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/solid/lnInclude"   
    fi
 
    OPENFOAM_FINITEVOLUME_CPPFLAGS="-I${LIB_SRC}/finiteVolume/lnInclude"
@@ -559,9 +563,20 @@ dnl ----------------------------------------------------------------------------
 AC_MSG_NOTICE( @OPENFOAM_SPECIE_CPPFLAGS@ == "${OPENFOAM_SPECIE_CPPFLAGS}" )
 AC_SUBST(OPENFOAM_SPECIE_CPPFLAGS)
 
+AC_MSG_NOTICE( @OPENFOAM_SOLID_CPPFLAGS@ == "${OPENFOAM_SOLID_CPPFLAGS}" )
+AC_SUBST(OPENFOAM_SOLID_CPPFLAGS)
+
 OPENFOAM_SPECIE_LIBS="${FOAM_LIBS_PREFIX}specie${FOAM_LIBS_SUFFIX}"
 AC_MSG_NOTICE( @OPENFOAM_SPECIE_LIBS@ == "${OPENFOAM_SPECIE_LIBS}" )
 AC_SUBST(OPENFOAM_SPECIE_LIBS)
+
+
+OPENFOAM_SOLID_LIBS=""
+if test ${FOAM_VERSION} -ge 020000 ; then
+   OPENFOAM_SOLID_LIBS="${FOAM_LIBS_PREFIX}solid${FOAM_LIBS_SUFFIX}"   
+fi
+AC_MSG_NOTICE( @OPENFOAM_SOLID_LIBS@ == "${OPENFOAM_SOLID_LIBS}" )
+AC_SUBST(OPENFOAM_SOLID_LIBS)
 
 dnl --------------------------------------------------------------------------------
 AC_MSG_NOTICE( @OPENFOAM_FINITEVOLUME_CPPFLAGS@ == "${OPENFOAM_FINITEVOLUME_CPPFLAGS}" )
