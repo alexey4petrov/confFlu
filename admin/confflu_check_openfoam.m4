@@ -31,6 +31,7 @@ DEV_BRANCH=""
 FOAM_PACKAGE_NAME=""
 FOAM_PACKAGE_SUFFIX=""
 FOAM_PACKAGE_BUILD=""
+FOAM_PACKAGE_DIR=""
 TEST_CASES=""
 HEADER_PATHS=""
 LIST_VERSIONS=""
@@ -50,6 +51,8 @@ AC_SUBST(FOAM_PACKAGE_NAME)
 AC_SUBST(FOAM_PACKAGE_SUFFIX)
 
 AC_SUBST(FOAM_PACKAGE_BUILD)
+
+AC_SUBST(FOAM_PACKAGE_DIR)
 
 AC_SUBST(TEST_CASES)
 
@@ -93,6 +96,7 @@ if test -d "${WM_PROJECT_DIR}" ; then
    if test "x${FOAM_BRANCH}" == "xext" ; then
       FOAM_BRANCH="dev"
    fi
+   FOAM_PACKAGE_DIR=$WM_PROJECT_DIR
 else
    dnl Look for FreeFOAM
    dnl --------------------------------------------------------------------------------
