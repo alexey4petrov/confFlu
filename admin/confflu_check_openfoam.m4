@@ -31,9 +31,14 @@ DEV_BRANCH=""
 FOAM_PACKAGE_NAME=""
 FOAM_PACKAGE_SUFFIX=""
 FOAM_PACKAGE_BUILD=""
+FOAM_PACKAGE_DIR=""
 TEST_CASES=""
 HEADER_PATHS=""
 LIST_VERSIONS=""
+DEFINE_FOAM_BRANCH=""
+DEFINE_FOAM_VERSION=""
+FOAM_USER_BIN=""
+FOAM_USER_LIB=""
 
 AC_SUBST(FOAM_VERSION)
 
@@ -47,11 +52,21 @@ AC_SUBST(FOAM_PACKAGE_SUFFIX)
 
 AC_SUBST(FOAM_PACKAGE_BUILD)
 
+AC_SUBST(FOAM_PACKAGE_DIR)
+
 AC_SUBST(TEST_CASES)
 
 AC_SUBST(HEADER_PATHS)
 
 AC_SUBST(LIST_VERSIONS)
+
+AC_SUBST(DEFINE_FOAM_BRANCH)
+
+AC_SUBST(DEFINE_FOAM_VERSION)
+
+AC_SUBST(FOAM_USER_BIN)
+
+AC_SUBST(FOAM_USER_LIB)
 
 openfoam_ok=no
 
@@ -81,6 +96,7 @@ if test -d "${WM_PROJECT_DIR}" ; then
    if test "x${FOAM_BRANCH}" == "xext" ; then
       FOAM_BRANCH="dev"
    fi
+   FOAM_PACKAGE_DIR=$WM_PROJECT_DIR
 else
    dnl Look for FreeFOAM
    dnl --------------------------------------------------------------------------------
@@ -120,6 +136,8 @@ END
       case ${FF_VERSION_FULL} in
       "0.1.0" )
       	  FOAM_VERSION=010500 ;;
+      "0.1.0rc5" )
+      	  FOAM_VERSION=010701 ;;
       * )
       	  FOAM_VERSION=010701 ;;
       esac
@@ -147,12 +165,7 @@ AC_MSG_NOTICE( @ENABLE_OPENFOAM@ == "${ENABLE_OPENFOAM}" )
 dnl --------------------------------------------------------------------------------
 case "x${FOAM_BRANCH}" in
 "xfree" )
-   case "x${FOAM_VERSION}" in
-   "x010500" )
-       FOAM_PACKAGE_NAME="freefoam-0.1.0" ;;
-   * )
-       FOAM_PACKAGE_NAME="freefoam-0.2.0" ;;
-   esac
+   FOAM_PACKAGE_NAME="freefoam-${FF_VERSION_FULL}"
    FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/freefoam//'`] ;;
 * )
    case "x${WM_PROJECT_VERSION}" in
@@ -166,6 +179,8 @@ case "x${FOAM_BRANCH}" in
 	FOAM_PACKAGE_NAME="openfoam171" ;;
    "x2.0.0" )
 	FOAM_PACKAGE_NAME="openfoam200" ;;
+   "x2.0.1" )
+	FOAM_PACKAGE_NAME="openfoam201" ;;
    esac
    FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/openfoam//'`] ;;
 esac
@@ -208,6 +223,12 @@ xdev )
   HEADER_PATHS+="/patches/r1.4.1-dev "
 ;;
 *)
+  if test ${FOAM_VERSION} -ge 020001; then
+     HEADER_PATHS+="/patches/r2.0.1 "
+     LIST_VERSIONS+="\"020001\","
+     TEST_CASES+="r2.0.1 "
+  fi
+
   if test ${FOAM_VERSION} -ge 020000; then
      HEADER_PATHS+="/patches/r2.0.0 "
      LIST_VERSIONS+="\"020000\","
@@ -248,6 +269,12 @@ AC_MSG_NOTICE( @LIST_VERSIONS@ == "${LIST_VERSIONS}" )
 AC_MSG_NOTICE( @HEADER_PATHS@ == "${HEADER_PATHS}" )
 AC_MSG_NOTICE( @TEST_CASES@ == "${TEST_CASES}" )
 
+FOAM_USER_BIN=${FOAM_USER_APPBIN}
+FOAM_USER_LIB=${FOAM_USER_LIBBIN}
+AC_MSG_NOTICE( @FOAM_USER_BIN@ == "${FOAM_USER_BIN}" )
+AC_MSG_NOTICE( @FOAM_USER_LIB@ == "${FOAM_USER_LIB}" )
+
+
 
 dnl --------------------------------------------------------------------------------
 case "x${FOAM_BRANCH}" in
@@ -257,10 +284,12 @@ case "x${FOAM_BRANCH}" in
 
    OPENFOAM_GFLAGS="-DOpenFOAM_EXPORTS ${FF_DEFINITIONS}"
 
-   OPENFOAM_CXXFLAGS="${OPENFOAM_GFLAGS} -fPIC"
+   OPENFOAM_CXXFLAGS="${OPENFOAM_GFLAGS} -fPIC -Wno-unused-parameter"
    # OPENFOAM_CXXFLAGS="${OPENFOAM_CXXFLAGS} -ggdb3 -DFULLDEBUG"
 
-   OPENFOAM_LINKLIBSO="c++ -shared" 
+   OPENFOAM_LINKLIBSO="c++ -shared"
+   OPENFOAM_LINKEXE="c++"
+   
    OPENFOAM_LDFLAGS="-Wl,-rpath=${FF_INSTALL_LIB_PATH}"
    
    FOAM_LIBS_PREFIX="-l"
@@ -302,9 +331,17 @@ case "x${FOAM_BRANCH}" in
    OPENFOAM_INCOMPRESSIBLETURBULENCEMODELS_CPPFLAGS="${OPENFOAM_INCOMPRESSIBLETURBULENCEMODELS_CPPFLAGS} -I${FF_INSTALL_HEADER_PATH}/incompressibleLESModels"
    OPENFOAM_INCOMPRESSIBLETURBULENCEMODELS_CPPFLAGS="${OPENFOAM_INCOMPRESSIBLETURBULENCEMODELS_CPPFLAGS} -I${FF_INSTALL_HEADER_PATH}/incompressibleRASModels"
 
+   if test ${FOAM_VERSION} -ge 010701 ; then
+      OPENFOAM_INCOMPRESSIBLETURBULENCEMODELS_CPPFLAGS="${OPENFOAM_INCOMPRESSIBLETURBULENCEMODELS_CPPFLAGS} -I${FF_INSTALL_HEADER_PATH}/incompressibleTurbulenceModel"
+   fi
+   
+   OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS=""
    OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS="${OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS} -I${FF_INSTALL_HEADER_PATH}/compressibleLESModels"
    OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS="${OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS} -I${FF_INSTALL_HEADER_PATH}/compressibleRASModels"
-
+   if test ${FOAM_VERSION} -ge 010701 ; then
+     OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS="${OPENFOAM_COMPRESSIBLETURBULENCEMODELS_CPPFLAGS} -I${FF_INSTALL_HEADER_PATH}/compressibleTurbulenceModel"
+   fi
+   
    OPENFOAM_INTERFACEPROPERTIES_CPPFLAGS="-I${FF_INSTALL_HEADER_PATH}/interfaceProperties"
 
    ;;
@@ -353,6 +390,15 @@ END
    rm -fr conf.linklibso.makefile
 
    dnl --------------------------------------------------------------------------------
+cat > conf.linkexe.makefile << 'END'
+include conf.include.makefile
+all:
+	@echo $(LINKEXE)
+END
+   OPENFOAM_LINKEXE=`make --makefile=conf.linkexe.makefile`
+   rm -fr conf.linkexe.makefile
+
+   dnl --------------------------------------------------------------------------------
    LIB_SRC=${WM_PROJECT_DIR}/src
    LIB_DIR=${WM_PROJECT_DIR}/lib
    LIB_WM_OPTIONS_DIR=${LIB_DIR}/${WM_OPTIONS}
@@ -387,6 +433,10 @@ END
 
    OPENFOAM_BASICTHERMOPHYSICALMODELS_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/basic/lnInclude"
    
+   if test ${FOAM_VERSION} -ge 020000 ; then
+     OPENFOAM_BASICSOLIDTHERMO_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/basicSolidThermo/lnInclude"   
+   fi
+     
    if test ${FOAM_VERSION} -lt 020000 ; then
      OPENFOAM_RADIATION_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/radiation/lnInclude"
    else
@@ -394,6 +444,14 @@ END
    fi
 
    OPENFOAM_SPECIE_CPPFLAGS=""
+   if test ${FOAM_VERSION} -ge 020000 ; then
+     OPENFOAM_SPECIE_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/specie/lnInclude"   
+   fi
+
+   OPENFOAM_SOLID_CPPFLAGS=""
+   if test ${FOAM_VERSION} -ge 020000 ; then
+     OPENFOAM_SOLID_CPPFLAGS="-I${LIB_SRC}/thermophysicalModels/solid/lnInclude"   
+   fi
 
    OPENFOAM_FINITEVOLUME_CPPFLAGS="-I${LIB_SRC}/finiteVolume/lnInclude"
 
@@ -441,7 +499,8 @@ esac
 
 
 dnl --------------------------------------------------------------------------------
-OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_VERSION__=${FOAM_VERSION}"
+DEFINE_FOAM_VERSION="-D__FOAM_VERSION__=${FOAM_VERSION}"
+OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} ${DEFINE_FOAM_VERSION}"
 
 
 dnl --------------------------------------------------------------------------------
@@ -468,12 +527,14 @@ AC_SUBST(CXX_DEFINE_BRANCHES)
 dnl --------------------------------------------------------------------------------
 case "x${FOAM_BRANCH}" in
 "xfree")
-   OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_BRANCH__=__FREEFOAM__"
+   DEFINE_FOAM_BRANCH="-D__FOAM_BRANCH__=__FREEFOAM__"
 ;;
 "xdev")
-   OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} -D__FOAM_BRANCH__=__OPENFOAM_EXT__"
+   DEFINE_FOAM_BRANCH="-D__FOAM_BRANCH__=__OPENFOAM_EXT__"
 ;;
 esac
+
+OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} ${DEFINE_FOAM_BRANCH}"
 
 
 dnl --------------------------------------------------------------------------------
@@ -488,6 +549,10 @@ AC_SUBST(OPENFOAM_CXXFLAGS)
 
 AC_MSG_NOTICE( @OPENFOAM_LINKLIBSO@ == "${OPENFOAM_LINKLIBSO}" )
 AC_SUBST(OPENFOAM_LINKLIBSO)
+
+AC_MSG_NOTICE( @OPENFOAM_LINKEXE@ == "${OPENFOAM_LINKEXE}" )
+AC_SUBST(OPENFOAM_LINKEXE)
+
 
 AC_MSG_NOTICE( @OPENFOAM_LDFLAGS@ == "${OPENFOAM_LDFLAGS}" )
 AC_SUBST(OPENFOAM_LDFLAGS)
@@ -506,11 +571,23 @@ AC_SUBST(OPENFOAM_MESHTOOLS_LIBS)
 
 dnl --------------------------------------------------------------------------------
 OPENFOAM_BASICTHERMOPHYSICALMODELS_LIBS="${FOAM_LIBS_PREFIX}basicThermophysicalModels${FOAM_LIBS_SUFFIX}"
+
+if test ${FOAM_VERSION} -ge 020000 ; then
+   OPENFOAM_BASICSOLIDTHERMO_LIBS="${FOAM_LIBS_PREFIX}basicSolidThermo${FOAM_LIBS_SUFFIX}"   
+fi
+   
 AC_MSG_NOTICE( @OPENFOAM_BASICTHERMOPHYSICALMODELS_CPPFLAGS@ == "${OPENFOAM_BASICTHERMOPHYSICALMODELS_CPPFLAGS}" )
 AC_SUBST(OPENFOAM_BASICTHERMOPHYSICALMODELS_CPPFLAGS)
 
+AC_MSG_NOTICE( @OPENFOAM_BASICSOLIDTHERMO_CPPFLAGS@ == "${OPENFOAM_BASICSOLIDTHERMO_CPPFLAGS}" )
+AC_SUBST(OPENFOAM_BASICSOLIDTHERMO_CPPFLAGS)
+
 AC_MSG_NOTICE( @OPENFOAM_BASICTHERMOPHYSICALMODELS_LIBS@ == "${OPENFOAM_BASICTHERMOPHYSICALMODELS_LIBS}" )
 AC_SUBST(OPENFOAM_BASICTHERMOPHYSICALMODELS_LIBS)
+
+AC_MSG_NOTICE( @OPENFOAM_BASICSOLIDTHERMO_LIBS@ == "${OPENFOAM_BASICSOLIDTHERMO_LIBS}" )
+AC_SUBST(OPENFOAM_BASICSOLIDTHERMO_LIBS)
+
 
 dnl --------------------------------------------------------------------------------
 AC_MSG_NOTICE( @OPENFOAM_RADIATION_CPPFLAGS@ == "${OPENFOAM_RADIATION_CPPFLAGS}" )
@@ -529,9 +606,20 @@ dnl ----------------------------------------------------------------------------
 AC_MSG_NOTICE( @OPENFOAM_SPECIE_CPPFLAGS@ == "${OPENFOAM_SPECIE_CPPFLAGS}" )
 AC_SUBST(OPENFOAM_SPECIE_CPPFLAGS)
 
+AC_MSG_NOTICE( @OPENFOAM_SOLID_CPPFLAGS@ == "${OPENFOAM_SOLID_CPPFLAGS}" )
+AC_SUBST(OPENFOAM_SOLID_CPPFLAGS)
+
 OPENFOAM_SPECIE_LIBS="${FOAM_LIBS_PREFIX}specie${FOAM_LIBS_SUFFIX}"
 AC_MSG_NOTICE( @OPENFOAM_SPECIE_LIBS@ == "${OPENFOAM_SPECIE_LIBS}" )
 AC_SUBST(OPENFOAM_SPECIE_LIBS)
+
+
+OPENFOAM_SOLID_LIBS=""
+if test ${FOAM_VERSION} -ge 020000 ; then
+   OPENFOAM_SOLID_LIBS="${FOAM_LIBS_PREFIX}solid${FOAM_LIBS_SUFFIX}"   
+fi
+AC_MSG_NOTICE( @OPENFOAM_SOLID_LIBS@ == "${OPENFOAM_SOLID_LIBS}" )
+AC_SUBST(OPENFOAM_SOLID_LIBS)
 
 dnl --------------------------------------------------------------------------------
 AC_MSG_NOTICE( @OPENFOAM_FINITEVOLUME_CPPFLAGS@ == "${OPENFOAM_FINITEVOLUME_CPPFLAGS}" )
@@ -651,6 +739,9 @@ if test ${FOAM_VERSION} -ge 010701 -a "x${FOAM_BRANCH}" != "xfree" ; then
 fi
 AC_MSG_NOTICE( @OPENFOAM_INTERFACEPROPERTIES_LIBS@ == "${OPENFOAM_INTERFACEPROPERTIES_LIBS}" )
 AC_SUBST(OPENFOAM_INTERFACEPROPERTIES_LIBS)
+
+foam_version=${FOAM_VERSION}
+foam_branch=${FOAM_VERSION}
 
 
 dnl --------------------------------------------------------------------------------
