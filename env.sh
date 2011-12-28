@@ -29,8 +29,7 @@ source_openfoam()
       tmp_PATH=${PATH}
       tmp_LD_LIBRARY_PATH=${LD_LIBRARY_PATH}
       
-      openfoam_bashrc=$1;shift
-      source ${openfoam_bashrc}
+      source $*
       echo WM_PROJECT_DIR=\"${WM_PROJECT_DIR}\"
 
       export PATH=${PATH}:${tmp_PATH}
