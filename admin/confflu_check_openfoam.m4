@@ -181,6 +181,8 @@ case "x${FOAM_BRANCH}" in
 	FOAM_PACKAGE_NAME="openfoam200" ;;
    "x2.0.1" )
 	FOAM_PACKAGE_NAME="openfoam201" ;;
+   "x2.1.0" )
+	FOAM_PACKAGE_NAME="openfoam210" ;;
    esac
    FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/openfoam//'`] ;;
 esac
@@ -223,6 +225,12 @@ xdev )
   HEADER_PATHS+="/patches/r1.4.1-dev "
 ;;
 *)
+  if test ${FOAM_VERSION} -ge 020100; then
+     HEADER_PATHS+="/patches/r2.1.0 "
+     LIST_VERSIONS+="\"020100\","
+     TEST_CASES+="r2.1.0 "
+  fi
+
   if test ${FOAM_VERSION} -ge 020001; then
      HEADER_PATHS+="/patches/r2.0.1 "
      LIST_VERSIONS+="\"020001\","
