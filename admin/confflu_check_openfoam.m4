@@ -128,7 +128,7 @@ END
    AC_MSG_NOTICE( FF_DEFINITIONS == "${FF_DEFINITIONS}" )
 
    dnl --------------------------------------------------------------------------------
-   FF_VERSION_FULL=`freefoam -version | awk '{print $3}'`
+   FF_VERSION_FULL=`python -c "from FreeFOAM import VERSION_FULL; print VERSION_FULL"`
    AC_MSG_NOTICE( FF_VERSION_FULL == "${FF_VERSION_FULL}" )
 
    dnl --------------------------------------------------------------------------------
