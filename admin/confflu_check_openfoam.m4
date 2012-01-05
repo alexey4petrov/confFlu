@@ -128,7 +128,7 @@ END
    AC_MSG_NOTICE( FF_DEFINITIONS == "${FF_DEFINITIONS}" )
 
    dnl --------------------------------------------------------------------------------
-   FF_VERSION_FULL=`freefoam -version | awk '{print $3}'`
+   FF_VERSION_FULL=`python -c "from FreeFOAM import VERSION_FULL; print VERSION_FULL"`
    AC_MSG_NOTICE( FF_VERSION_FULL == "${FF_VERSION_FULL}" )
 
    dnl --------------------------------------------------------------------------------
@@ -181,6 +181,8 @@ case "x${FOAM_BRANCH}" in
 	FOAM_PACKAGE_NAME="openfoam200" ;;
    "x2.0.1" )
 	FOAM_PACKAGE_NAME="openfoam201" ;;
+   "x2.1.0" )
+	FOAM_PACKAGE_NAME="openfoam210" ;;
    esac
    FOAM_PACKAGE_SUFFIX=[`echo ${FOAM_PACKAGE_NAME} | sed 's/openfoam//'`] ;;
 esac
@@ -223,6 +225,12 @@ xdev )
   HEADER_PATHS+="/patches/r1.4.1-dev "
 ;;
 *)
+  if test ${FOAM_VERSION} -ge 020100; then
+     HEADER_PATHS+="/patches/r2.1.0 "
+     LIST_VERSIONS+="\"020100\","
+     TEST_CASES+="r2.1.0 "
+  fi
+
   if test ${FOAM_VERSION} -ge 020001; then
      HEADER_PATHS+="/patches/r2.0.1 "
      LIST_VERSIONS+="\"020001\","
@@ -734,7 +742,7 @@ AC_MSG_NOTICE( @OPENFOAM_INTERFACEPROPERTIES_CPPFLAGS@ == "${OPENFOAM_INTERFACEP
 AC_SUBST(OPENFOAM_INTERFACEPROPERTIES_CPPFLAGS)
 
 OPENFOAM_INTERFACEPROPERTIES_LIBS="${FOAM_LIBS_PREFIX}interfaceProperties${FOAM_LIBS_SUFFIX}"
-if test ${FOAM_VERSION} -ge 010701 -a "x${FOAM_BRANCH}" != "xfree" ; then
+if test ${FOAM_VERSION} -ge 010701; then
    OPENFOAM_INTERFACEPROPERTIES_LIBS="${OPENFOAM_INTERFACEPROPERTIES_LIBS} ${FOAM_LIBS_PREFIX}twoPhaseInterfaceProperties${FOAM_LIBS_SUFFIX}"
 fi
 AC_MSG_NOTICE( @OPENFOAM_INTERFACEPROPERTIES_LIBS@ == "${OPENFOAM_INTERFACEPROPERTIES_LIBS}" )
