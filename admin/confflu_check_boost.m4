@@ -67,6 +67,12 @@ if test "x${boost_includes_ok}" = "xno" ; then
    AC_CHECK_FILE( [${with_boost_includes}/boost/version.hpp], [ boost_includes_ok=yes ], [ boost_includes_ok=no ] )
 fi
 
+dnl Try to use the MacPorts-installation on Macs
+if test "x${boost_includes_ok}" = "xno" ; then
+   with_boost_includes="/opt/local/include"
+   AC_CHECK_FILE( [${with_boost_includes}/boost/version.hpp], [ boost_includes_ok=yes ], [ boost_includes_ok=no ] )
+fi
+
 dnl Define corresponding common preprocessor & compiler flags
 if test "x${boost_includes_ok}" = "xyes" ; then
    test ! "x${with_boost_includes}" = "x/usr/include" && BOOST_CPPFLAGS="-I${with_boost_includes}"
