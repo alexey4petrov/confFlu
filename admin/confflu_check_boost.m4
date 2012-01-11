@@ -88,6 +88,7 @@ if test "x${boost_includes_ok}" = "xno" ; then
    AC_MSG_WARN( [use --with-boost-includes=<path> to define BOOST header files location] )
 fi
 
+
 dnl --------------------------------------------------------------------------------
 dnl Check for Boost libraries
 boost_libraries_ok=no
@@ -100,7 +101,7 @@ AC_ARG_WITH( [boost_libraries],
 dnl First try to use SALOME environment   
 if test "x${with_boost_libraries}" = "xyes" && test ! "x${BOOSTDIR}" = "x" ; then
    with_boost_libraries="${BOOSTDIR}/lib"
-   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*so$" | tail --lines=1`
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*(so|dylib)$" | tail --lines=1`
    if test ! "x${a_boost_lib}" = "x" ; then
       AC_CHECK_FILE( [${with_boost_libraries}/${a_boost_lib}], [ boost_libraries_ok=yes ], [ boost_libraries_ok=no ] )
    fi
@@ -109,7 +110,16 @@ fi
 dnl Try to use native environment
 if test "x${boost_libraries_ok}" = "xno" ; then
    with_boost_libraries="/usr/lib"
-   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*so$" | tail --lines=1`
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*(so|dylib)$" | tail --lines=1`
+   if test ! "x${a_boost_lib}" = "x" ; then
+      AC_CHECK_FILE( [${with_boost_libraries}/${a_boost_lib}], [ boost_libraries_ok=yes ], [ boost_libraries_ok=no ] )
+   fi
+fi
+
+dnl Try to use the MacPorts-installation on Macs
+if test "x${boost_libraries_ok}" = "xno" ; then
+   with_boost_libraries="/opt/local/lib"
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*(so|dylib)$" | tail --lines=1`
    if test ! "x${a_boost_lib}" = "x" ; then
       AC_CHECK_FILE( [${with_boost_libraries}/${a_boost_lib}], [ boost_libraries_ok=yes ], [ boost_libraries_ok=no ] )
    fi
@@ -120,12 +130,12 @@ if test "x${boost_libraries_ok}" = "xyes" ; then
    test ! "x${with_boost_libraries}" = "x/usr/lib" && BOOST_LDFLAGS="-L${with_boost_libraries}"
    LDFLAGS="${BOOST_LDFLAGS}"
    
-   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*-mt\.so$" | tail --lines=1`
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*-mt\.(so|dylib)$" | tail --lines=1`
    if test "x${a_boost_lib}" = "x" ; then
-      a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*\.so$" | tail --lines=1`
+      a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*\.(so|dylib)$" | tail --lines=1`
    fi
 
-   BOOST_LIBSUFFIX=[`echo ${a_boost_lib} | sed -e "s%libboost_[a-z]*%%g" | sed -e "s%\.so%%g"`]
+   BOOST_LIBSUFFIX=[`echo ${a_boost_lib} | sed -e "s%libboost_[a-z]*%%g" | sed -e "s%\.(so|dylib)%%g"`]
 fi
 
 if test "x${boost_libraries_ok}" = "xyes" ; then
