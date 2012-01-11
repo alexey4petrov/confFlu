@@ -364,10 +364,6 @@ include $(GENERAL_RULES)/general
 include $(RULES)/general
 include $(RULES)/$(WM_LINK_LANGUAGE)
 
-c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-Wold-style-cast %%g")
-c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-Wall %%g")
-c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-Wextra %%g")
-# c++FLAGS:=$(shell echo $(c++FLAGS) | sed -e"s%-O3 %-ggdb3 -DFULLDEBUG %g")
 END
 
    dnl --------------------------------------------------------------------------------
@@ -407,6 +403,43 @@ END
    rm -fr conf.linkexe.makefile
 
    dnl --------------------------------------------------------------------------------
+cat > conf.glibs.makefile << 'END'
+include conf.include.makefile
+all:
+	@echo $(GLIBS)
+END
+   OPENFOAM_GLIBS=`make --makefile=conf.glibs.makefile`
+   rm -fr conf.glibs.makefile
+
+   dnl --------------------------------------------------------------------------------
+cat > conf.glib_libs.makefile << 'END'
+include conf.include.makefile
+all:
+	@echo $(GLIB_LIBS)
+END
+   OPENFOAM_GLIB_LIBS=`make --makefile=conf.glib_libs.makefile`
+   rm -fr conf.glib_libs.makefile
+
+   dnl --------------------------------------------------------------------------------
+cat > conf.projectlibs.makefile << 'END'
+include conf.include.makefile
+all:
+	@echo $(PROJECT_LIBS)
+END
+   OPENFOAM_PROJECT_LIBS=`make --makefile=conf.projectlibs.makefile`
+   rm -fr conf.projectlibs.makefile
+
+   dnl --------------------------------------------------------------------------------
+cat > conf.openfoam_cc.makefile << 'END'
+include conf.include.makefile
+all:
+	@echo $(CC)
+END
+   OPENFOAM_CC=`make --makefile=conf.openfoam_cc.makefile`
+   rm -fr conf.openfoam_cc.makefile
+
+   dnl --------------------------------------------------------------------------------
+
    LIB_SRC=${WM_PROJECT_DIR}/src
    LIB_DIR=${WM_PROJECT_DIR}/lib
    LIB_WM_OPTIONS_DIR=${LIB_DIR}/${WM_OPTIONS}
@@ -434,8 +467,12 @@ END
    FOAM_LIBS_PREFIX="-l"
    FOAM_LIBS_SUFFIX=""
    
+   
    PROJECT_LIBS=${FOAM_LIBS_PREFIX}${WM_PROJECT}${FOAM_LIBS_SUFFIX}
    OPENFOAM_LIBS=${PROJECT_LIBS}
+
+   OPENFOAM_LINKEXE_LIBS="${OPENFOAM_PROJECT_LIBS} ${OPENFOAM_GLIBS}"
+   OPENFOAM_LINKLIBSO_LIBS="${OPENFOAM_LIBS} ${OPENFOAM_GLIB_LIBS}"
 
    OPENFOAM_MESHTOOLS_CPPFLAGS="-I${LIB_SRC}/meshTools/lnInclude"
 
@@ -546,6 +583,9 @@ OPENFOAM_CPPFLAGS="${OPENFOAM_CPPFLAGS} ${DEFINE_FOAM_BRANCH}"
 
 
 dnl --------------------------------------------------------------------------------
+AC_MSG_NOTICE( @OPENFOAM_CC@ == "${OPENFOAM_CC}" )
+AC_SUBST(OPENFOAM_CC)
+
 AC_MSG_NOTICE( @OPENFOAM_GFLAGS@ == "${OPENFOAM_GFLAGS}" )
 AC_SUBST(OPENFOAM_GFLAGS)
 
@@ -561,6 +601,11 @@ AC_SUBST(OPENFOAM_LINKLIBSO)
 AC_MSG_NOTICE( @OPENFOAM_LINKEXE@ == "${OPENFOAM_LINKEXE}" )
 AC_SUBST(OPENFOAM_LINKEXE)
 
+AC_MSG_NOTICE( @OPENFOAM_LINKLIBSO_LIBS@ == "${OPENFOAM_LINKLIBSO_LIBS}" )
+AC_SUBST(OPENFOAM_LINKLIBSO_LIBS)
+
+AC_MSG_NOTICE( @OPENFOAM_LINKEXE_LIBS@ == "${OPENFOAM_LINKEXE_LIBS}" )
+AC_SUBST(OPENFOAM_LINKEXE_LIBS)
 
 AC_MSG_NOTICE( @OPENFOAM_LDFLAGS@ == "${OPENFOAM_LDFLAGS}" )
 AC_SUBST(OPENFOAM_LDFLAGS)
