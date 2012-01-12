@@ -24,8 +24,8 @@
 prefix=@prefix@
 datarootdir=@datarootdir@
 
-conffludir:=${datarootdir}/confFlu
-
+conffludir:=${datarootdir}/confflu
+confflu_install_dir:=$(conffludir)
 
 #--------------------------------------------------------------------------------------
 DESTDIR=
@@ -53,6 +53,9 @@ install:
 	@ cp -rf @abs_top_builddir@/admin $(conffludir)/
 	@ echo "install @abs_top_builddir@/env.sh --> $(conffludir)/bashrc"
 	@ cp -rf @abs_top_builddir@/env.sh $(conffludir)/bashrc
+	echo "export CONFFLU_ROOT_DIR=$(confflu_install_dir)" >> $(conffludir)/bashrc
+	echo "echo CONFFLU_ROOT_DIR=\"\$${CONFFLU_ROOT_DIR}\"" >> $(conffludir)/bashrc
+
 
 develop:
 	@ rm -rf $(conffludir)
