@@ -1,9 +1,19 @@
 #PACKAGE# (#VERSION#) @UBUNTU_CODENAME@; urgency=high
 
-  * To support compilation for third-party pythonFlu extensions
+  * Porting on the latest version of OpenFOAM - 2.1.0, 2.0.1,2.0.0
+  
+  * Porting on FreeFOAM up to the 0.1.0rc5
+  
+  * Porting on MacOS X
 
  -- #USERNAME# <#EMAIL#>  #DATE#
  
+confflu (1.2-hybrid) lucid; urgency=high
+
+  * To support compilation for third-party pythonFlu extensions
+
+ -- Alexey PETROV <alexey.petrov.nnov@gmail.com> Mon, 05 July 2011 21:09:12 +0300
+
 confflu (1.1) lucid; urgency=high
 
   * To reflect pythonFlu build system improvements
