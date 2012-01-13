@@ -53,10 +53,15 @@ AC_ARG_WITH( [boost_includes],
              AC_HELP_STRING( [--with-boost-includes=<path>],
                              [use <path> to look for BOOST includes] ),
              [],
-             [ with_boost_includes="yes" ] )
+             [] )
    
-dnl First try to use SALOME environment   
-if test "x${with_boost_includes}" = "xyes" && test ! "x${BOOSTDIR}" = "x" ; then
+dnl First checking command line options
+if test ! "x${with_boost_includes}" = "x"; then
+   AC_CHECK_FILE( [${with_boost_includes}/boost/version.hpp], [ boost_includes_ok=yes ], [ boost_includes_ok=no ] )
+fi
+
+dnl Second try to use SALOME environment  
+if test "x${boost_includes_ok}" = "xno" && test ! "x${BOOSTDIR}" = "x" ; then
    with_boost_includes="${BOOSTDIR}/include"
    AC_CHECK_FILE( [${with_boost_includes}/boost/version.hpp], [ boost_includes_ok=yes ], [ boost_includes_ok=no ] )
 fi
@@ -89,10 +94,19 @@ AC_ARG_WITH( [boost_libraries],
              AC_HELP_STRING( [--with-boost-libraries=<path>],
                              [use <path> to look for BOOST libraries] ),
              [],
-             [ with_boost_libraries="yes" ]  )
+             []  )
 
-dnl First try to use SALOME environment   
-if test "x${with_boost_libraries}" = "xyes" && test ! "x${BOOSTDIR}" = "x" ; then
+
+dnl First checking command line options   
+if test ! "x${with_boost_libraries}" = "x" ; then
+   a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*so$" | tail --lines=1`
+   if test ! "x${a_boost_lib}" = "x" ; then
+      AC_CHECK_FILE( [${with_boost_libraries}/${a_boost_lib}], [ boost_libraries_ok=yes ], [ boost_libraries_ok=no ] )
+   fi
+fi
+
+dnl Second try to use SALOME environment   
+if test "x${boost_libraries_ok}" = "xno" && test ! "x${BOOSTDIR}" = "x" ; then
    with_boost_libraries="${BOOSTDIR}/lib"
    a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*so$" | tail --lines=1`
    if test ! "x${a_boost_lib}" = "x" ; then
