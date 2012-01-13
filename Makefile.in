@@ -48,11 +48,11 @@ install:
 	@ rm -rf $(conffludir)
 	@ echo "install @abs_top_builddir@/build_configure --> $(conffludir)/"
 	@ install -d $(conffludir)
-	@ cp -rf @abs_top_builddir@/build_configure $(conffludir)/
+	@ cp -rf build_configure $(conffludir)
 	@ echo "install @abs_top_builddir@/admin --> $(conffludir)/"
-	@ cp -rf @abs_top_builddir@/admin $(conffludir)/
+	@ cp -rf admin $(conffludir)
 	@ echo "install @abs_top_builddir@/env.sh --> $(conffludir)/bashrc"
-	@ cp -rf @abs_top_builddir@/env.sh $(conffludir)/bashrc
+	@ cp -rf env.sh $(conffludir)/bashrc
 	echo "export CONFFLU_ROOT_DIR=$(confflu_install_dir)" >> $(conffludir)/bashrc
 	echo "echo CONFFLU_ROOT_DIR=\"\$${CONFFLU_ROOT_DIR}\"" >> $(conffludir)/bashrc
 
