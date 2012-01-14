@@ -74,14 +74,21 @@ AC_DEFUN([CONFFLU_CHECK_OS],
   
   LIB_EXTENSION="so"
   LD_ADDNEEDED="--add-needed -Xlinker --no-as-needed"
+  LDCONFIG=ldconfig
+  FIND=find
   
   if test "x${OS_UNAME}" == "xDarwin"; then
      LD_ADDNEEDED=
      LIB_EXTENSION="dylib"
+     LDCONFIG=
+     FIND=gfind
 
      alias wc=gwc
      alias tail=gtail
   fi
+  
+  AC_SUBST(FIND)
+  AC_SUBST(LDCONFIG)
 ])
 
 
