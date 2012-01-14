@@ -73,8 +73,15 @@ AC_DEFUN([CONFFLU_CHECK_OS],
   OS_UNAME=[`uname -s `]
   
   LIB_EXTENSION="so"
+  LD_ADDNEEDED="--add-needed -Xlinker --no-as-needed"
+  
   if test "x${OS_UNAME}" == "xDarwin"; then
+     LD_ADDNEEDED=
+     LD_NOASNEEDED=
      LIB_EXTENSION="dylib"
+
+     alias wc=gwc
+     alias tail=gtail
   fi
 ])
 

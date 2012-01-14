@@ -25,6 +25,7 @@ dnl ----------------------------------------------------------------------------
 AC_DEFUN([CONFFLU_CHECK_OPENFOAM],dnl
 [
 AC_CHECKING(for OpenFOAM library)
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 FOAM_VERSION=""
 DEV_BRANCH=""
@@ -72,13 +73,6 @@ openfoam_ok=no
 
 
 dnl --------------------------------------------------------------------------------
-case `uname -s` in 
-Darwin)
-  alias wc=gwc
-  alias tail=gtail
-  ;;
-esac
-
 if test -d "${WM_PROJECT_DIR}" ; then
    dnl Look for OpenCFD or Extended OpenFOAM
    FOAM_BRANCH=[`echo ${WM_PROJECT_VERSION} | grep "-" | sed -e "s/\([^-]*\)-\(.*\)/\2/g"`]
