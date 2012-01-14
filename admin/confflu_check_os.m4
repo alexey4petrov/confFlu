@@ -70,6 +70,12 @@ AC_DEFUN([CONFFLU_CHECK_OS],
   
   AC_MSG_NOTICE( @OS_ARCHITECTURE@ == "${OS_ARCHITECTURE}" )
   
+  OS_UNAME=[`uname -s `]
+  
+  LIB_EXTENSION="so"
+  if test "x${OS_UNAME}" == "xDarwin"; then
+     LIB_EXTENSION="dylib"
+  fi
 ])
 
 
