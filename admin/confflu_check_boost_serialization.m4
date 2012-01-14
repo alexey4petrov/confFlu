@@ -28,6 +28,7 @@ AC_DEFUN([CONFFLU_CHECK_BOOST_SERIALIZATION],
 AC_CHECKING(for Boost "serialization" library)
 
 AC_REQUIRE([CONFFLU_CHECK_BOOST])
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -52,7 +53,7 @@ fi
 dnl --------------------------------------------------------------------------------
 dnl Check for Boost "serialization" library
 if test "x${boost_serialization_ok}" = "xyes" ; then
-   AC_CHECK_FILE( [${with_boost_libraries}/libboost_serialization${BOOST_LIBSUFFIX}.so], [ boost_serialization_ok=yes ], [ boost_serialization_ok=no ] )
+   AC_CHECK_FILE( [${with_boost_libraries}/libboost_serialization${BOOST_LIBSUFFIX}.${LIB_EXTENSION}], [ boost_serialization_ok=yes ], [ boost_serialization_ok=no ] )
 fi
 
 dnl --------------------------------------------------------------------------------

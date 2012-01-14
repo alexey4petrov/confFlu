@@ -25,6 +25,7 @@ dnl ----------------------------------------------------------------------------
 AC_DEFUN([CONFFLU_CHECK_HDF5],
 [
 AC_CHECKING(for HDF5 environemnt)
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG([C])
@@ -91,12 +92,12 @@ AC_ARG_WITH( [hdf5_libraries],
    
 if test "x${with_hdf5_libraries}" = "xno" ; then
    with_hdf5_libraries=${hdf5_home}/lib
-   AC_CHECK_FILE( [${with_hdf5_libraries}/libhdf5.so], [ hdf5_libraries_ok=yes ], [ hdf5_libraries_ok=no ] )
+   AC_CHECK_FILE( [${with_hdf5_libraries}/libhdf5.${LIB_EXTENSION}], [ hdf5_libraries_ok=yes ], [ hdf5_libraries_ok=no ] )
 fi
 
 if test "x${hdf5_libraries_ok}" = "xno" ; then
    with_hdf5_libraries=/usr/lib
-   AC_CHECK_FILE( [${with_hdf5_libraries}/libhdf5.so], [ hdf5_libraries_ok=yes ], [ hdf5_libraries_ok=no ] )
+   AC_CHECK_FILE( [${with_hdf5_libraries}/libhdf5.${LIB_EXTENSION}], [ hdf5_libraries_ok=yes ], [ hdf5_libraries_ok=no ] )
 fi
 
 

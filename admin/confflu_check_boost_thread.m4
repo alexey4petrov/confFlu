@@ -28,6 +28,7 @@ AC_DEFUN([CONFFLU_CHECK_BOOST_THREAD],
 AC_CHECKING(for Boost "thread" library)
 
 AC_REQUIRE([CONFFLU_CHECK_BOOST])
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -54,7 +55,7 @@ fi
 dnl --------------------------------------------------------------------------------
 dnl Check for Boost "thread" library
 if test "x${boost_thread_ok}" = "xyes" ; then
-   AC_CHECK_FILE( [${with_boost_libraries}/libboost_thread${BOOST_LIBSUFFIX}.so], [ boost_thread_ok=yes ], [ boost_thread_ok=no ] )
+   AC_CHECK_FILE( [${with_boost_libraries}/libboost_thread${BOOST_LIBSUFFIX}.${LIB_EXTENSION}], [ boost_thread_ok=yes ], [ boost_thread_ok=no ] )
 fi
 
 if test "x${boost_thread_ok}" = "xyes" ; then

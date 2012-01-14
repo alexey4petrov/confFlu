@@ -27,6 +27,7 @@ AC_DEFUN([CONFFLU_CHECK_BLOCKFVMATRIXLIB],dnl
 AC_CHECKING(for blockFvMatrixLib package)
 
 AC_REQUIRE([CONFFLU_CHECK_BLOCKLDUMATRIXLIB])
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -61,7 +62,7 @@ if test ! "x${withval}" = "xno" ; then
    fi
 
    AC_CHECK_FILE( [${blockfvmatrixlib_root_dir}/lnInclude], [ blockfvmatrixlib_ok=yes ], [ blockfvmatrixlib_ok=no ] )
-   AC_CHECK_FILE( [${blockfvmatrixlib_root_dir}/lib/libblockFvMatrix.so], [ blockfvmatrixlib_ok=yes ], [ blockfvmatrixlib_ok=no ] )
+   AC_CHECK_FILE( [${blockfvmatrixlib_root_dir}/lib/libblockFvMatrix.${LIB_EXTENSION}], [ blockfvmatrixlib_ok=yes ], [ blockfvmatrixlib_ok=no ] )
 
    if test "x${blockfvmatrixlib_ok}" = "xyes" ; then
       BLOCKFVMATRIXLIB_CPPFLAGS="${BLOCKFVMATRIXLIB_CPPFLAGS} -I${blockfvmatrixlib_root_dir}/lnInclude"

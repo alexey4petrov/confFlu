@@ -28,6 +28,7 @@ AC_DEFUN([CONFFLU_CHECK_BOOST_PROGRAM_OPTIONS],
 AC_CHECKING(for Boost "program_options" library)
 
 AC_REQUIRE([CONFFLU_CHECK_BOOST])
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -54,7 +55,7 @@ fi
 dnl --------------------------------------------------------------------------------
 dnl Check for Boost "program_options" library
 if test "x${boost_program_options_ok}" = "xyes" ; then
-   AC_CHECK_FILE( [${with_boost_libraries}/libboost_program_options${BOOST_LIBSUFFIX}.so], [ boost_program_options_ok=yes ], [ boost_program_options_ok=no ] )
+   AC_CHECK_FILE( [${with_boost_libraries}/libboost_program_options${BOOST_LIBSUFFIX}.${LIB_EXTENSION}], [ boost_program_options_ok=yes ], [ boost_program_options_ok=no ] )
 fi
 
 if test "x${boost_program_options_ok}" = "xyes" ; then

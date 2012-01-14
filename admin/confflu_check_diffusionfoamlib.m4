@@ -27,6 +27,7 @@ AC_DEFUN([CONFFLU_CHECK_DIFFUSIONFOAMLIB],dnl
 AC_CHECKING(for diffusionFoamLib package)
 
 AC_REQUIRE([CONFFLU_CHECK_BLOCKFVMATRIXLIB])
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -61,7 +62,7 @@ if test ! "x${withval}" = "xno" ; then
    fi
 
    AC_CHECK_FILE( [${diffusionfoamlib_root_dir}/lnInclude], [ diffusionfoamlib_ok=yes ], [ diffusionfoamlib_ok=no ] )
-   AC_CHECK_FILE( [${diffusionfoamlib_root_dir}/lib/libdiffusionFoam.so], [ diffusionfoamlib_ok=yes ], [ diffusionfoamlib_ok=no ] )
+   AC_CHECK_FILE( [${diffusionfoamlib_root_dir}/lib/libdiffusionFoam.${LIB_EXTENSION}], [ diffusionfoamlib_ok=yes ], [ diffusionfoamlib_ok=no ] )
 
    if test "x${diffusionfoamlib_ok}" = "xyes" ; then
       DIFFUSIONFOAMLIB_CPPFLAGS="${DIFFUSIONFOAMLIB_CPPFLAGS} -I${diffusionfoamlib_root_dir}/lnInclude"

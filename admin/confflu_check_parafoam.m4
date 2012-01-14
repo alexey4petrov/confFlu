@@ -32,6 +32,7 @@ AC_REQUIRE([CONFFLU_CHECK_BOOST_THREAD])
 
 AC_REQUIRE([CONFFLU_CHECK_OPENFOAM])
 AC_REQUIRE([CONFFLU_CHECK_DIFFUSIONFOAMLIB])
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_SUBST(ENABLE_PARAFOAM)
 
@@ -56,7 +57,7 @@ if test "x${withval}" = "xno" ; then
 fi
 
 dnl --------------------------------------------------------------------------------
-AC_CHECK_FILE( [${parafoam_root_dir}/lib/libparallel_threading_base.so], [ parafoam_ok=yes ], [ parafoam_ok=no ] )
+AC_CHECK_FILE( [${parafoam_root_dir}/lib/libparallel_threading_base.${LIB_EXTENSION}], [ parafoam_ok=yes ], [ parafoam_ok=no ] )
 
 dnl --------------------------------------------------------------------------------
 if test "x${parafoam_ok}" = "xno" ; then

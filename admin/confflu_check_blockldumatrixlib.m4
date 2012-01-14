@@ -27,6 +27,7 @@ AC_DEFUN([CONFFLU_CHECK_BLOCKLDUMATRIXLIB],dnl
 AC_CHECKING(for blockLduMatrixLib package)
 
 AC_REQUIRE([CONFFLU_CHECK_OPENFOAM])
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -61,7 +62,7 @@ if test ! "x${withval}" = "xno" ; then
    fi
 
    AC_CHECK_FILE( [${blockldumatrixlib_root_dir}/lnInclude], [ blockldumatrixlib_ok=yes ], [ blockldumatrixlib_ok=no ] )
-   AC_CHECK_FILE( [${blockldumatrixlib_root_dir}/lib/libblockLduMatrix.so], [ blockldumatrixlib_ok=yes ], [ blockldumatrixlib_ok=no ] )
+   AC_CHECK_FILE( [${blockldumatrixlib_root_dir}/lib/libblockLduMatrix.${LIB_EXTENSION}], [ blockldumatrixlib_ok=yes ], [ blockldumatrixlib_ok=no ] )
 
    if test "x${blockldumatrixlib_ok}" = "xyes" ; then
       BLOCKLDUMATRIXLIB_CPPFLAGS="-I${blockldumatrixlib_root_dir}/lnInclude"

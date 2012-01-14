@@ -25,6 +25,7 @@ dnl ----------------------------------------------------------------------------
 AC_DEFUN([CONFFLU_CHECK_VTK],dnl
 [
 AC_CHECKING(for VTK Library)
+AC_REQUIRE([CONFFLU_CHECK_OS])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -84,12 +85,12 @@ AC_ARG_WITH( [vtk_libraries],
    
 if test "x${with_vtk_libraries}" = "xno" && test ! "x${VTKHOME}" = "x" ; then
    with_vtk_libraries=${VTKHOME}/lib
-   AC_CHECK_FILE( [${with_vtk_libraries}/libvtkCommon.so], [ vtk_libraries_ok=yes ], [ vtk_libraries_ok=no ] )
+   AC_CHECK_FILE( [${with_vtk_libraries}/libvtkCommon.${LIB_EXTENSION}], [ vtk_libraries_ok=yes ], [ vtk_libraries_ok=no ] )
 fi
 
 if test "x${vtk_libraries_ok}" = "xno" ; then
    with_vtk_libraries=/usr/lib
-   AC_CHECK_FILE( [${with_vtk_libraries}/libvtkCommon.so], [ vtk_libraries_ok=yes ], [ vtk_libraries_ok=no ] )
+   AC_CHECK_FILE( [${with_vtk_libraries}/libvtkCommon.${LIB_EXTENSION}], [ vtk_libraries_ok=yes ], [ vtk_libraries_ok=no ] )
 fi
 
 if test "x${vtk_libraries_ok}" = "xyes" ; then
