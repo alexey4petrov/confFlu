@@ -93,7 +93,7 @@ echo "---------------------------------- automake ------------------------------
 #   Makefile.in (from Makefile.am)
 
 # Add possibility to fail for missing Makefile.am
-automake --add-missing --copy --gnu || exit 1
+automake --add-missing --copy --gnu 1>&2 2>/dev/null
 
 
 echo "------------------------------------ OK -----------------------------------------"
