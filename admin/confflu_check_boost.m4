@@ -146,11 +146,10 @@ if test "x${boost_libraries_ok}" = "xyes" ; then
    LDFLAGS="${BOOST_LDFLAGS}"
    
    a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*-mt\.\${LIB_EXTENSION}$" | tail --lines=1`
-   echo "$a_boost_lib"
+
    if test "x${a_boost_lib}" = "x" ; then
       a_boost_lib=`ls ${with_boost_libraries} | grep -E "^libboost_.*\.\${LIB_EXTENSION}$" | tail --lines=1`
    fi
-   echo "$a_boost_lib"
    BOOST_LIBSUFFIX=[`echo ${a_boost_lib} | sed -e "s%libboost_[a-z]*%%g" | sed -e "s%\.\${LIB_EXTENSION}%%g"`]
 fi
 
