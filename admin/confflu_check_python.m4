@@ -107,9 +107,12 @@ AC_ARG_WITH( [python_libraries],
 case `uname -s` in
 Darwin)
   SOEXT=dylib
+  LD_ADDNEEDED=
+  LD_NOASNEEDED=
   ;;
 *)
   SOEXT=so
+  LD_ADDNEEDED=--add-needed -Xlinker --no-as-needed
   ;;
 esac
 
@@ -140,7 +143,7 @@ if test "x${python_libraries_ok}" = "xyes" ; then
 
    PYTHON_LDFLAGS="-lpython${python_version}"
    test ! "x${with_python_libraries}" = "x/usr/lib" && PYTHON_LDFLAGS="-L${with_python_libraries} ${PYTHON_LDFLAGS}"
-   LDFLAGS="-Xlinker --add-needed -Xlinker --no-as-needed ${PYTHON_LDFLAGS}"
+   LDFLAGS="-Xlinker ${LD_ADDNEEDED} ${PYTHON_LDFLAGS}"
 
    AC_MSG_CHECKING( for linking to Python libraries )
    AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <Python.h> ], [ PyDict_New() ] ) ],
