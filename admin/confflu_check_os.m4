@@ -77,7 +77,6 @@ AC_DEFUN([CONFFLU_CHECK_OS],
   
   if test "x${OS_UNAME}" == "xDarwin"; then
      LD_ADDNEEDED=
-     LD_NOASNEEDED=
      LIB_EXTENSION="dylib"
 
      alias wc=gwc
