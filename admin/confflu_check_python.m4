@@ -112,7 +112,7 @@ Darwin)
   ;;
 *)
   SOEXT=so
-  LD_ADDNEEDED=--add-needed -Xlinker --no-as-needed
+  LD_ADDNEEDED="--add-needed -Xlinker --no-as-needed"
   ;;
 esac
 
