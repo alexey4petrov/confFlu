@@ -73,12 +73,12 @@ AC_DEFUN([CONFFLU_CHECK_OS],
   OS_UNAME=[`uname -s `]
   
   LIB_EXTENSION="so"
-  LD_ADDNEEDED="--add-needed -Xlinker --no-as-needed"
+  GNU_LDFLAGS="-Xlinker --add-needed -Xlinker --no-as-needed"
   LDCONFIG=ldconfig
   FIND=find
   
   if test "x${OS_UNAME}" == "xDarwin"; then
-     LD_ADDNEEDED=
+     GNU_LDFLAGS=
      LIB_EXTENSION="dylib"
      LDCONFIG=
      FIND=gfind
