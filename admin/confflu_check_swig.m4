@@ -51,7 +51,7 @@ fi
 
 
 dnl --------------------------------------------------------------------------------
-SWIG_VERSION=[`dpkg -s swig 2>/dev/null | grep "Version:" | sed -e "s/Version: //g"`]
+SWIG_VERSION=[`swig -version | grep "SWIG Version" | sed -e "s/SWIG Version //g"`]
 AC_SUBST(SWIG_VERSION)
 
 
