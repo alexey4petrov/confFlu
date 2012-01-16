@@ -24,7 +24,7 @@
 prefix=@prefix@
 datarootdir=@datarootdir@
 
-conffludir:=${datarootdir}/confflu
+conffludir:=${datarootdir}/confFlu
 confflu_install_dir:=$(conffludir)
 
 #--------------------------------------------------------------------------------------
