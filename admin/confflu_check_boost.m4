@@ -167,6 +167,9 @@ if test "x${boost_includes_ok}" = "xyes" && test "x${boost_libraries_ok}" = "xye
    boost_ok="yes"
 fi
 
+BOOST_VERSION=[`dpkg -s libboost-dev 2>/dev/null | grep "Version:" | sed -e "s/Version: //g"`]
+AC_SUBST(BOOST_VERSION)
+
 AC_LANG_RESTORE
 CPPFLAGS=${STORE_CPPFLAGS}
 CXXFLAGS=${STORE_CXXFLAGS}
