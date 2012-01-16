@@ -48,6 +48,15 @@ dnl ----------------------------------------------------------------------------
 if test "x${swig_ok}" = "xno" ; then
    AC_MSG_WARN( [use --with-swig=<path> to define SWIG installation] )
 fi
+
+
+dnl --------------------------------------------------------------------------------
+SWIG_VERSION=[`dpkg -s swig 2>/dev/null | grep "Version:" | sed -e "s/Version: //g"`]
+AC_SUBST(SWIG_VERSION)
+
+
+
+dnl --------------------------------------------------------------------------------
 ])
 
 
