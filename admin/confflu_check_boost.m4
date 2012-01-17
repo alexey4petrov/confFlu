@@ -167,8 +167,21 @@ if test "x${boost_includes_ok}" = "xyes" && test "x${boost_libraries_ok}" = "xye
    boost_ok="yes"
 fi
 
-BOOST_VERSION=[`dpkg -s libboost-dev 2>/dev/null | grep "Version:" | sed -e "s/Version: //g"`]
-AC_SUBST(BOOST_VERSION)
+BOOST_VERSION=[`cat ${with_boost_includes}/boost/version.hpp | grep "\#define BOOST_LIB_VERSION" | sed -e "s/\#define BOOST_LIB_VERSION //g" | \
+                sed -e "s/\"//g" | sed -e "s/_/./g"`]
+BOOST_VERSION="1.46.1"
+FROM_BOOST_VERSION=${BOOST_VERSION}
+
+number_counter=[`echo ${BOOST_VERSION} | sed -e"s%[^\.]%%g" | wc --bytes`]
+if test "x${number_counter}" = "x3" ; then
+   FROM_BOOST_VERSION=[`echo ${BOOST_VERSION} | sed -e "s/.[0-9]*$//g"`]
+fi
+minor_version=[`echo ${FROM_BOOST_VERSION} | sed -e "s/^[0-9].//g"`]
+let increment_minor_version=${minor_version}+1
+TO_BOOST_VERSION=[`echo ${FROM_BOOST_VERSION} | sed -e "s/[0-9]*$/\${increment_minor_version}/g"`]
+
+AC_SUBST(FROM_BOOST_VERSION)
+AC_SUBST(TO_BOOST_VERSION)
 
 AC_LANG_RESTORE
 CPPFLAGS=${STORE_CPPFLAGS}
