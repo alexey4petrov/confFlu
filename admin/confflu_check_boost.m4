@@ -169,7 +169,7 @@ fi
 
 BOOST_VERSION=[`cat ${with_boost_includes}/boost/version.hpp | grep "\#define BOOST_LIB_VERSION" | sed -e "s/\#define BOOST_LIB_VERSION //g" | \
                 sed -e "s/\"//g" | sed -e "s/_/./g"`]
-BOOST_VERSION="1.46.1"
+
 FROM_BOOST_VERSION=${BOOST_VERSION}
 
 number_counter=[`echo ${BOOST_VERSION} | sed -e"s%[^\.]%%g" | wc --bytes`]
