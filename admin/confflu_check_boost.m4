@@ -26,6 +26,7 @@ AC_DEFUN([CONFFLU_CHECK_BOOST],
 [
 AC_CHECKING(for Boost Library in general)
 AC_REQUIRE([CONFFLU_CHECK_OS])
+AC_REQUIRE([CONFFLU_CHECK_PYTHON])
 
 AC_LANG_SAVE
 AC_LANG_CPLUSPLUS
@@ -167,18 +168,22 @@ if test "x${boost_includes_ok}" = "xyes" && test "x${boost_libraries_ok}" = "xye
    boost_ok="yes"
 fi
 
-BOOST_VERSION=[`cat ${with_boost_includes}/boost/version.hpp | grep "\#define BOOST_LIB_VERSION" | sed -e "s/\#define BOOST_LIB_VERSION //g" | \
-                sed -e "s/\"//g" | sed -e "s/_/./g"`]
+BOOST_VERSION=[`cat ${with_boost_includes}/boost/version.hpp  | grep "\#define BOOST_VERSION " | sed -e "s/\#define BOOST_VERSION //g"`]
+AC_MSG_NOTICE( @BOOST_VERSION@ == "${BOOST_VERSION}" )
 
-FROM_BOOST_VERSION=${BOOST_VERSION}
+BOOST_MAJOR_VERSION=[`python -c "print ${BOOST_VERSION} / 100000"`]
+AC_MSG_NOTICE( @BOOST_MAJOR_VERSION@ == "${BOOST_MAJOR_VERSION}" )
 
-number_counter=[`echo ${BOOST_VERSION} | sed -e"s%[^\.]%%g" | wc --bytes`]
-if test "x${number_counter}" = "x3" ; then
-   FROM_BOOST_VERSION=[`echo ${BOOST_VERSION} | sed -e "s/.[0-9]*$//g"`]
-fi
-minor_version=[`echo ${FROM_BOOST_VERSION} | sed -e "s/^[0-9].//g"`]
-let increment_minor_version=${minor_version}+1
-TO_BOOST_VERSION=[`echo ${FROM_BOOST_VERSION} | sed -e "s/[0-9]*$/\${increment_minor_version}/g"`]
+BOOST_MINOR_VERSION=[`python -c "print ${BOOST_VERSION} / 100 % 1000"`]
+AC_MSG_NOTICE( @BOOST_MINOR_VERSION@ == "${BOOST_MINOR_VERSION}" )
+
+FROM_BOOST_VERSION=${BOOST_MAJOR_VERSION}.${BOOST_MINOR_VERSION}
+AC_MSG_NOTICE( @FROM_BOOST_VERSION@ == "${FROM_BOOST_VERSION}" )
+
+BOOST_MINOR_VERSION2=[`python -c "print ${BOOST_MINOR_VERSION} + 1"`]
+
+TO_BOOST_VERSION=${BOOST_MAJOR_VERSION}.${BOOST_MINOR_VERSION2}
+AC_MSG_NOTICE( @TO_BOOST_VERSION@ == "${TO_BOOST_VERSION}" )
 
 AC_SUBST(FROM_BOOST_VERSION)
 AC_SUBST(TO_BOOST_VERSION)
