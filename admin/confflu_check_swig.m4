@@ -50,10 +50,47 @@ if test "x${swig_ok}" = "xno" ; then
 fi
 
 
-dnl --------------------------------------------------------------------------------
+dnl ---------------------------------------------------------------------------
 SWIG_VERSION=[`swig -version | grep "SWIG Version" | sed -e "s/SWIG Version //g"`]
 AC_SUBST(SWIG_VERSION)
+AC_MSG_NOTICE( @SWIG_VERSION@ == "${SWIG_VERSION}" )
 
+dnl----------------------------------------------------------------------------
+dnl The last number( minor version ) of swig version may be the two or one digit number,
+dnl so the numeric string of swig version must be different.
+dnl For example 1.3.40 or 2.0.6 ( 40 or 6 ), so numeric string of swig version equals 010340 or 020106
+
+dnl Extract minor version
+SWIG_MINOR_VERSION=[`echo ${SWIG_VERSION} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\+\).*%\3%g"`]
+
+dnl Check minor version ( one or two digit number )
+RESULT_DIVIDING_BY_10=[`python -c "print ${SWIG_MINOR_VERSION} / 10"`]
+if test ${RESULT_DIVIDING_BY_10} -eq 0; then
+dnl one digit number of minor version ( 2.0.6 )
+SWIG_NUMERIC_VERSION=[`echo ${SWIG_VERSION} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\20${SWIG_MINOR_VERSION}%g"`]
+else
+dnl two digit number of minor version( 1.3.40 )
+SWIG_NUMERIC_VERSION=[`echo ${SWIG_VERSION} | sed -e"s%^\([1-9]\)\.\([0-9]\)\.\([0-9]\).*%0\10\2${SWIG_MINOR_VERSION}%g"`]
+fi
+
+
+dnl----------------------------------------------------------------------------
+SWIG_WARNINGS="-w508" dnl Declaration of 'XXX' shadows declaration accessible via 'YYY"
+SWIG_WARNINGS="${SWIG_WARNINGS} -w317" dnl Specialization of non-template 'XXX'
+SWIG_WARNINGS="${SWIG_WARNINGS} -w509" dnl Overloaded method 'XXX' is shadowed by 'YYY'
+SWIG_WARNINGS="${SWIG_WARNINGS} -w503" dnl Can't wrap 'XXX' unless renamed to a valid identifier
+SWIG_WARNINGS="${SWIG_WARNINGS} -w462" dnl Unable to set dimensionless array variable
+SWIG_WARNINGS="${SWIG_WARNINGS} -w473" dnl Returning a pointer or reference in a director method is not recommended
+
+if test ${SWIG_NUMERIC_VERSION} -lt "020000"; then
+   SWIG_WARNINGS="${SWIG_WARNINGS} -w312" # Nested class not currently supported (ignored)
+else
+   SWIG_WARNINGS="${SWIG_WARNINGS} -w325" # Nested class not currently supported (ignored)
+fi
+
+
+AC_SUBST(SWIG_WARNINGS)
+AC_MSG_NOTICE( @SWIG_WARNINGS@ == "${SWIG_WARNINGS}" )
 
 
 dnl --------------------------------------------------------------------------------
