@@ -88,6 +88,10 @@ else
    SWIG_WARNINGS="${SWIG_WARNINGS} -w325" # Nested class not currently supported (ignored)
 fi
 
+if test ${SWIG_NUMERIC_VERSION} -eq "020006"; then
+   SWIG_WARNINGS="${SWIG_WARNINGS} -w521" # Illegal destructor name.Ignored
+fi
+
 
 AC_SUBST(SWIG_WARNINGS)
 AC_MSG_NOTICE( @SWIG_WARNINGS@ == "${SWIG_WARNINGS}" )
