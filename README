@@ -31,7 +31,7 @@ Source CFD Toolbox, see http://sourceforge.net/projects/foam/ ) developement.
 The neccessity for defintion of such kind of functionality appears from the
 issue that OpenFOAM referece build system does not provide corresponding
 capabilities. As result of lack of the configuration capabilties OpenFOAM
-users/developers strugle with compilation procidure trying to discover reasons
+users/developers strugle with compilation procedure trying to discover reasons
 for this or that failure.
 
 "confFlu" proposed implementation based on standard Linux/UNIX "GNU automake"
