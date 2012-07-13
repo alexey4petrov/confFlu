@@ -23,25 +23,47 @@ See http://sourceforge.net/projects/pythonflu
 
 
 ---------------------------------------------------------------------------
-Author(s) :  Alexey PETROV
+Author(s) :  Alexey Petrov, Andrey Simurzin
 
-2011-07-04
+2012-01-05 (r2.1-porting)
+
+  * Porting on the new generation of SWIG wrapper - 2.X (tested with 2.0.3 - 2.0.6)
+
+  * Porting on the latest OpenCFD version of OpenFOAM - 2.1.1
+
+  
+---------------------------------------------------------------------------
+Author(s) :  Alexey Petrov, Andrey Simurzin
+
+2012-01-05 (r2.0-porting)
+
+  * Porting on the latest version of OpenFOAM - 2.1.0, 2.0.1,2.0.0
+  
+  * Porting on FreeFOAM up to the 0.1.0rc5
+  
+  * Porting on MacOS X
+
+  
+---------------------------------------------------------------------------
+Author(s) :  Alexey Petrov, Andrey Simurzin
+
+2011-07-04 (r1.2-hybrid)
 
 * To support compilation for third-party pythonFlu extensions
 
 
 ---------------------------------------------------------------------------
-Author(s) :  Alexey PETROV
+Author(s) :  Alexey Petrov, Andrey Simurzin
 
-2011-05-27
+2011-05-27 (r1.1-Elvis)
 
 * To reflect pythonFlu build system improvements
 
 
 ---------------------------------------------------------------------------
-Author(s) :  Alexey PETROV
+Author(s) :  Alexey Petrov
 
-2011-04-04
+2011-04-04 (r0.1)
 
 1. Adjusting to the latest advancements in pythonFlu (pyFoam recently)
 
@@ -49,14 +71,13 @@ Author(s) :  Alexey PETROV
 
 
 ---------------------------------------------------------------------------
-Author(s) :  Alexey PETROV
+Author(s) :  Alexey Petrov, Andrey Simurzin
 
 2010-04-04
 
 1. Introduction of "confFlu" package
--------------------------------
-All OpenFOAM related developement starts to use this configuration package as
-a basis for its particular configuration systems.
+   All OpenFOAM related developement starts to use this configuration
+   package as a basis for its particular configuration systems.
 
 2. Writing corresponding "user information"
 
