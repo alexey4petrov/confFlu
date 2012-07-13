@@ -1,31 +1,6 @@
-****
-NEWS
-****
-
-confFlu - pythonFlu configuration package
-Copyright (C) 2010- Alexey Petrov
-Copyright (C) 2009-2010 Pebble Bed Modular Reactor (Pty) Limited (PBMR)
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-See http://sourceforge.net/projects/pythonflu
-
-
 ---------------------------------------------------------------------------
-Author(s) :  Alexey Petrov, Andrey Simurzin
-
-2012-01-05 (r2.1-porting)
+    confFlu r2.1-swig
+---------------------------------------------------------------------------
 
   * Porting on the new generation of SWIG wrapper - 2.X (tested with 2.0.3 - 2.0.6)
 
@@ -33,9 +8,8 @@ Author(s) :  Alexey Petrov, Andrey Simurzin
 
   
 ---------------------------------------------------------------------------
-Author(s) :  Alexey Petrov, Andrey Simurzin
-
-2012-01-05 (r2.0-porting)
+    confFlu r2.0-porting
+---------------------------------------------------------------------------
 
   * Porting on the latest version of OpenFOAM - 2.1.0, 2.0.1,2.0.0
   
@@ -45,25 +19,22 @@ Author(s) :  Alexey Petrov, Andrey Simurzin
 
   
 ---------------------------------------------------------------------------
-Author(s) :  Alexey Petrov, Andrey Simurzin
-
-2011-07-04 (r1.2-hybrid)
+    confFlu r1.2-hybrid
+---------------------------------------------------------------------------
 
   * To support compilation for third-party pythonFlu extensions
 
 
 ---------------------------------------------------------------------------
-Author(s) :  Alexey Petrov, Andrey Simurzin
-
-2011-05-27 (r1.1-Elvis)
+    confFlu r1.1-Elvis
+---------------------------------------------------------------------------
 
   * To reflect pythonFlu build system improvements
 
 
 ---------------------------------------------------------------------------
-Author(s) :  Alexey Petrov
-
-2011-04-04 (r0.1)
+    confFlu r0.1
+---------------------------------------------------------------------------
 
   * Adjusting to the latest advancements in pythonFlu (pyFoam recently)
 
@@ -71,10 +42,8 @@ Author(s) :  Alexey Petrov
 
 
 ---------------------------------------------------------------------------
-Author(s) :  Alexey Petrov, Andrey Simurzin
-
-2010-04-04
-
+    confFlu r0.1-beta
+---------------------------------------------------------------------------
   * Introduction of "confFlu" package
     All OpenFOAM related developement starts to use this configuration
     package as a basis for its particular configuration systems.
