@@ -92,7 +92,7 @@ if test "x${with_loki_libraries}" = "xno" && test ! "x${LOKI_ROOT_DIR}" = "x" ; 
    AC_CHECK_FILE( [${with_loki_libraries}/libloki.${LIB_EXTENSION}], [ loki_libraries_ok=yes ], [ loki_libraries_ok=no ] )
 fi
 
-if test "x${vtk_libraries_ok}" = "xno" ; then
+if test "x${loki_libraries_ok}" = "xno" ; then
    with_loki_libraries="/usr/lib"
    AC_CHECK_FILE( [${with_loki_libraries}/libloki.${LIB_EXTENSION}], [ loki_libraries_ok=yes ], [ loki_libraries_ok=no ] )
 fi
