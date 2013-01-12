@@ -116,7 +116,7 @@ if test "x${omniORB_ok}" = "xyes" ; then
   CPPFLAGS="${OMNIORB_CXXFLAGS} ${OMNIORB_INCLUDES}"
 
   AC_MSG_CHECKING(linking to omnithreads)
-  AC_LINK_IFELSE( AC_LANG_PROGRAM( [ #include <omnithread.h> ], [ omni_mutex my_mutex ] ),
+  AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <omnithread.h> ], [ omni_mutex my_mutex ] ) ],
                   [ omniORB_ok=yes ],
                   [ omniORB_ok=no ] )
   AC_MSG_RESULT( ${omniORB_ok} )
@@ -141,7 +141,7 @@ if test "x${omniORB_ok}" = "xyes" ; then
   LIBS="${OMNIORB_LIBS}"
 
   AC_MSG_CHECKING(linking to omniORB)
-  AC_LINK_IFELSE( AC_LANG_PROGRAM( [ #include <CORBA.h> ], [ CORBA::ORB_var orb ] ),
+  AC_LINK_IFELSE( [ AC_LANG_PROGRAM( [ #include <CORBA.h> ], [ CORBA::ORB_var orb ] ) ],
                   [ omniORB_ok=yes ],
                   [ omniORB_ok=no ] )
   AC_MSG_RESULT( ${omniORB_ok} )
